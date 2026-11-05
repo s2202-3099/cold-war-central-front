@@ -1,0 +1,570 @@
+<title>中欧正面 1949–1991</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a staff-map dossier — narrow reading column for text, wide map table for the simulator. NATO blue / Pact red follow military map symbology. */
+:root{
+  --paper:#eceee6; --panel:#f6f7f2; --ink:#1b2320; --muted:#5a665f; --line:#c6cdc1;
+  --nato:#1c5ea8; --nato-soft:#d7e3f1; --wp:#b02a1e; --wp-soft:#f1dcd8; --nuke:#a87406; --nuke-soft:#f2e6c9;
+  --water:#a9c2d1; --land:#dde3d4; --land-pact:#e6d9d2; --land-gdr:#ddc6bd; --grid:rgba(27,35,32,.07);
+  --f-display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121815; --panel:#18201c; --ink:#e2e7df; --muted:#9aa69e; --line:#2d3833;
+  --nato:#6ea4e2; --nato-soft:#1d2d40; --wp:#e46c5e; --wp-soft:#3a2220; --nuke:#e2b13f; --nuke-soft:#3a3018;
+  --water:#1d3340; --land:#1e2722; --land-pact:#2b2522; --land-gdr:#3a2a26; --grid:rgba(226,231,223,.06); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121815; --panel:#18201c; --ink:#e2e7df; --muted:#9aa69e; --line:#2d3833;
+  --nato:#6ea4e2; --nato-soft:#1d2d40; --wp:#e46c5e; --wp-soft:#3a2220; --nuke:#e2b13f; --nuke-soft:#3a3018;
+  --water:#1d3340; --land:#1e2722; --land-pact:#2b2522; --land-gdr:#3a2a26; --grid:rgba(226,231,223,.06); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.85;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:48px 48px}
+.wrap{max-width:1180px;margin:0 auto}
+.col{max-width:720px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.35;margin:0}
+h1{font-size:clamp(2.1rem,5vw,3.4rem);font-weight:800;letter-spacing:.02em}
+h2{font-size:1.65rem;font-weight:800;margin-bottom:.6rem}
+h3{font-size:1.15rem;font-weight:600;margin:1.4rem 0 .3rem}
+p{margin:0 0 .9rem;text-indent:1em}
+p.ni{text-indent:0}
+a{color:var(--nato)}
+.mono,.tag,.kicker{font-family:var(--f-mono)}
+.kicker{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+header.top{padding-block:40px 20px;border-bottom:2px solid var(--ink);margin-bottom:8px;display:grid;gap:10px}
+header.top .lede{max-width:720px;color:var(--ink)}
+.stamp{display:inline-flex;gap:10px;flex-wrap:wrap;font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.stamp span{border:1px solid var(--line);padding:1px 8px;border-radius:2px}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem;padding-block:10px;border-bottom:1px solid var(--line)}
+nav.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--ink)}
+section{padding-block:44px 8px;border-bottom:1px solid var(--line)}
+.sec-num{font-family:var(--f-mono);color:var(--muted);font-size:.8rem;letter-spacing:.1em}
+/* periods */
+.periods{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border:1px solid var(--ink);margin:18px 0 0}
+.periods button{all:unset;cursor:pointer;padding:10px 12px;border-right:1px solid var(--line);font-size:.85rem;line-height:1.45;display:grid;gap:2px;background:var(--panel)}
+.periods button:last-child{border-right:0}
+.periods button .yr{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.periods button b{font-family:var(--f-display);font-size:1rem}
+.periods button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.periods button[aria-selected="true"] .yr{color:var(--paper);opacity:.75}
+.periods button:focus-visible{outline:2px solid var(--nato);outline-offset:-2px}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--ink);border-top:0}
+.vs>div{padding:16px 18px;min-width:0}
+.vs .east{border-right:1px solid var(--line);background:linear-gradient(90deg,var(--wp-soft),transparent 60%)}
+.vs .west{background:linear-gradient(270deg,var(--nato-soft),transparent 60%)}
+.vs h4{margin:0 0 6px;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em}
+.vs .east h4{color:var(--wp)} .vs .west h4{color:var(--nato)}
+.vs dl{margin:0;display:grid;grid-template-columns:4.6em 1fr;gap:4px 10px;font-size:.92rem;line-height:1.65}
+.vs dt{font-weight:700;color:var(--muted)}
+.vs dd{margin:0}
+.period-note{font-size:.9rem;color:var(--muted);padding:10px 2px 0}
+/* simulator */
+.sim{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px;margin-top:18px}
+.ctrl{background:var(--panel);border:1px solid var(--line);padding:14px;display:grid;gap:12px;align-content:start;font-size:.9rem}
+.ctrl label{display:grid;gap:3px}
+.ctrl .lab{display:flex;justify-content:space-between;gap:8px;font-weight:500}
+.ctrl .lab .mono{color:var(--muted);font-size:.8rem}
+.ctrl select,.ctrl input[type=range]{width:100%;accent-color:var(--ink)}
+.ctrl select{font:inherit;padding:5px 6px;background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:block;text-align:center;padding:5px 4px;cursor:pointer;font-size:.82rem;line-height:1.35}
+.seg input:checked+label{background:var(--ink);color:var(--paper)}
+.seg input:focus-visible+label{outline:2px solid var(--nato);outline-offset:-2px}
+.chk{display:flex!important;align-items:center;gap:8px;grid-template-columns:none}
+.preset-desc{font-size:.82rem;color:var(--muted);line-height:1.6;border-left:3px solid var(--line);padding-left:8px}
+.stage{display:grid;gap:12px;min-width:0}
+.mapbox{position:relative;border:1px solid var(--ink);background:var(--water);aspect-ratio:1/1.02;max-width:100%;overflow:hidden}
+.mapbox svg{display:block;width:100%;height:100%}
+.daybar{position:absolute;left:10px;top:10px;background:var(--panel);border:1px solid var(--ink);padding:4px 10px;font-family:var(--f-mono);font-size:.95rem}
+.daybar b{font-size:1.25rem}
+.legend{position:absolute;right:10px;bottom:10px;background:var(--panel);border:1px solid var(--line);padding:6px 9px;font-size:.72rem;line-height:1.6;display:grid;gap:1px}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px}
+.playrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-size:.9rem;padding:6px 14px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible{outline:2px solid var(--nato);outline-offset:2px}
+.playrow input[type=range]{flex:1;min-width:140px;accent-color:var(--wp)}
+.out{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);padding:12px 14px;min-width:0}
+.card h4{margin:0 0 6px;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;color:var(--muted);font-weight:500}
+.axt{width:100%;border-collapse:collapse;font-size:.82rem;font-variant-numeric:tabular-nums}
+.axt th,.axt td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.axt th:first-child,.axt td:first-child{text-align:left;white-space:normal}
+.axt th{font-weight:500;color:var(--muted);font-size:.74rem}
+.bar{display:inline-block;height:6px;vertical-align:middle;background:var(--wp);margin-left:4px}
+.verdict{font-size:.92rem;line-height:1.7;padding:10px 12px;border:1px solid var(--ink);background:var(--paper)}
+.verdict.nuke{border-color:var(--nuke);background:var(--nuke-soft)}
+.log{list-style:none;margin:0;padding:0;font-size:.82rem;max-height:220px;overflow:auto;display:grid;gap:3px}
+.log li{display:grid;grid-template-columns:3.6em 1fr;gap:6px;line-height:1.5}
+.log .d{font-family:var(--f-mono);color:var(--muted)}
+.log .k-nuc{color:var(--nuke);font-weight:700}
+.log .k-omg,.log .k-2nd{color:var(--wp)}
+.log .k-nato{color:var(--nato)}
+.chartbox{overflow-x:auto}
+.chartbox svg{display:block;width:100%;min-width:420px;height:auto}
+.caveat{font-size:.84rem;color:var(--muted);border:1px dashed var(--line);padding:10px 12px;margin-top:4px}
+/* doctrine diagram */
+.diagram{overflow-x:auto;border:1px solid var(--line);background:var(--panel);margin:14px 0}
+.diagram svg{display:block;min-width:640px;width:100%;height:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.two>div{min-width:0}
+.term{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+/* tables */
+.tbl{overflow-x:auto;margin:14px 0}
+.tbl table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem;line-height:1.6}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.tbl th{font-family:var(--f-mono);font-weight:500;font-size:.74rem;letter-spacing:.08em;color:var(--muted);border-bottom:2px solid var(--ink)}
+.tbl td:first-child{font-family:var(--f-mono);white-space:nowrap}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:.7rem;padding:0 6px;border:1px solid currentColor;border-radius:2px;margin-right:4px}
+.pill.n{color:var(--nuke)} .pill.c{color:var(--nato)}
+.debate{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.debate .card p{text-indent:0;font-size:.9rem}
+.debate .card h3{margin-top:0;font-size:1.02rem}
+ol.src{font-size:.84rem;line-height:1.65;padding-left:1.6em;color:var(--muted)}
+ol.src a{word-break:break-all}
+@media (max-width:860px){
+  .sim{grid-template-columns:1fr}
+  .out{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .debate{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .periods{grid-template-columns:1fr 1fr}
+  .periods button{border-bottom:1px solid var(--line)}
+  .vs{grid-template-columns:1fr}
+  .vs .east{border-right:0;border-bottom:1px solid var(--line)}
+  .vs dl{grid-template-columns:1fr}
+  .vs dt{margin-top:4px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="kicker">Central Front · Soviet Ground Forces / Warsaw Pact vs NATO</div>
+  <h1>中欧正面 1949–1991</h1>
+  <div class="lede col"><p class="ni">冷戦期、ワルシャワ条約機構とNATOは中欧での戦争を40年あまり計画し続けた。双方の戦略・作戦術・戦術は互いに反応しながら変わり、冷戦後に公開された東側文書は、西側が推測するしかなかった計画の中身を明らかにした。このページは、その変化を時期ごとに対照し、簡易モデルで「計画が想定した戦争」を動かして確かめる。</p></div>
+  <div class="stamp"><span>時期区分 5期</span><span>簡易シミュレーター</span><span>東側一次史料（PHPほか）</span><span>改訂 2026-11</span></div>
+</header>
+<nav class="toc" aria-label="目次">
+  <a href="#periods">1 時期区分</a><a href="#sim">2 シミュレーター</a><a href="#ops">3 作戦術と戦術</a><a href="#plans">4 公開された計画</a><a href="#debate">5 評価論争</a><a href="#sources">6 前提と出典</a>
+</nav>
+
+<section id="periods">
+  <div class="sec-num">§1</div>
+  <h2>五つの時期で東西を対照する</h2>
+  <div class="col"><p>東西の構想は一枚絵ではない。核の位置づけが変わるたびに、地上戦の考え方も変わった。時期を選ぶと、同じ時期のソ連・ワ条約機構とNATOを並べて表示する。</p></div>
+  <div class="periods" role="tablist" aria-label="時期" id="ptabs"></div>
+  <div class="vs" id="pvs"></div>
+  <div class="period-note col" id="pnote"></div>
+</section>
+
+<section id="sim">
+  <div class="sec-num">§2</div>
+  <h2>中欧正面シミュレーター</h2>
+  <div class="col"><p>五つの侵攻軸ごとに、両軍の戦力（師団換算）と前進距離を一日刻みで計算する。プリセットは公開された計画・演習の想定に合わせてあり、パラメーターを動かすと結果がどう変わるかを見られる。<b>教育用の粗いモデルで、予測ではない。</b>核兵器の効果は計算せず、柔軟反応の時期は「NATOが核使用を迫られる時点」でモデルを止める。</p></div>
+  <div class="sim">
+    <form class="ctrl" id="ctrl" autocomplete="off">
+      <label for="preset"><span class="lab">シナリオ</span>
+        <select id="preset"></select></label>
+      <div class="preset-desc" id="pdesc"></div>
+      <label for="warning"><span class="lab">NATOの警報・準備期間 <span class="mono" id="v-warning"></span></span>
+        <input type="range" id="warning" min="0" max="14" step="1"></label>
+      <label for="natoQ"><span class="lab">NATOの質的係数 <span class="mono" id="v-natoQ"></span></span>
+        <input type="range" id="natoQ" min="0.8" max="1.6" step="0.05"></label>
+      <label for="wp2Day"><span class="lab">WP第2梯団の到着 <span class="mono" id="v-wp2Day"></span></span>
+        <input type="range" id="wp2Day" min="2" max="12" step="1"></label>
+      <div><div class="lab" style="margin-bottom:3px">WPの構想</div>
+        <div class="seg"><input type="radio" name="wpDoc" id="wpDoc-nuc" value="nuc"><label for="wpDoc-nuc">核の同時使用</label><input type="radio" name="wpDoc" id="wpDoc-conv" value="conv"><label for="wpDoc-conv">通常戦＋OMG</label></div></div>
+      <div><div class="lab" style="margin-bottom:3px">NATOのドクトリン</div>
+        <div class="seg"><input type="radio" name="natoDoc" id="natoDoc-AD" value="AD"><label for="natoDoc-AD">アクティブ・<br>ディフェンス</label><input type="radio" name="natoDoc" id="natoDoc-ALB" value="ALB"><label for="natoDoc-ALB">エアランド・<br>バトル＋FOFA</label></div></div>
+      <label for="deep"><span class="lab">縦深攻撃による第2梯団の減殺 <span class="mono" id="v-deep"></span></span>
+        <input type="range" id="deep" min="0" max="0.5" step="0.05"></label>
+      <label for="threshold"><span class="lab">核の敷居（最大突破距離） <span class="mono" id="v-threshold"></span></span>
+        <input type="range" id="threshold" min="50" max="300" step="10"></label>
+      <label class="chk" for="france"><input type="checkbox" id="france"> フランス第1軍が参戦する</label>
+      <label class="chk" for="ignore"><input type="checkbox" id="ignore"> 核の敷居を無視して通常戦を続ける</label>
+    </form>
+    <div class="stage">
+      <div class="mapbox" id="mapbox">
+        <svg id="map" role="img" aria-label="中欧の地図。侵攻軸ごとのワ条約機構軍の前進位置を示す"></svg>
+        <div class="daybar">D+<b id="dlabel">0</b></div>
+        <div class="legend">
+          <span><i style="background:var(--wp)"></i>WP軍の前進</span>
+          <span><i style="background:var(--ink)"></i>内独国境（1949–90）</span>
+          <span><i style="background:var(--water);height:3px"></i>主要河川</span>
+          <span><i style="background:var(--nato);height:8px;width:8px;border-radius:50%"></i>NATO軍団の担当区域</span>
+        </div>
+      </div>
+      <div class="playrow">
+        <button class="btn" type="button" id="play">再生</button>
+        <button class="btn ghost" type="button" id="reset">D+0</button>
+        <input type="range" id="day" min="0" max="30" value="0" aria-label="日数">
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <div class="out">
+        <div class="card"><h4>侵攻軸ごとの状況</h4><div style="overflow-x:auto"><table class="axt" id="axt"></table></div></div>
+        <div class="card"><h4>経過</h4><ul class="log" id="log"></ul></div>
+      </div>
+      <div class="card"><h4>前進距離の推移（km）</h4><div class="chartbox"><svg id="chart" viewBox="0 0 720 260" role="img" aria-label="侵攻軸ごとの前進距離の推移"></svg></div></div>
+    </div>
+  </div>
+  <div class="caveat col">モデルの前提：初期戦力は1980年代の公開文献にもとづく師団換算の概数で、軸への配分は概略。日々の前進は戦力比と地形係数で、損耗は戦力比の累乗で決まる。WPは第2梯団を突破の進んだ軸へ優先投入し、通常戦の構想では戦力比が十分な軸でOMGを投入する。NATOは増援を最も押された軸へ回し、エアランド・バトルでは第2梯団の到着を2日遅らせて一部を減殺し、戦力比が逆転した軸で反撃する。詳細は§6。</div>
+</section>
+
+<section id="ops">
+  <div class="sec-num">§3</div>
+  <h2>作戦術と戦術の要点</h2>
+  <div class="diagram"><svg id="echelon" viewBox="0 0 900 300" role="img" aria-label="ワ条約機構の梯団とOMG、NATOの防御と縦深攻撃の模式図"></svg></div>
+  <div class="two">
+    <div>
+      <h3 style="color:var(--wp)">ソ連・ワ条約機構</h3>
+      <p><b>縦深作戦</b>：起源は1930年代のトリアンダフィーロフ、トゥハチェフスキー、イッセルソンらの理論で、1936年の赤軍臨時野外教令（PU-36）に入った。敵の防御を全縦深で同時に制圧し、突破口から機動部隊を後方深くへ送り込む。</p>
+      <p><b>梯団</b>：第一梯団が攻撃して突破口を開く。第二梯団は、成功した方向に投入して戦果を拡張する部隊で、止まった第一梯団の交代要員ではない。</p>
+      <p><b>OMG（作戦機動グループ）</b>：大戦期の機動集団の系譜を引く。方面軍のOMGは戦車軍規模、軍のOMGは増強師団規模。突破口から（あるいは防御の隙間から）作戦の初期に投入され、核運搬手段・指揮所・飛行場・渡河点を狙い、NATOが防御を固める前に縦深を崩す。常設部隊ではなく戦時の任務編成で、1981年のザーパド81で初めて演練された。西側ではドネリー（1982）が問題提起した。</p>
+      <p><b>補給</b>：上級が下級へ要請を待たずに前送りする押し出し型。<span class="term">ТВД</span>（戦域）ごとに総司令部を置く体制は1984年の西方戦域総司令部で完成し、オガルコフが司令官に就いた。</p>
+    </div>
+    <div>
+      <h3 style="color:var(--nato)">NATO・米陸軍</h3>
+      <p><b>前方防衛と軍団区域</b>：西ドイツの要求で、国境近くで守る前方防衛をとった。北部軍集団（蘭・西独・英・ベルギーの各軍団）と中部軍集団（西独・米の各軍団）が国境沿いに担当区域を並べた配置は「レイヤーケーキ」と呼ばれた。</p>
+      <p><b>柔軟反応（MC14/3、1968）</b>：まず通常戦力で防ぎ、必要なら意図的に核へエスカレートし、最後は全面核報復に至る段階的な戦略。それ以前のMC14/2（1957）は大量報復を基本とした。</p>
+      <p><b>アクティブ・ディフェンス（FM100-5、1976）</b>：デピュイのもと、第四次中東戦争の戦訓を受けて「最初の会戦に勝つ」ことを目標とした。主攻方向を見極めて部隊を横に移し、陣地からの火力で第一梯団を消耗させる。後続梯団への対処が弱いと批判された。</p>
+      <p><b>エアランド・バトル（FM100-5、1982・86）</b>：スターリーの「拡大された戦場」から生まれた。四原則は主導性・縦深・敏捷性・同期。接触前の後続梯団を航空と長射程火力で叩いて第一梯団と分断し、反撃の機会を作る。NATOの対応概念は1984年採択の<b>後続部隊攻撃（FOFA）</b>。</p>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="sec-num">§4</div>
+  <h2>公開された計画と演習</h2>
+  <div class="col"><p>冷戦後、ポーランド・チェコ・東独の軍文書が公開され、ワ条約機構の想定が文書で確かめられるようになった。共通するのは、戦争は必ずNATOの攻撃から始まり、東側はただちに反攻に転じるという筋書きである。到達日数は計画ごとに大きく異なる。</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>年</th><th>文書・演習</th><th>想定と時間表</th><th>核</th></tr></thead>
+    <tbody>
+      <tr><td>1951</td><td>ポーランド軍文書館の計画</td><td>NATOの侵攻を食い止める防御的な計画と評価される（Mastny）</td><td>—</td></tr>
+      <tr><td>1961.3</td><td>チェコスロヴァキア方面軍演習</td><td>作戦6〜7日目にディジョン〜リヨンの線</td><td><span class="pill n">核</span></td></tr>
+      <tr><td>1961.9–10</td><td>ブーリャ（嵐）演習</td><td>全加盟国軍が連合で参加した初の演習。10月6日のNATO核攻撃に反撃し、ポーランド沿岸方面軍（約43.7万名）がシェラン島に空挺・上陸、11日までにデンマーク、13日までにオランダを制圧する想定</td><td><span class="pill n">核</span></td></tr>
+      <tr><td>1964.10</td><td>チェコスロヴァキア戦争計画</td><td>1日目バイロイト〜パッサウ、4日目モスバッハ〜メミンゲン、7〜8日目ラングル〜ブザンソン、その後リヨンへ。西側の大規模核攻撃で開戦する前提</td><td><span class="pill n">核131発</span></td></tr>
+      <tr><td>1972</td><td>シールド72</td><td>ポーランドを経由する西側の攻撃を想定</td><td><span class="pill n">核</span></td></tr>
+      <tr><td>1979</td><td>「ライン川まで7日間」</td><td>NATOの核先制攻撃を受けて反撃し、7日でライン川へ。2005年にポーランドが公開</td><td><span class="pill n">核</span></td></tr>
+      <tr><td>1981.9</td><td>ザーパド81（ソ連軍）</td><td>OMG構想を初めて演練</td><td><span class="pill c">通常</span></td></tr>
+      <tr><td>1983</td><td>ソユーズ83</td><td>戦争35〜40日目までにデンマーク、フランスなどを占領</td><td>—</td></tr>
+      <tr><td>1987.5</td><td>ベルリン政治諮問委員会</td><td>攻勢戦略を放棄し、厳格に防衛的なドクトリンを採択</td><td>—</td></tr>
+    </tbody></table></div>
+  <div class="col"><p>東側の軍人自身がこうした時間表を疑っていた。ポーランド方面軍の計画を分析したパウカは、1日100km前後の前進を要する想定を「非現実的どころか奇怪」と評した。1986年にはヤルゼルスキが、核戦争の五、六日後にパリでコーヒーを飲めると誰も思うべきではないとソ連側に語ったと伝えられる。シミュレーターの1961年・1964年・1979年のプリセットは、こうした計画の目標日とモデルの結果を並べて表示する。</p></div>
+</section>
+
+<section id="debate">
+  <div class="sec-num">§5</div>
+  <h2>評価論争 ── NATOは持ちこたえられたか</h2>
+  <div class="debate">
+    <div class="card"><h3>同時代の論争</h3><p>NATOの公式な戦力比較は師団・戦車数の大差を示したが、その数字自体が1982年版の173個師団から1984年版の115対88（動員後）へと修正された。ミアシャイマー（1982）はソ連が突破正面で決定的優位を作れず速戦即決できないと論じ、ポーゼン（1984/85）は質と補充を加味した動的比較でNATOの不利は通説ほどではないとした。コーエン（1988）は楽観論の前提の選び方を批判した。</p></div>
+    <div class="card"><h3>冷戦後の史料</h3><p>西側は1970〜80年代のソ連が通常戦の選択肢を重視したと見たが、1979年の演習も開戦直後の核使用を想定していた。ルニャーク（2001）は、1964年計画が通常戦や限定核戦争に幻想を抱いていなかったと指摘し、ホイザー（1993）も東独文書から早期の核エスカレーションの想定を確認した。オドム（1998）はソ連軍内部の即応性と兵站の問題を明らかにした。</p></div>
+    <div class="card"><h3>意図の解釈</h3><p>計画の中身が攻勢的だったことは確かだが、侵略の意図を示すかは解釈が分かれる。ルニャークはレーニン主義的な脅威認識が「NATOが先に攻撃する」筋書きを生んだと見る。一方で、その筋書きを正当化の定型と見て、作戦の中身の先制性を重く見る立場もある。1983年のエイブル・アーチャーは、相互の脅威認識が誤認を生みうることを示した。</p></div>
+  </div>
+  <div class="col" style="margin-top:16px"><p>シミュレーターで警報期間とNATOの質的係数を動かすと、結果が大きく振れることがわかる。これは論争の核心そのものである。戦力比の評価は、何をどう数え、どんな戦い方を想定するかで変わる。どちらの陣営も、相手が先に仕掛けてくるという前提の上に計画を組んでいた。</p></div>
+</section>
+
+<section id="sources">
+  <div class="sec-num">§6</div>
+  <h2>モデルの前提と出典</h2>
+  <div class="col">
+    <p><b>戦力</b>：各軸の初期戦力は師団換算の概数で、在独ソ連軍・東独軍・ポーランド軍・チェコスロヴァキア軍とNATO各軍団の公開された編成をもとに配分した。部隊と軸の対応は概略で、計画文書そのものではない。第2梯団（ソ連西部の軍管区から）は合計18、NATOの増援（REFORGERなど）は8日目から1日0.6、上限8とした。</p>
+    <p><b>計算</b>：WPの実効戦力をNATOの実効戦力（質的係数×展開率×防御態勢）で割った比が1.1を超えると、超過分に比例して前進する（地形係数を掛け、1日90kmが上限）。展開率は警報期間とともに上がる。核の同時使用では初日に双方が大損害を受け、3日間前進が加速する。数字は相対比較のためのもので、実際の戦闘結果を表すものではない。</p>
+    <p><b>止める理由</b>：柔軟反応のもとでNATOが核使用を検討する条件を、いずれかの軸の突破距離が「核の敷居」を超えるか、NATOの戦力が当初の半分を割ることと置いた。そこから先は政治判断で、モデルでは扱えない。</p>
+  </div>
+  <ol class="src">
+    <li>PHP (Parallel History Project), <i>Taking Lyon on the Ninth Day? The 1964 Warsaw Pact Plan for a Nuclear War in Europe</i>, ETH Zurich, 2000. <a href="https://www.files.ethz.ch/isn/108642/warplan_dossier.pdf" target="_blank" rel="noopener">files.ethz.ch</a></li>
+    <li>PHP, <i>Chronology of Events: Warsaw Pact 1949–1991</i>. <a href="https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21834/ipublicationdocument_singledocument/cf0c158f-1edf-40cb-b5a5-c2dfe9ee615e/en/chronology_wp.pdf" target="_blank" rel="noopener">phpisn.ethz.ch</a></li>
+    <li>Petr Luňák, "Reassessing the Cold War Alliances," <i>NATO Review</i>, 2001. <a href="https://www.nato.int/docu/revue/2001/0104-09.htm" target="_blank" rel="noopener">nato.int</a></li>
+    <li>Pałka, Polish front planning and the 1961 "Burza/Buria" exercise, <i>Kwartalnik Historyczny</i>, English ed., 2017 no.1. <a href="https://kh-ihpan.edu.pl/images/KH2017EngLangEdNo1/05_Palka.pdf" target="_blank" rel="noopener">kh-ihpan.edu.pl</a></li>
+    <li>Matthias Uhl, "Storming on to Paris: The 1961 Buria Exercise and the Planned Solution of the Berlin Crisis," in Mastny, Holtsmark, Wenger (eds.), <i>War Plans and Alliances in the Cold War</i>, Routledge, 2006.</li>
+    <li>National Security Archive, 1964 Warsaw Pact war plan release, 2000. <a href="https://nsarchive2.gwu.edu/NSAEBB/NSAEBB31/press.html" target="_blank" rel="noopener">nsarchive2.gwu.edu</a></li>
+    <li>NATO Nuclear Planning Group, "The Montebello Decision," 27 Oct 1983. <a href="https://www.nato.int/docu/basictxt/b831027a.htm" target="_blank" rel="noopener">nato.int</a></li>
+    <li>U.S. DoD, <i>Soviet Military Power 1983</i>, ch.3. <a href="https://irp.fas.org/dia/product/smp_83_ch3.htm" target="_blank" rel="noopener">irp.fas.org</a></li>
+    <li>"NATO revises estimates of Warsaw Pact strength," <i>Christian Science Monitor</i>, 22 Jun 1984. <a href="https://www.csmonitor.com/1984/0622/062234.html" target="_blank" rel="noopener">csmonitor.com</a></li>
+    <li>U.S. Army, FM 100-5 <i>Operations</i> (1976, 1982, 1986); FM 100-2-3 <i>The Soviet Army: Troops, Organization and Equipment</i>.</li>
+    <li>C. N. Donnelly, "The Soviet Operational Manoeuvre Group: A New Challenge for NATO," <i>International Defense Review</i> 15(9), 1982.</li>
+    <li>John J. Mearsheimer, "Why the Soviets Can't Win Quickly in Central Europe," <i>International Security</i> 7(1), 1982 / Barry R. Posen, "Measuring the European Conventional Balance," <i>IS</i> 9(3), 1984/85 / Eliot A. Cohen, "Toward Better Net Assessment," <i>IS</i> 13(1), 1988.</li>
+    <li>Beatrice Heuser, "Warsaw Pact Military Doctrines in the 1970s and 1980s: Findings in the East German Archives," <i>Comparative Strategy</i> 12(4), 1993 / William E. Odom, <i>The Collapse of the Soviet Military</i>, Yale UP, 1998.</li>
+    <li>Vojtech Mastny & Malcolm Byrne (eds.), <i>A Cardboard Castle? An Inside History of the Warsaw Pact, 1955–1991</i>, CEU Press, 2005.</li>
+    <li>デイヴィッド・M・グランツ著、梅田宗法訳『ソ連軍〈作戦術〉』作品社、2020 / 葛原和三『機甲戦の理論と歴史』芙蓉書房出版、2009 / 古峰文三『幻の東部戦線』アルゴノート社、2021。</li>
+    <li>地図：Natural Earth（world-atlas 2.0.2）。内独国境と河川は概略線。</li>
+  </ol>
+</section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const EU = /*GEO*/null;
+
+/* ---------- §1 periods ---------- */
+const PERIODS=[
+ {yr:'1949–53',name:'スターリン期',
+  e:{戦略:'大戦型の大規模通常戦力で西欧を圧する。核は1949年に初実験、まだ作戦の前提ではない',作戦:'独ソ戦の縦深作戦と機動集団の経験をそのまま継承',計画:'ポーランド軍文書館の1951年計画は防御的と評される'},
+  w:{戦略:'1949年NATO発足。米国の核独占と戦略爆撃に依存',作戦:'1952年リスボン会議で大規模な通常戦力目標を掲げるが未達',計画:'ライン川以西での防御が現実的な線'},
+  note:'冷戦初期の東側計画は、後の時代に比べて防勢的だったことが公開文書からわかっている。'},
+ {yr:'1954–66',name:'核の全面化',
+  e:{戦略:'フルシチョフ期の核ロケット戦争論。ソコロフスキー『軍事戦略』（1962）',作戦:'核の大量使用で開いた突破口に戦車部隊を突進させ、数日でフランス東部へ',計画:'ブーリャ演習（1961）、1964年チェコスロヴァキア計画（核131発）'},
+  w:{戦略:'MC14/2（1957）の大量報復。通常戦力は核使用の引き金役',作戦:'戦術核の大量配備（デイビー・クロケットなど）。前方防衛を国境近くへ',計画:'西独連邦軍の創設（1955）で前方防衛が可能に'},
+  note:'東側の計画は「NATOの核先制攻撃に反撃する」筋書きで書かれ、開戦と同時に双方が核を使う前提だった。'},
+ {yr:'1967–76',name:'柔軟反応',
+  e:{戦略:'通常戦段階がありうるという議論が現れる（マクグワイアは1960年代後半の転換を主張）',作戦:'核の脅威下で分散と高速機動を重視',計画:'シールド72など演習は引き続き核使用を想定'},
+  w:{戦略:'MC14/3（1968）の柔軟反応。通常戦→意図的エスカレーション→全面核',作戦:'北部・中部軍集団の軍団区域による前方防衛（レイヤーケーキ）',計画:'米陸軍はアクティブ・ディフェンス（FM100-5、1976）で「最初の会戦に勝つ」'},
+  note:'西側は東側も通常戦を重視し始めたと見たが、冷戦後の文書は核の早期使用の想定が続いていたことを示す。'},
+ {yr:'1977–86',name:'オガルコフ期',
+  e:{戦略:'参謀総長オガルコフ（1977–84）が高精度通常兵器による「軍事技術革命」を説く',作戦:'OMG構想（ザーパド81で演練）。戦域総司令部、西方戦域総司令部（1984）',計画:'戦時統一軍規程（1980、ルーマニアは不同意）。「ライン川まで7日間」（1979）'},
+  w:{戦略:'INF配備の二重決定（1979）とモンテベロ決定（1983）による在欧核の削減',作戦:'エアランド・バトル（FM100-5、1982・86）、後続部隊攻撃FOFA（1984）',計画:'REFORGERによる米本土からの増援。第2梯団を戦場の外で叩く'},
+  note:'双方とも縦深を叩く構想に進んだ時期。初版でまとめた構図の大半はこの時期のもの。'},
+ {yr:'1987–91',name:'防衛ドクトリンと解体',
+  e:{戦略:'ワ条約機構が防衛的ドクトリンを採択（1987年5月）。「合理的十分性」',作戦:'ゴルバチョフの一方的削減発表（1988年12月7日、国連演説）',計画:'1991年に軍事機構、続いて条約機構そのものが解散'},
+  w:{戦略:'CFE条約（1990年11月）で通常戦力に上限',作戦:'エアランド・バトルの初の大規模適用は湾岸戦争（1991）',計画:'ドイツ統一（1990）で中欧正面そのものが消える'},
+  note:'中欧での大戦争は一度も起きず、双方の計画は検証されないまま終わった。'}
+];
+(function(){
+  const tabs=document.getElementById('ptabs'), vs=document.getElementById('pvs'), note=document.getElementById('pnote');
+  function show(i){
+    [...tabs.children].forEach((b,j)=>{b.setAttribute('aria-selected',j===i);b.tabIndex=j===i?0:-1});
+    const p=PERIODS[i]; const dl=o=>Object.entries(o).map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('');
+    vs.innerHTML=`<div class="east"><h4>SOVIET / WARSAW PACT</h4><dl>${dl(p.e)}</dl></div><div class="west"><h4>NATO / US</h4><dl>${dl(p.w)}</dl></div>`;
+    note.textContent=p.note;
+  }
+  PERIODS.forEach((p,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.innerHTML=`<span class="yr">${['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ'][i]} ${p.yr}</span><b>${p.name}</b>`;b.onclick=()=>show(i);
+    b.onkeydown=e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=(i+(e.key==='ArrowRight'?1:4))%5;show(n);tabs.children[n].focus();}};tabs.appendChild(b)});
+  show(3);
+})();
+
+/* ---------- axes & geography ---------- */
+const AXES=[
+ {id:'coast',short:'沿岸',name:'沿岸軸',wpName:'ポーランド方面軍・第2親衛戦車軍',natoName:'LANDJUT・蘭第1軍団',wp:9,nato:4,terrain:0.85,
+  path:[[11.41,53.63,'シュヴェリーン'],[10.0,53.55,'ハンブルク'],[8.80,53.08,'ブレーメン'],[6.57,53.22,'フローニンゲン'],[4.90,52.37,'アムステルダム']]},
+ {id:'ngp',short:'北独平原',name:'北ドイツ平原',wpName:'第3打撃軍・東独軍',natoName:'西独第1軍団・英第1軍団',wp:7,nato:6,terrain:1.0,
+  path:[[11.63,52.13,'マクデブルク'],[11.0,52.23,'ヘルムシュテット'],[10.52,52.27,'ブラウンシュヴァイク'],[9.73,52.37,'ハノーファー'],[8.92,52.29,'ミンデン'],[7.63,51.96,'ミュンスター'],[6.62,51.66,'ヴェーゼル（ライン）'],[4.40,51.22,'アントワープ']]},
+ {id:'gott',short:'ゲッティンゲン',name:'ゲッティンゲン回廊',wpName:'在独ソ連軍の一部',natoName:'ベルギー第1軍団・西独第3軍団',wp:4,nato:4,terrain:0.75,
+  path:[[10.79,51.50,'ノルトハウゼン'],[9.93,51.53,'ゲッティンゲン'],[9.48,51.31,'カッセル'],[8.75,51.72,'パーダーボルン'],[7.47,51.51,'ドルトムント'],[6.77,51.23,'デュッセルドルフ（ライン）'],[5.57,50.63,'リエージュ']]},
+ {id:'fulda',short:'フルダ',name:'フルダ・ギャップ',wpName:'第8親衛軍・東独軍',natoName:'米第5軍団',wp:6,nato:3.5,terrain:0.65,
+  path:[[10.32,50.97,'アイゼナハ'],[9.68,50.55,'フルダ'],[8.92,50.13,'ハーナウ'],[8.68,50.11,'フランクフルト'],[8.27,50.0,'マインツ（ライン）'],[7.77,49.44,'カイザースラウテルン'],[6.18,49.12,'メス']]},
+ {id:'hof',short:'ホーフ・南独',name:'ホーフ回廊・南ドイツ',wpName:'在独ソ連軍南翼・チェコスロヴァキア方面軍',natoName:'米第7軍団・西独第2軍団',wp:10,nato:6,terrain:0.65,
+  path:[[12.37,50.08,'ヘプ'],[11.58,49.94,'バイロイト'],[11.08,49.45,'ニュルンベルク'],[9.18,48.78,'シュトゥットガルト'],[7.75,48.58,'ストラスブール（ライン）'],[6.02,47.24,'ブザンソン'],[4.84,45.76,'リヨン']]}
+];
+const KM=(a,b)=>d3.geoDistance(a,b)*6371;
+AXES.forEach(a=>{a.cum=[0];for(let i=1;i<a.path.length;i++)a.cum.push(a.cum[i-1]+KM(a.path[i-1],a.path[i]));a.len=a.cum[a.cum.length-1];
+  const ri=a.path.findIndex(p=>p[2].includes('ライン'));a.rhine=ri>=0?a.cum[ri]:null;});
+function posAt(a,km){km=Math.max(0,Math.min(a.len,km));let i=1;while(i<a.cum.length-1&&a.cum[i]<km)i++;
+  const t=(km-a.cum[i-1])/Math.max(1e-6,a.cum[i]-a.cum[i-1]);return d3.geoInterpolate(a.path[i-1],a.path[i])(Math.max(0,Math.min(1,t)));}
+function placeAt(a,km){let n=a.path[0][2];for(let i=0;i<a.path.length;i++){if(a.cum[i]<=km+1)n=a.path[i][2];}return n;}
+
+const IGB=[[10.89,53.96],[10.80,53.88],[10.78,53.70],[10.57,53.37],[10.95,53.25],[11.57,53.04],[11.2,52.90],[10.85,52.75],[10.95,52.45],[11.05,52.22],[10.95,52.05],[10.65,51.88],[10.55,51.75],[10.62,51.58],[10.35,51.50],[10.15,51.20],[10.15,50.98],[9.95,50.85],[9.97,50.72],[10.05,50.60],[10.25,50.45],[10.95,50.35],[11.45,50.40],[12.10,50.32]];
+const GDR_EAST=[[12.5,50.40],[13.0,50.50],[13.5,50.65],[14.0,50.85],[14.3,50.95],[14.8,50.87],[15.0,51.25],[14.75,51.6],[14.7,52.1],[14.55,52.35],[14.15,52.85],[14.35,53.2],[14.4,53.45],[14.25,53.9],[13.8,54.15],[13.4,54.6],[12.5,54.45],[11.5,54.05],[10.89,53.96]];
+const GDR={type:'Polygon',coordinates:[[...IGB,...GDR_EAST].reverse()]};
+const RIVERS={
+ ライン:[[7.59,47.56],[7.80,48.58],[8.33,49.03],[8.45,49.49],[8.27,50.0],[7.90,49.97],[7.60,50.36],[7.12,50.74],[6.96,50.94],[6.77,51.23],[6.75,51.43],[6.62,51.66],[6.25,51.84],[5.85,51.85],[4.48,51.90],[4.10,51.98]],
+ エルベ:[[14.15,50.92],[13.74,51.05],[13.47,51.16],[13.0,51.56],[12.65,51.86],[12.25,51.86],[11.63,52.13],[11.97,52.54],[11.75,53.0],[10.57,53.37],[9.99,53.55],[8.7,53.87]],
+ ヴェーザー:[[9.65,51.42],[9.38,51.77],[9.36,52.10],[8.92,52.29],[9.21,52.64],[8.80,53.08],[8.58,53.55]],
+ マイン:[[11.58,49.94],[10.89,49.89],[10.23,50.05],[9.93,49.79],[9.52,49.76],[9.15,49.97],[8.68,50.11],[8.27,50.0]],
+ ドナウ:[[8.5,47.95],[9.99,48.40],[11.42,48.76],[12.10,49.02],[13.46,48.57],[14.29,48.31],[16.37,48.21]],
+ オーデル:[[17.03,51.11],[15.5,51.95],[14.55,52.35],[14.15,52.85],[14.55,53.43]]
+};
+const CORPS=[['LANDJUT',9.6,54.35],['蘭I',9.4,53.05],['西独I',10.1,52.6],['英I',10.2,52.05],['白I',9.75,51.55],['西独III',9.6,51.0],['米V',9.4,50.55],['米VII',10.6,49.8],['西独II',12.2,49.0]];
+const CITIES=[['ベルリン',13.40,52.52],['ボン',7.10,50.73],['パリ',2.35,48.86],['ワルシャワ',21.01,52.23],['プラハ',14.42,50.08],['ウィーン',16.37,48.21],['ミュンヘン',11.58,48.14]];
+
+/* ---------- map ---------- */
+const svg=d3.select('#map'); const W=800,H=816; svg.attr('viewBox',`0 0 ${W} ${H}`);
+const bbox={type:'Feature',geometry:{type:'Polygon',coordinates:[[[3.2,45.4],[3.2,55.4],[17.2,55.4],[17.2,45.4],[3.2,45.4]].reverse()]}};
+const proj=d3.geoConicConformal().parallels([47,55]).rotate([-10,0]).fitExtent([[0,0],[W,H]],bbox);
+const gp=d3.geoPath(proj);
+const countries=topojson.feature(EU,EU.objects.c).features;
+const PACT=new Set(['Poland','Czechia','Slovakia','Hungary']);
+const gBase=svg.append('g');
+gBase.selectAll('path.c').data(countries).join('path').attr('d',gp).attr('fill',d=>PACT.has(d.properties.name)?'var(--land-pact)':'var(--land)').attr('stroke','none');
+gBase.append('path').datum(GDR).attr('d',gp).attr('fill','var(--land-gdr)');
+gBase.append('path').datum(topojson.mesh(EU,EU.objects.c,(a,b)=>a!==b&&!((a.properties.name==='Czechia'&&b.properties.name==='Slovakia')||(b.properties.name==='Czechia'&&a.properties.name==='Slovakia'))))
+  .attr('d',gp).attr('fill','none').attr('stroke','var(--muted)').attr('stroke-width',0.7).attr('stroke-opacity',.7);
+Object.entries(RIVERS).forEach(([n,c])=>gBase.append('path').datum({type:'LineString',coordinates:c}).attr('d',gp).attr('fill','none').attr('stroke','var(--water)').attr('stroke-width',n==='ライン'||n==='エルベ'?3:2).attr('stroke-linejoin','round'));
+gBase.append('path').datum({type:'LineString',coordinates:IGB}).attr('d',gp).attr('fill','none').attr('stroke','var(--ink)').attr('stroke-width',2.4).attr('stroke-dasharray','7 3');
+const lab=(t,lon,lat,o={})=>{const [x,y]=proj([lon,lat]);gBase.append('text').attr('x',x+(o.dx||0)).attr('y',y+(o.dy||0)).text(t).attr('font-size',o.size||13).attr('fill',o.fill||'var(--muted)').attr('font-family',o.font||'var(--f-body)').attr('text-anchor',o.anchor||'start').attr('font-weight',o.w||400).attr('letter-spacing',o.ls||0);};
+lab('西ドイツ',8.1,50.6,{size:17,fill:'var(--muted)',w:700,ls:3});lab('東ドイツ',12.6,52.0,{size:17,fill:'var(--wp)',w:700,ls:3});
+lab('ポーランド',16.2,53.2,{size:15,fill:'var(--wp)',w:700});lab('チェコスロヴァキア',14.2,49.6,{size:15,fill:'var(--wp)',w:700});
+lab('フランス',4.2,47.9,{size:15,w:700});lab('オランダ',5.2,52.85,{size:13,w:700});lab('ベルギー',4.1,50.85,{size:13,w:700});lab('デンマーク',9.3,55.25,{size:13,w:700});lab('オーストリア',13.6,47.4,{size:13,w:700});lab('スイス',7.3,46.7,{size:13,w:700});
+lab('北海',5.2,54.4,{size:14,fill:'var(--ink)',ls:4});lab('バルト海',13.6,54.95,{size:13,fill:'var(--ink)',ls:3});
+CITIES.forEach(([n,lo,la])=>{const [x,y]=proj([lo,la]);gBase.append('circle').attr('cx',x).attr('cy',y).attr('r',3).attr('fill','var(--ink)');lab(n,lo,la,{dx:5,dy:-4,size:12,fill:'var(--ink)'});});
+CORPS.forEach(([n,lo,la])=>{const [x,y]=proj([lo,la]);const g=gBase.append('g');g.append('circle').attr('cx',x).attr('cy',y).attr('r',4.5).attr('fill','var(--nato)');g.append('text').attr('x',x-7).attr('y',y+4).attr('text-anchor','end').attr('font-size',11.5).attr('font-family','var(--f-mono)').attr('fill','var(--nato)').attr('font-weight',500).text(n);});
+// axes
+const gAx=svg.append('g');
+AXES.forEach(a=>{gAx.append('path').datum({type:'LineString',coordinates:a.path.map(p=>[p[0],p[1]])}).attr('d',gp).attr('fill','none').attr('stroke','var(--wp)').attr('stroke-width',1.2).attr('stroke-dasharray','2 4').attr('stroke-opacity',.7);
+  a.path.slice(1).forEach(p=>{const [x,y]=proj([p[0],p[1]]);gAx.append('circle').attr('cx',x).attr('cy',y).attr('r',2).attr('fill','var(--wp)').attr('fill-opacity',.6);});
+  a.prog=gAx.append('path').attr('fill','none').attr('stroke','var(--wp)').attr('stroke-width',7).attr('stroke-linecap','round').attr('stroke-opacity',.85);
+  a.head=gAx.append('g');a.head.append('circle').attr('r',8).attr('fill','var(--wp)').attr('stroke','var(--paper)').attr('stroke-width',2);
+  a.headT=a.head.append('text').attr('x',11).attr('y',4).attr('font-size',12).attr('font-family','var(--f-mono)').attr('fill','var(--wp)').attr('font-weight',500).attr('paint-order','stroke').attr('stroke','var(--paper)').attr('stroke-width',3);
+  a.omgMark=a.head.append('text').attr('x',-10).attr('y',-11).attr('font-size',10).attr('font-family','var(--f-mono)').attr('fill','var(--wp)').attr('font-weight',700).attr('paint-order','stroke').attr('stroke','var(--paper)').attr('stroke-width',3);
+});
+const nukeLayer=svg.append('g');
+
+/* ---------- model ---------- */
+const BASE={warning:7,natoQ:1.25,wp2Day:5,wp2:18,deep:0.25,reinfStart:8,reinf:0.6,reinfCap:8,france:true,threshold:120,ignore:false,scaleNato:1,wpQ:1};
+const PRESETS={
+ p1961:{label:'1961 ブーリャ演習型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.9,warning:3,wp2Day:4,wp2:14,deep:0,scaleNato:0.85},
+  desc:'ベルリン危機下の連合演習。NATOの核攻撃に反撃して核を同時使用し、西欧へ突進する。NATOは大量報復の時代で、FM100-5のドクトリン区別はまだない（モデルでは近い挙動の側を使う）。',
+  target:{axis:'coast',km:'end',day:7,text:'ポーランド沿岸方面軍：開戦7日目までにオランダ制圧'}},
+ p1964:{label:'1964 チェコスロヴァキア計画型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.95,warning:3,wp2Day:4,wp2:14,deep:0,scaleNato:0.9},
+  desc:'西側の大規模核攻撃で開戦し、核131発を使って南ドイツから仏東部へ。計画上は7〜8日目にラングル〜ブザンソンの線。',
+  target:{axis:'hof',place:'ブザンソン',day:8,text:'1964年計画：7〜8日目にブザンソンの線'}},
+ p1979:{label:'1979「ライン川まで7日間」型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:1.1,warning:4},
+  desc:'NATOの核先制攻撃を受けて反撃し、7日でライン川に達する想定。NATOはアクティブ・ディフェンスの時代。',
+  target:{axis:'ngp',place:'ライン',day:7,text:'演習名どおり7日でライン川'}},
+ p1976:{label:'1976 通常攻勢 対 アクティブ・ディフェンス',p:{nuc:'flex',wpDoc:'conv',natoDoc:'AD',natoQ:1.15,warning:5},
+  desc:'柔軟反応のもとで通常戦段階が続く場合。NATOは第一会戦に火力を集中するが、後続梯団への手当てがない。'},
+ p1985:{label:'1985 オガルコフ期 対 エアランド・バトル',p:{nuc:'flex',wpDoc:'conv',natoDoc:'ALB',natoQ:1.25,warning:7},
+  desc:'1週間の警報で動員したNATOに、OMGを伴う通常攻勢をかける。NATOは縦深攻撃で第2梯団を遅らせ、減殺する。'},
+ p1985s:{label:'1985 短期警報の奇襲',p:{nuc:'flex',wpDoc:'conv',natoDoc:'ALB',natoQ:1.25,warning:1},
+  desc:'NATOが1日しか準備できない「立ち上がり攻撃」。西側の悲観論が最も恐れた型。'}
+};
+let P={};
+function run(p){
+  const ax=AXES.map(a=>({a,wp:a.wp,nato:a.nato*p.scaleNato,pen:0,omg:0,omgUsed:false,hist:[{pen:0,wp:a.wp,nato:a.nato*p.scaleNato,R:null,omg:false}]}));
+  const nato0=ax.reduce((s,x)=>s+x.nato,0), wp0=ax.reduce((s,x)=>s+x.wp,0);
+  const log=[[0,'start',`D日。${p.nuc==='early'?'WPの想定ではNATOが先に攻撃する。':'WPが通常戦力で攻勢を開始。'}NATOの準備期間は${p.warning}日。`]];
+  let stop=null, reinfUsed=0, frUsed=0, reached={};
+  const w2=p.wp2Day+(p.natoDoc==='ALB'?2:0);
+  for(let d=1;d<=30;d++){
+    if(p.nuc==='early'&&d===1){ax.forEach(x=>{x.nato*=0.5;x.wp*=0.7});log.push([d,'nuc','双方が大規模な核攻撃を応酬。NATO戦力は半減、WPも3割を失う（モデル上の仮定。民間人被害は計算外）']);}
+    if(d===w2){const ded=p.natoDoc==='ALB'?p.deep:0;const tot=p.wp2*(1-ded);const ws=ax.map(x=>x.pen+20);const S=ws.reduce((m,n)=>m+n,0);ax.forEach((x,i)=>x.wp+=tot*ws[i]/S);
+      log.push([d,'2nd',`第2梯団（師団換算${tot.toFixed(1)}）が到着し、突破の進んだ軸へ優先投入${ded>0?`。縦深攻撃で${Math.round(ded*100)}%を減殺、到着を2日遅延`:''}`]);}
+    if(d>=p.reinfStart&&reinfUsed<p.reinfCap){const t=ax.reduce((m,x)=>x.pen>m.pen?x:m,ax[0]);t.nato+=p.reinf;reinfUsed+=p.reinf;if(d===p.reinfStart)log.push([d,'nato','米本土からの増援（REFORGER）が前線に到着し始め、最も押された軸へ']);}
+    if(p.france&&d>=3&&frUsed<4){ax[3].nato+=0.5;ax[4].nato+=0.5;frUsed++;if(d===3)log.push([d,'nato','フランス第1軍が南ドイツで戦闘に加わる']);}
+    const deployed=Math.min(1,Math.max(0.4,0.4+0.06*(p.warning+d-1)));
+    const posture=p.warning>=4?1.2:1.05;
+    for(const x of ax){
+      const natoEff=x.nato*p.natoQ*deployed*posture*(p.natoDoc==='AD'&&d<=4?1.15:1)*(x.omg>0?0.85:1);
+      const wpEff=x.wp*p.wpQ; const R=wpEff/Math.max(0.05,natoEff);
+      let adv;
+      if(R>1.1)adv=x.a.terrain*12*(R-1.1);else if(R>=0.8)adv=x.a.terrain*1.5;else adv=(p.natoDoc==='ALB'&&d>=4)?-x.a.terrain*8*(0.8-R)/0.8:0;
+      if(p.nuc==='early'&&d<=3)adv*=1.6;
+      if(p.wpDoc==='conv'&&!x.omgUsed&&R>1.6&&x.pen>15){x.omgUsed=true;x.omg=4;log.push([d,'omg',`${x.a.name}でOMGを投入。NATO後方の指揮・補給を攪乱`]);}
+      const omgNow=x.omg>0; if(omgNow){adv*=1.6;x.omg--;}
+      if(adv<0&&x.pen>0&&!x.cntr){x.cntr=true;log.push([d,'nato',`${x.a.name}で戦力比が逆転し、NATOが反撃に転じる`]);}
+      adv=Math.min(90,adv); x.pen=Math.min(x.a.len,Math.max(0,x.pen+adv));
+      const wl=x.wp*0.03*Math.pow(natoEff/wpEff,0.6)*(p.natoDoc==='AD'&&d<=4?1.2:1);
+      const nl=x.nato*0.032*Math.pow(R,0.7);
+      x.wp=Math.max(0.05,x.wp-wl); x.nato=Math.max(0.05,x.nato-nl);
+      if(x.a.rhine&&x.pen>=x.a.rhine&&!reached[x.a.id]){reached[x.a.id]=d;log.push([d,'2nd',`${x.a.name}でライン川に到達`]);}
+      x.hist.push({pen:x.pen,wp:x.wp,nato:x.nato,R,omg:omgNow});
+    }
+    const natoT=ax.reduce((s,x)=>s+x.nato,0), mx=Math.max(...ax.map(x=>x.pen));
+    if(p.nuc==='flex'&&!p.ignore&&(mx>=p.threshold||natoT<0.5*nato0)){stop=d;
+      const why=mx>=p.threshold?`${ax.find(x=>x.pen===mx).a.name}の突破が${Math.round(mx)}kmに達した`:'NATOの戦力が当初の半分を割った';
+      log.push([d,'nuc',`${why}。NATOは核使用の判断を迫られる（柔軟反応の敷居）。モデルはここで止まる`]);break;}
+  }
+  return {ax,log,stop,days:stop||30,reached,nato0,wp0};
+}
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+const sel=$('preset');Object.entries(PRESETS).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;sel.appendChild(o);});
+const FIELDS=['warning','natoQ','wp2Day','deep','threshold'];
+const fmt={warning:v=>v+'日',natoQ:v=>'×'+(+v).toFixed(2),wp2Day:v=>'D+'+v,deep:v=>Math.round(v*100)+'%',threshold:v=>v+'km'};
+function applyPreset(k){P={...BASE,...PRESETS[k].p};FIELDS.forEach(f=>{$(f).value=P[f];});$('wpDoc-'+P.wpDoc).checked=true;$('natoDoc-'+P.natoDoc).checked=true;$('france').checked=P.france;$('ignore').checked=P.ignore;$('pdesc').textContent=PRESETS[k].desc;}
+function readForm(){FIELDS.forEach(f=>{P[f]=+$(f).value;$('v-'+f).textContent=fmt[f]($(f).value);});
+  P.wpDoc=document.querySelector('input[name=wpDoc]:checked').value;P.natoDoc=document.querySelector('input[name=natoDoc]:checked').value;
+  P.nuc=P.wpDoc==='nuc'?'early':'flex';P.france=$('france').checked;P.ignore=$('ignore').checked;
+  $('threshold').disabled=P.nuc==='early';$('ignore').disabled=P.nuc==='early';$('deep').disabled=P.natoDoc!=='ALB';}
+let R=null, day=0, timer=null;
+function recompute(keepDay){readForm();R=run(P);$('day').max=R.days;if(!keepDay)day=0;day=Math.min(day,R.days);draw();drawChart();}
+function draw(){
+  $('dlabel').textContent=day;$('day').value=day;
+  R.ax.forEach(x=>{const h=x.hist[Math.min(day,x.hist.length-1)];const a=x.a;
+    const n=Math.max(2,Math.ceil(h.pen/8));const pts=d3.range(n+1).map(i=>posAt(a,h.pen*i/n));
+    a.prog.attr('d',gp({type:'LineString',coordinates:pts}));
+    const [hx,hy]=proj(posAt(a,h.pen));a.head.attr('transform',`translate(${hx},${hy})`);a.headT.text(`${Math.round(h.pen)}km`);a.omgMark.text(h.omg?'OMG':'');});
+  nukeLayer.selectAll('*').remove();
+  if(P.nuc==='early'&&day>=1){R.ax.forEach(x=>{const [cx,cy]=proj(posAt(x.a,Math.min(40,x.a.len*0.08)));nukeLayer.append('circle').attr('cx',cx).attr('cy',cy).attr('r',26).attr('fill','var(--nuke)').attr('fill-opacity',.18).attr('stroke','var(--nuke)').attr('stroke-dasharray','3 3');});}
+  // table
+  const rows=R.ax.map(x=>{const h=x.hist[Math.min(day,x.hist.length-1)];return `<tr><td>${x.a.name}<br><span style="color:var(--muted);font-size:.72rem">${x.a.wpName} ／ ${x.a.natoName}</span></td><td>${Math.round(h.pen)}<span class="bar" style="width:${Math.min(60,h.pen/6)}px"></span></td><td>${placeAt(x.a,h.pen)}</td><td>${h.wp.toFixed(1)}</td><td>${h.nato.toFixed(1)}</td><td>${h.R?h.R.toFixed(2):'—'}</td></tr>`;}).join('');
+  $('axt').innerHTML=`<thead><tr><th>軸（WP／NATO）</th><th>前進km</th><th>到達点</th><th>WP</th><th>NATO</th><th>戦力比</th></tr></thead><tbody>${rows}</tbody>`;
+  $('log').innerHTML=R.log.filter(l=>l[0]<=day).map(l=>`<li><span class="d">D+${l[0]}</span><span class="k-${l[1]}">${l[2]}</span></li>`).join('');
+  verdict();
+  chartCursor();
+}
+function verdict(){
+  const v=$('verdict');const k=sel.value;const pre=PRESETS[k];const parts=[];
+  const mx=R.ax.reduce((m,x)=>x.hist[Math.min(day,x.hist.length-1)].pen>m.p?{p:x.hist[Math.min(day,x.hist.length-1)].pen,n:x.a.name}:m,{p:0,n:''});
+  if(R.stop&&day>=R.stop){v.className='verdict nuke';parts.push(`<b>D+${R.stop}で核の敷居に達した。</b>${mx.n}の突破が最も深い（${Math.round(mx.p)}km）。柔軟反応のもとでは、ここから先はNATOの核使用をめぐる政治判断になり、モデルでは扱えない。`);}
+  else if(P.nuc==='early'){v.className='verdict nuke';parts.push(`<b>核を同時に使う想定。</b>核の効果と民間人被害はモデルの外にある。表示しているのは、計画が前提とした「核で開いた突破口を戦車が走る」部分だけである。`);}
+  else{v.className='verdict';const stopTxt=R.stop?`D+${R.stop}に核の敷居に達する。`:'30日間、核の敷居に達しない。';parts.push(`<b>通常戦が続く想定。</b>${stopTxt}D+${day}時点の最大突破は${mx.n||'—'}の${Math.round(mx.p)}km。`);}
+  if(pre.target&&(P.wpDoc==='nuc')){const t=pre.target;const x=R.ax.find(z=>z.a.id===t.axis);let km=t.km==='end'?x.a.len:(t.place==='ライン'?x.a.rhine:x.a.cum[x.a.path.findIndex(p=>p[2].includes(t.place))]);
+    const dd=x.hist.findIndex(h=>h.pen>=km-1);parts.push(`計画の目標は「${t.text}」。モデルでは${dd>0?`D+${dd}に到達`:'30日以内に到達しない'}${dd>0&&dd<=t.day?'（計画どおり）':dd>0?'（計画より遅い）':''}。`);}
+  v.innerHTML=parts.join(' ');
+}
+/* chart */
+const CH={w:720,h:260,l:44,r:110,t:14,b:30};const csvg=d3.select('#chart');
+const SHADES=['var(--wp)','var(--wp)','var(--wp)','var(--wp)','var(--wp)'];
+const DASH=['none','6 3','2 3','10 3 2 3','1 0'];
+function drawChart(){
+  csvg.selectAll('*').remove();
+  const xs=d3.scaleLinear([0,30],[CH.l,CH.w-CH.r]);const mxp=Math.max(100,d3.max(R.ax,x=>d3.max(x.hist,h=>h.pen)));
+  const ys=d3.scaleLinear([0,Math.ceil(mxp/100)*100],[CH.h-CH.b,CH.t]);
+  ys.ticks(5).forEach(t=>{csvg.append('line').attr('x1',CH.l).attr('x2',CH.w-CH.r).attr('y1',ys(t)).attr('y2',ys(t)).attr('stroke','var(--line)');csvg.append('text').attr('x',CH.l-6).attr('y',ys(t)+4).attr('text-anchor','end').attr('font-size',11).attr('fill','var(--muted)').attr('font-family','var(--f-mono)').text(t);});
+  [0,5,10,15,20,25,30].forEach(t=>csvg.append('text').attr('x',xs(t)).attr('y',CH.h-CH.b+18).attr('text-anchor','middle').attr('font-size',11).attr('fill','var(--muted)').attr('font-family','var(--f-mono)').text('D+'+t));
+  if(P.nuc==='flex'&&!P.ignore){csvg.append('line').attr('x1',CH.l).attr('x2',CH.w-CH.r).attr('y1',ys(P.threshold)).attr('y2',ys(P.threshold)).attr('stroke','var(--nuke)').attr('stroke-dasharray','5 4').attr('stroke-width',1.5);
+    csvg.append('text').attr('x',CH.w-CH.r+4).attr('y',ys(P.threshold)+4).attr('font-size',11).attr('fill','var(--nuke)').text('核の敷居');}
+  const line=d3.line().x((h,i)=>xs(i)).y(h=>ys(h.pen));
+  const ends=[];
+  R.ax.forEach((x,i)=>{csvg.append('path').datum(x.hist).attr('d',line).attr('fill','none').attr('stroke',SHADES[i]).attr('stroke-width',2).attr('stroke-dasharray',DASH[i]).attr('stroke-opacity',0.35+0.13*i);
+    const last=x.hist[x.hist.length-1];ends.push({y:ys(last.pen),x:xs(x.hist.length-1),n:x.a.short,i});});
+  ends.sort((a,b)=>a.y-b.y);for(let i=1;i<ends.length;i++)if(ends[i].y-ends[i-1].y<13)ends[i].y=ends[i-1].y+13;
+  ends.forEach(e=>{csvg.append('circle').attr('cx',e.x).attr('cy',ys(R.ax[e.i].hist[R.ax[e.i].hist.length-1].pen)).attr('r',3).attr('fill','var(--wp)');
+    csvg.append('text').attr('x',CH.w-CH.r+8).attr('y',e.y+4).attr('font-size',11.5).attr('fill','var(--ink)').text(e.n);});
+  csvg.append('line').attr('id','cur').attr('y1',CH.t).attr('y2',CH.h-CH.b).attr('stroke','var(--ink)').attr('stroke-width',1);
+  CH.xs=xs;chartCursor();
+}
+function chartCursor(){if(!CH.xs)return;csvg.select('#cur').attr('x1',CH.xs(day)).attr('x2',CH.xs(day));}
+function stopPlay(){clearInterval(timer);timer=null;$('play').textContent='再生';}
+$('play').onclick=()=>{if(timer){stopPlay();return;}if(day>=R.days)day=0;$('play').textContent='一時停止';const step=matchMedia('(prefers-reduced-motion: reduce)').matches?1:1;timer=setInterval(()=>{day+=step;if(day>=R.days){day=R.days;draw();stopPlay();return;}draw();},matchMedia('(prefers-reduced-motion: reduce)').matches?900:450);};
+$('reset').onclick=()=>{stopPlay();day=0;draw();};
+$('day').oninput=e=>{stopPlay();day=+e.target.value;draw();};
+sel.onchange=()=>{stopPlay();applyPreset(sel.value);recompute(false);day=R.days;draw();};
+$('ctrl').addEventListener('input',e=>{if(e.target.id==='preset')return;stopPlay();recompute(true);});
+$('ctrl').addEventListener('submit',e=>e.preventDefault());
+sel.value='p1985';applyPreset('p1985');recompute(false);day=R.days;draw();
+
+/* ---------- §3 echelon diagram ---------- */
+(function(){
+  const s=d3.select('#echelon');const g=s.append('g');
+  const T=(x,y,t,o={})=>g.append('text').attr('x',x).attr('y',y).text(t).attr('font-size',o.size||13).attr('fill',o.fill||'var(--ink)').attr('text-anchor',o.anchor||'middle').attr('font-family',o.font||'var(--f-body)').attr('font-weight',o.w||400);
+  // zones
+  g.append('rect').attr('x',0).attr('y',0).attr('width',900).attr('height',300).attr('fill','var(--panel)');
+  g.append('rect').attr('x',0).attr('y',0).attr('width',430).attr('height',300).attr('fill','var(--wp-soft)').attr('fill-opacity',.6);
+  g.append('rect').attr('x',430).attr('y',0).attr('width',470).attr('height',300).attr('fill','var(--nato-soft)').attr('fill-opacity',.6);
+  g.append('line').attr('x1',430).attr('x2',430).attr('y1',0).attr('y2',300).attr('stroke','var(--ink)').attr('stroke-width',2.5).attr('stroke-dasharray','8 4');
+  T(430,292,'国境（FLOT）',{size:11,font:'var(--f-mono)'});
+  T(20,24,'← ワ条約機構の縦深',{anchor:'start',size:12,fill:'var(--wp)',font:'var(--f-mono)'});T(880,24,'NATOの縦深 →',{anchor:'end',size:12,fill:'var(--nato)',font:'var(--f-mono)'});
+  // NATO zones
+  [['援護地域',470,525],['主防御地域',530,700],['後方地域',705,890]].forEach(([n,a,b],i)=>{g.append('rect').attr('x',a).attr('y',44).attr('width',b-a).attr('height',212).attr('fill','none').attr('stroke','var(--nato)').attr('stroke-opacity',.5).attr('stroke-dasharray',i===1?'none':'4 3');T((a+b)/2,64,n,{size:12,fill:'var(--nato)'});});
+  // battle positions
+  [[580,120],[640,170],[600,215],[660,100]].forEach(([x,y])=>{g.append('path').attr('d',`M${x-16},${y+8} A18,18 0 0 1 ${x+16},${y+8}`).attr('fill','none').attr('stroke','var(--nato)').attr('stroke-width',2.5);});
+  T(615,248,'陣地からの火力で第一梯団を消耗',{size:11,fill:'var(--nato)'});
+  // WP echelons
+  const box=(x,y,w,h,t,sub)=>{g.append('rect').attr('x',x).attr('y',y).attr('width',w).attr('height',h).attr('fill','var(--paper)').attr('stroke','var(--wp)').attr('stroke-width',2);T(x+w/2,y+h/2-2,t,{size:12.5,fill:'var(--wp)',w:700});if(sub)T(x+w/2,y+h/2+14,sub,{size:10.5,fill:'var(--muted)'});};
+  box(300,95,110,56,'第一梯団','突破口を開く');box(300,175,110,50,'第一梯団','');
+  box(150,120,110,56,'OMG','突破口から縦深へ');
+  box(20,110,110,76,'第二梯団','成功方向へ投入');
+  // arrows
+  const arr=(d,c,w,dash)=>g.append('path').attr('d',d).attr('fill','none').attr('stroke',c).attr('stroke-width',w).attr('stroke-dasharray',dash||'none').attr('marker-end','url(#ah-'+(c.includes('wp')?'r':'b')+')');
+  const defs=s.append('defs');[['r','var(--wp)'],['b','var(--nato)']].forEach(([k,c])=>defs.append('marker').attr('id','ah-'+k).attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5).attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto').append('path').attr('d','M0,0L10,5L0,10z').attr('fill',c));
+  arr('M410,123 L455,123','var(--wp)',3);
+  arr('M260,148 C340,148 380,148 440,140 C520,128 600,140 760,150','var(--wp)',3.5,'9 5');
+  T(760,175,'OMG：核手段・指揮所・飛行場・渡河点',{size:11,fill:'var(--wp)',anchor:'end'});
+  arr('M130,150 L148,150','var(--wp)',2.5);
+  // deep attack
+  arr('M840,92 C640,20 260,20 85,100','var(--nato)',2.5,'3 4');
+  T(470,30,'縦深攻撃（エアランド・バトル／FOFA）：接触前の後続梯団を航空・長射程火力で叩き、遅らせる',{size:11.5,fill:'var(--nato)'});
+})();
+</script>

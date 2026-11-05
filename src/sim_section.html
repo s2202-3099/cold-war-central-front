@@ -1,0 +1,182 @@
+<section id="sim">
+  <div class="sec-num">§2</div>
+  <h2>中欧正面シミュレーター</h2>
+  <div class="col"><p>NATOの軍団担当区域に合わせて正面を10の軸に分け、両軍の師団を1980年代の戦闘序列どおりに配置した。北翼にはシェラン島とバルト海峡への上陸作戦を独立した軸として置いている。両軍とも部隊ごとに動員開始からの到着日（ワ条約機構はM＋日数）をもつ。ワ条約機構が開戦前に長く動員するほど後続部隊が開戦時に前線へそろうが、そのぶんNATOにも準備の時間が生まれる。NATOの準備期間は、情報が動員を察知するまでの日数と同盟が決定するまでの日数で決まる。各軸はライン川の先、パリ・英仏海峡・ベネルクスまで延びている。西ベルリンの攻略、オーストリア回廊、北ノルウェー、化学兵器も選べる。航空戦は双方の航空戦力の削り合いとして計算し、その結果が地上の戦闘と航空阻止に効く。米本土から船で来る増援は大西洋の制海に左右される。<b>教育用の粗いモデルで、予測ではない。</b>柔軟反応の時期は、NATOが核使用を迫られた時点で通常戦の計算を止め、その先は§2-3の核パネルで扱う。「核の敷居に達したら」の選び方で、そこで止めるか、NATOの初使用とワ条約機構の反撃へ進めるか、核を使わずにD+60まで通常戦を続けるかを切り替えられる。</p></div>
+  <div class="sim">
+    <form class="ctrl" id="ctrl" autocomplete="off">
+      <label for="preset"><span class="lab">シナリオ</span>
+        <select id="preset"></select></label>
+      <div class="preset-desc" id="pdesc"></div>
+      <label for="wpMob"><span class="lab">WPの動員開始（開戦の何日前か） <span class="mono" id="v-wpMob"></span></span>
+        <input type="range" id="wpMob" min="0" max="21" step="1"></label>
+      <label for="intel"><span class="lab">情報がWPの動員を察知するまで <span class="mono" id="v-intel"></span></span>
+        <input type="range" id="intel" min="0" max="7" step="1"></label>
+      <label for="decide"><span class="lab">同盟が動員を決めるまで <span class="mono" id="v-decide"></span></span>
+        <input type="range" id="decide" min="0" max="7" step="1"></label>
+      <div class="prep">NATOの準備期間 <b class="mono" id="v-prep"></b></div>
+      <label for="natoQ"><span class="lab">NATOの質的係数 <span class="mono" id="v-natoQ"></span></span>
+        <input type="range" id="natoQ" min="0.8" max="1.6" step="0.05"></label>
+      <fieldset class="nset"><legend>航空戦</legend>
+      <label for="airQ"><span class="lab">NATO機の質（WP機1機に対する） <span class="mono" id="v-airQ"></span></span>
+        <input type="range" id="airQ" min="0.8" max="3" step="0.1"></label>
+      <label for="airOp"><span class="lab">WPの初期航空作戦の強さ <span class="mono" id="v-airOp"></span></span>
+        <input type="range" id="airOp" min="0" max="1" step="0.05"></label></fieldset>
+      <label for="sea"><span class="lab">大西洋の制海（NATO側） <span class="mono" id="v-sea"></span></span>
+        <input type="range" id="sea" min="0" max="1" step="0.05"></label>
+      <label for="wp2Day"><span class="lab">戦略第2梯団 第1波の到着（WP動員から） <span class="mono" id="v-wp2Day"></span></span>
+        <input type="range" id="wp2Day" min="5" max="20" step="1"></label>
+      <label for="baltic"><span class="lab">バルト海のWP側制海・制空 <span class="mono" id="v-baltic"></span></span>
+        <input type="range" id="baltic" min="0" max="1" step="0.05"></label>
+      <label for="main"><span class="lab">WPの主攻正面</span><select id="main"></select></label>
+      <div><div class="lab" style="margin-bottom:3px">WPの構想</div>
+        <div class="seg"><input type="radio" name="wpDoc" id="wpDoc-nuc" value="nuc"><label for="wpDoc-nuc">核の同時使用</label><input type="radio" name="wpDoc" id="wpDoc-conv" value="conv"><label for="wpDoc-conv">通常戦＋OMG</label></div></div>
+      <div><div class="lab" style="margin-bottom:3px">NATOのドクトリン</div>
+        <div class="seg"><input type="radio" name="natoDoc" id="natoDoc-AD" value="AD"><label for="natoDoc-AD">アクティブ・<br>ディフェンス</label><input type="radio" name="natoDoc" id="natoDoc-ALB" value="ALB"><label for="natoDoc-ALB">エアランド・<br>バトル＋FOFA</label></div></div>
+      <label for="deep"><span class="lab">縦深攻撃による第2梯団の減殺 <span class="mono" id="v-deep"></span></span>
+        <input type="range" id="deep" min="0" max="0.5" step="0.05"></label>
+      <label for="threshold"><span class="lab">核の敷居（陸上の最大突破距離） <span class="mono" id="v-threshold"></span></span>
+        <input type="range" id="threshold" min="50" max="300" step="10"></label>
+      <fieldset class="nset"><legend>西ベルリンと側面</legend>
+      <label for="berlin"><span class="lab">西ベルリン</span><select id="berlin"><option value="assault">東独軍が攻略する</option><option value="siege">包囲にとどめる</option><option value="none">扱わない</option></select></label>
+      <label for="austria"><span class="lab">オーストリア</span><select id="austria"><option value="neutral">中立が守られる</option><option value="violate">WPが中立を破り回廊として使う</option></select></label>
+      <label class="chk" for="norway"><input type="checkbox" id="norway"> 北ノルウェーにも攻撃がある</label></fieldset>
+      <fieldset class="nset"><legend>化学兵器</legend>
+      <label class="chk" for="chem"><input type="checkbox" id="chem"> WPが化学兵器を使う</label>
+      <label for="chemN"><span class="lab">NATOの戦闘力の低下（防護装備での戦闘） <span class="mono" id="v-chemN"></span></span>
+        <input type="range" id="chemN" min="0" max="40" step="5"></label>
+      <label for="chemW"><span class="lab">WP自身の低下（汚染地帯の通過） <span class="mono" id="v-chemW"></span></span>
+        <input type="range" id="chemW" min="0" max="15" step="1"></label>
+      <label for="chemDelay"><span class="lab">港・飛行場の汚染による増援の遅れ <span class="mono" id="v-chemDelay"></span></span>
+        <input type="range" id="chemDelay" min="0" max="6" step="1"></label></fieldset>
+      <label for="phase2"><span class="lab">ライン川を越えた後の主攻</span><select id="phase2"><option value="paris">パリへ向け直す</option><option value="channel">英仏海峡の港とベネルクスへ</option><option value="same">主攻を変えない</option></select></label>
+      <label class="chk" for="frNuke"><input type="checkbox" id="frNuke"> フランスが「最後の警告」として核を使う</label>
+      <label class="chk" for="france"><input type="checkbox" id="france"> フランス第1軍が参戦する</label>
+      <label for="nukeMode"><span class="lab">核の敷居に達したら</span>
+        <select id="nukeMode">
+          <option value="stop">計算を止める（政治判断に委ねる）</option>
+          <option value="esc">NATOが初使用 → WPが戦域核で反撃 → NATOが東欧へ反撃</option>
+          <option value="fu">NATOが初使用、WPは報復しない（楽観的な仮定）</option>
+          <option value="ignore">核を使わず通常戦を続ける（仮定）</option>
+        </select></label>
+      <label for="consult"><span class="lab">核使用の同盟内協議 <span class="mono" id="v-consult"></span></span>
+        <input type="range" id="consult" min="0" max="7" step="1"></label>
+      <label class="chk" for="frgVeto"><input type="checkbox" id="frgVeto"> 西ドイツが自国領内での使用を拒む</label>
+    </form>
+    <div class="stage">
+      <div class="mapbox" id="mapbox">
+        <svg id="map" role="img" aria-label="中欧の地図。侵攻軸ごとのワ条約機構軍の前進位置を示す"></svg>
+        <div class="daybar">D+<b id="dlabel">0</b></div>
+        <div class="legend">
+          <span><i style="background:var(--wp)"></i>WP軍の前進</span>
+          <span><i style="background:var(--ink)"></i>内独国境（1949–90）</span>
+          <span><i style="background:var(--water)"></i>主要河川</span>
+          <span><i style="background:var(--nato);height:8px;width:8px;border-radius:50%"></i>NATO軍団の担当区域</span>
+        </div>
+      </div>
+      <div class="playrow">
+        <button class="btn" type="button" id="play">再生</button>
+        <button class="btn ghost" type="button" id="reset">最初へ</button>
+        <button class="btn ghost sm" type="button" id="dprev" aria-label="1日戻る">−1日</button>
+        <span class="dnow mono" id="dnow">D+0</span>
+        <button class="btn ghost sm" type="button" id="dnext" aria-label="1日進む">+1日</button>
+        <div class="dtrack"><input type="range" id="day" min="0" max="60" value="0" aria-label="日数"><div class="dticks mono"><span>D+0</span><span>D+15</span><span>D+30</span><span>D+45</span><span>D+60</span></div></div>
+        <span class="dstop" id="dstop"></span>
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <div class="card"><h4>侵攻軸ごとの状況（行を選ぶと下の戦闘序列が開く）</h4><div style="overflow-x:auto"><table class="axt" id="axt"></table></div></div>
+      <div class="out">
+        <div class="card"><h4>前進距離の推移（km）</h4><div class="chartbox"><svg id="chart" viewBox="0 0 640 300" role="img" aria-label="侵攻軸ごとの前進距離の推移"></svg></div>
+          <h4 style="margin-top:10px">航空優勢指数（50＝拮抗、NATO側が高い）と推計民間人死者</h4><div class="chartbox"><svg id="airchart" viewBox="0 0 640 130" role="img" aria-label="航空優勢指数と推計民間人死者の推移"></svg></div></div>
+        <div class="card"><h4>経過</h4><ul class="log" id="log"></ul></div>
+      </div>
+      <div class="card mcbox" id="mcbox">
+        <h4>不確実性 ── 同じ設定で条件を揺らして何度も回す</h4>
+        <p class="mcintro">上の結果は、すべての数字を一点に決めたときの1本の筋書きにすぎない。ここでは、当時から評価の割れていた数字（両軍の質、航空戦、警報期間など）を下の幅で無作為に揺らし、さらに軸ごとの戦力見積もりと日々の前進にも誤差を入れて、同じ設定を何百回も回す。表示する確率は「このモデルと、この幅の仮定のもとで」の割合で、現実にそうなる確率ではない。</p>
+        <div class="mcrow"><button class="btn sm" type="button" id="mcrun">再計算</button>
+          <label for="mcn" class="mcn">試行回数 <select id="mcn"><option value="200">200回</option><option value="400" selected>400回</option><option value="1000">1000回</option></select></label>
+          <label class="chk" for="mcauto"><input type="checkbox" id="mcauto" checked> 設定を変えたら自動で回す</label>
+          <span class="mono mcstat" id="mcstat"></span></div>
+        <div class="mctiles" id="mctiles"></div>
+        <div class="mcgrid">
+          <div><h4>累積確率（その日までに起きている割合）</h4><div class="chartbox mcchart"><svg id="mcchart" viewBox="0 0 640 260" role="img" aria-label="核の敷居、ライン川到達、パリ到達の累積確率"></svg><div class="mctip" id="mctip" hidden></div></div></div>
+          <div><h4>結果を最も左右する不確実性</h4><div id="mcsens"></div></div>
+        </div>
+        <div class="tbl"><table class="axt" id="mcaxt"></table></div>
+        <details class="mcranges"><summary>揺らしている数字とその幅</summary><ul id="mcranges"></ul></details>
+      </div>
+    </div>
+  </div>
+  <div class="caveat col">モデルの前提：1個師団を師団換算1.0（旅団・連隊は0.25〜0.4）とし、NATO側の師団ごとの戦闘力の差は質的係数で一括して表す。WPは後続の梯団を主攻正面へ集中し、戦力比が0.8を割った正面では拘束攻撃に切り替え、NATOはD+4以降、戦力比が0.8を割った正面で反撃に出る。日々の前進は戦力比と地形係数で、損耗は戦力比の累乗で決まる。部隊と軸の対応は平時の駐屯地と軍団担当区域にもとづく概略で、計画文書そのものではない。詳細は§6。</div>
+</section>
+
+<section id="orbat">
+  <div class="sec-num">§2-2</div>
+  <h2>軸別の戦闘序列（1980年代後半）</h2>
+  <div class="col"><p>シミュレーターに入れた部隊の一覧。NATO側の数字は動員開始から担当区域に着くまでの日数、ワ条約機構側は動員開始（M日）から前線に着くまでの日数。M＋日数がWPの事前動員日数より小さい部隊は、開戦時に展開を終えている。在独ソ連軍の各軍と師団の駐屯地は1980年代後半のもの。ワ条約機構側の軸への割り当ては、平時の配置と西側の一般的な見積もりから置いたモデル上の想定である。</p><p>全体の規模は、NATOの1984年の評価に合わせた。それによれば、中部正面と北部正面の南側に向けられるワ条約機構の師団は約95個で、うち61個は前方配置か高い即応状態にあった。このモデルでも、第一梯団から戦略第2梯団の第2波までを合わせると、陸上戦力はおよそ90師団換算になる。1960年代はソ連陸軍全体の師団数がむしろ少なかった（1966年頃のNIEで約140個、1980年代半ばは約210個）。また、1968年以前はソ連中央軍集団がチェコスロヴァキアにいなかった。</p></div>
+  <div id="orbatList"></div>
+  <h3>軸をまたいで投入される部隊</h3>
+  <div class="tbl"><table id="echTable"></table></div>
+</section>
+
+<section id="eras">
+  <div class="sec-num">§2-4</div>
+  <h2>時代別の兵力と師団編成</h2>
+  <div class="col"><p>シミュレーターの戦闘序列は1980年代後半のものだが、中欧正面の兵力と師団の姿は時代ごとに大きく変わった。年代を選ぶと、その時代の東西の兵力と、標準的な師団の編成を並べて表示する。</p></div>
+  <div class="periods eratabs" role="tablist" aria-label="年代" id="etabs"></div>
+  <div class="vs" id="evs"></div>
+  <div class="tbl"><table id="edivs"></table></div>
+  <div class="period-note col" id="enote"></div>
+</section>
+
+<section id="divisions">
+  <div class="sec-num">§2-5</div>
+  <h2>主な師団</h2>
+  <div class="col"><p>シミュレーターに登場する師団のうち、来歴がよく知られているものを紹介する。ソ連の師団の多くは独ソ戦の部隊を起源とし、戦後は番号や種別を何度も変えながら東ドイツに居続けた。</p></div>
+  <div class="divgrid" id="divgrid"></div>
+</section>
+
+<section id="nuke">
+  <div class="sec-num">§2-3</div>
+  <h2>核のエスカレーションと民間人の被害</h2>
+  <div class="col"><p>柔軟反応のもとでは、NATOがまず戦場で選択的に核を使い、ワ条約機構はそれに大規模な戦域核で応じると考えられていた。冷戦後に公開された東側の文書は、ソ連が限定的な核戦争という考え方を受け入れていなかったことを示している。ここでは、段階を一つずつ上げたときの民間人の死者を推計する。</p>
+  <p>戦域核の段階（1〜3）は、1955年のNATO演習カルト・ブランシュの比率を当てはめて計算する。この演習では15ktの核268発が西ドイツ上空で使われ、死者170万人、負傷者350万人と見積もられた。1発あたりの死者は爆発威力の2/3乗に比例すると置き、1980年代の人口密度の増加を1.2倍として加えた。幅は0.5倍〜2倍とした。戦略核の段階（4）は計算せず、米議会技術評価局（OTA、1979）の推計幅をそのまま示す。</p><p>ここで設定した段階1〜3の発数と威力は、シミュレーターで「核の敷居に達したら」を初使用の分岐にしたとき、または核を同時に使うシナリオのときに、地図上の戦いにもそのまま使われる。</p></div>
+  <div class="nk">
+    <form class="ctrl" id="nctrl" autocomplete="off">
+      <label for="npreset"><span class="lab">想定</span><select id="npreset"></select></label>
+      <div class="preset-desc" id="ndesc"></div>
+      <div><div class="lab" style="margin-bottom:4px">どこまで拡大するか <span class="mono" id="v-stage"></span></div>
+        <input type="range" id="stage" min="0" max="4" step="1" aria-describedby="stageNames">
+        <div class="ladder" id="stageNames"><span>0 通常戦</span><span>1 初使用</span><span>2 WP反撃</span><span>3 NATO反撃</span><span>4 戦略核</span></div></div>
+      <fieldset class="nset"><legend>1　NATOの選択的初使用（西独・東独の戦場）</legend>
+        <label for="n1"><span class="lab">発数 <span class="mono" id="v-n1"></span></span><input type="range" id="n1" min="5" max="150" step="5"></label>
+        <label for="k1"><span class="lab">平均威力 <span class="mono" id="v-k1"></span></span><input type="range" id="k1" min="1" max="50" step="1"></label></fieldset>
+      <fieldset class="nset"><legend>2　WPの戦域核による大規模反撃（西欧）</legend>
+        <label for="n2"><span class="lab">発数 <span class="mono" id="v-n2"></span></span><input type="range" id="n2" min="50" max="1500" step="50"></label>
+        <label for="k2"><span class="lab">平均威力 <span class="mono" id="v-k2"></span></span><input type="range" id="k2" min="10" max="1000" step="10"></label></fieldset>
+      <fieldset class="nset"><legend>3　NATOの戦域核反撃（東欧）</legend>
+        <label for="n3"><span class="lab">発数 <span class="mono" id="v-n3"></span></span><input type="range" id="n3" min="50" max="1000" step="50"></label>
+        <label for="k3"><span class="lab">平均威力 <span class="mono" id="v-k3"></span></span><input type="range" id="k3" min="10" max="500" step="10"></label></fieldset>
+      <div><div class="lab" style="margin-bottom:3px">4　戦略核の目標</div>
+        <div class="seg"><input type="radio" name="s4" id="s4-cf" value="cf"><label for="s4-cf">対兵力のみ</label><input type="radio" name="s4" id="s4-full" value="full"><label for="s4-full">軍事・工業・都市</label></div></div>
+    </form>
+    <div class="stage">
+      <div class="nsum" id="nsum"></div>
+      <div class="card"><h4>地域別の推計死者（横棒は推計幅、縦線は中央値）</h4><div class="chartbox"><svg id="nchart" viewBox="0 0 640 260" role="img" aria-label="地域別の推計死者"></svg></div></div>
+      <div class="card"><h4>段階ごとの内訳</h4><div style="overflow-x:auto"><table class="axt" id="ntable"></table></div></div>
+    </div>
+  </div>
+  <h3>史料と研究が示した数字</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>年</th><th>文書・研究</th><th>想定</th><th>推計された被害</th></tr></thead>
+    <tbody>
+      <tr><td>1955</td><td>NATO演習 カルト・ブランシュ</td><td>15ktの核335発、うち268発が西ドイツ上空</td><td>西ドイツで死者170万人、負傷者350万人</td></tr>
+      <tr><td>1961</td><td>SIOP-62（米統合参謀本部の報告）</td><td>米国の全戦力による対ソ・対中攻撃</td><td>ソ連の人口の54%（約1億800万人）、中国約1億400万人が死亡。ポーランドで約264万人の死傷</td></tr>
+      <tr><td>1961</td><td>ワ条約機構 ブーリャ演習（ポーランド方面）</td><td>NATOがポーランド領内に核ミサイル21発（2,048kt）、翌日44発（4,787kt）</td><td>演習文書は被害を推計していない</td></tr>
+      <tr><td>1964</td><td>チェコスロヴァキア戦争計画</td><td>同方面軍だけで核131発（ミサイル96、爆弾35）</td><td>計画は民間人の被害を扱っていない</td></tr>
+      <tr><td>1979</td><td>「ライン川まで7日間」</td><td>WP側が約7.5Mtを西独・ベネルクス・デンマーク・北伊などに使用</td><td>NATOの核攻撃でポーランド民間人が最大200万人死亡と想定</td></tr>
+      <tr><td>1979</td><td>米議会技術評価局（OTA）『核戦争の影響』</td><td>①単一都市（デトロイト／レニングラード）②対兵力攻撃 ③軍事・工業目標への大規模攻撃</td><td>①22万〜250万人 ②米国で最大2,000万人、ソ連で1,000万人超 ③米国で人口の35〜77%（7,000万〜1億6,000万人）、ソ連で人口の20〜40%</td></tr>
+      <tr><td>1980</td><td>英国の民間防衛演習 スクエア・レッグ</td><td>英国に核150発、計280.5Mt</td><td>オープンショウらの独自推計で死者2,900万人（人口の53%）</td></tr>
+      <tr><td>1987</td><td>WHO報告（WHA40/11）</td><td>欧州の限定核戦争（98Mt）／米ソの核の約1%を都市に</td><td>欧州で死傷7,200万〜1億1,200万人／米国で死者最大6,600万人、ソ連で最大7,700万人</td></tr>
+    </tbody></table></div>
+  <div class="col"><p>どの推計も、爆風・熱・初期放射線・放射性降下物による短期の死者を中心にしている。医療と食料供給の崩壊、長期の放射線障害、そして1983年のTTAPS論文が提起した「核の冬」のような気候への影響は、数字の外に残っている。1955年のカルト・ブランシュの結果は西ドイツの世論に強い衝撃を与え、防衛政策の見直しを求める声につながった。戦術核で西ドイツを守るという考え方は、守る対象そのものを壊すという矛盾をはじめから抱えていた。</p></div>
+</section>

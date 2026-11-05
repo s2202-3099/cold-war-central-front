@@ -1,0 +1,16 @@
+{
+  "name": "cold-war-central-front",
+  "version": "1.0.0",
+  "private": true,
+  "description": "冷戦期中欧正面の戦略・作戦・計画とシミュレーター（単一HTML）",
+  "scripts": {
+    "build": "python3 build.py",
+    "test": "node tests/model.test.js",
+    "test:ui": "python3 tests/ui_test.py"
+  },
+  "devDependencies": {
+    "d3": "7.8.5",
+    "d3-geo": "3.1.0",
+    "topojson": "3.0.2"
+  }
+}
