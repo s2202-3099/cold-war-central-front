@@ -1,7 +1,7 @@
 /* ---------- uncertainty: Monte Carlo over the user's settings ---------- */
 var MC={tok:0,timer:null,A:null,B:null,n:0};
 const SENS_KEYS=[['natoQ','NATOの質的係数'],['wpQ','WPの質'],['airQ','NATO機の質'],['airOp','WPの初期航空作戦'],['sea','大西洋の制海'],['baltic','バルト海の制海'],
-  ['deep','縦深攻撃の効果'],['wpMob','WPの動員開始'],['intel','動員の察知'],['decide','同盟の決定'],['wp2Day','戦略第2梯団の到着'],['chemN','化学兵器の効果'],['natSpread','NATO各国の質の差'],['natoFr','多国籍の摩擦'],['wpRelK','非ソ連軍の信頼性の不足'],['wpDecay','非ソ連軍の抗戦意欲の低下'],['tJit','ソ連潜水艦の脅威'],['bDef','西ベルリンの市街戦防御'],['aDef','オーストリアの山地防御']];
+  ['deep','縦深攻撃の効果'],['wpMob','WPの動員開始'],['intel','動員の察知'],['decide','同盟の決定'],['wp2Day','戦略第2梯団の到着'],['chemN','化学兵器の効果'],['natSpread','NATO各国の質の差'],['natoFr','多国籍の摩擦'],['wpRelK','非ソ連軍の信頼性の不足'],['wpDecay','非ソ連軍の抗戦意欲の低下'],['tJit','ソ連潜水艦の脅威'],['mask','WPの欺瞞'],['bDef','西ベルリンの市街戦防御'],['aDef','オーストリアの山地防御']];
 function mcSchedule(){if(!MC||!$('mcauto').checked)return;clearTimeout(MC.timer);MC.timer=setTimeout(mcStart,450);}
 function mcStart(){
   const tok=++MC.tok;const n=+$('mcn').value;const t0=performance.now();
@@ -71,7 +71,7 @@ function mcChart(){
 }
 function mcSens(){
   const useA=!!MC.A;const set=useA?MC.A:MC.B;const y=set.map(r=>(useA?r.thr:r.rhine)??61);
-  const keys=SENS_KEYS.filter(([k])=>!(k==='chemN'&&!P.chem)&&!(k==='bDef'&&P.berlin!=='assault')&&!(k==='aDef'&&P.austria!=='violate')&&!(k==='deep'&&P.natoDoc!=='ALB')&&!(['natSpread','natoFr','wpRelK','wpDecay'].includes(k)&&!P.nat));
+  const keys=SENS_KEYS.filter(([k])=>!(k==='chemN'&&!P.chem)&&!(k==='bDef'&&P.berlin!=='assault')&&!(k==='aDef'&&P.austria!=='violate')&&!(k==='deep'&&P.natoDoc!=='ALB')&&!(['natSpread','natoFr','wpRelK','wpDecay'].includes(k)&&!P.nat)&&!(k==='mask'&&!P.preShift));
   if(new Set(y).size<2){$('mcsens').innerHTML=`<p class="mcnote">${useA?'核の敷居に達する日':'ライン川に届く日'}がどの試行でも同じで、比べられない。</p>`;return;}
   const rows=keys.map(([k,l])=>({k,l,r:spear(set.map(z=>z.q[k]),y)})).sort((a,b)=>Math.abs(b.r)-Math.abs(a.r)).slice(0,6);
   const what=useA?'核の敷居':'ライン川到達';

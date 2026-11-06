@@ -264,6 +264,12 @@ details.ob summary:focus-visible{outline:2px solid var(--nato);outline-offset:-2
       <label for="decide"><span class="lab">同盟が動員を決めるまで <span class="mono" id="v-decide"></span></span>
         <input type="range" id="decide" min="0" max="7" step="1"></label>
       <div class="prep">NATOの準備期間 <b class="mono" id="v-prep"></b></div>
+      <fieldset class="nset"><legend>警報期間中の再配置</legend>
+      <label class="chk" for="preShift"><input type="checkbox" id="preShift"> 捉えたWPの集中に合わせて、開戦前に予備を寄せる</label>
+      <label for="mask"><span class="lab">WPの欺瞞（マスキロフカ） <span class="mono" id="v-mask"></span></span>
+        <input type="range" id="mask" min="0" max="1" step="0.1"></label>
+      <label class="chk" for="crossAG"><input type="checkbox" id="crossAG"> 軍集団をまたいで予備を回す（CENTAGとNORTHAGの間）</label>
+      <label class="chk" for="bagnall"><input type="checkbox" id="bagnall"> 北部軍集団の作戦予備と反撃（バグナル、1984年〜）</label></fieldset>
       <label for="natoQ"><span class="lab">NATOの質的係数 <span class="mono" id="v-natoQ"></span></span>
         <input type="range" id="natoQ" min="0.8" max="1.6" step="0.05"></label>
       <fieldset class="nset"><legend>国ごとの差</legend>
@@ -510,6 +516,7 @@ details.ob summary:focus-visible{outline:2px solid var(--nato);outline-offset:-2
     <p><b>核の推計</b>：段階1〜3は、カルト・ブランシュ（1955）の「15kt×268発で死者170万人」から1発あたりの死者を求め、威力の2/3乗で拡大縮小し、人口密度の増加を1.2倍として掛けた。幅は0.5〜2倍。段階4はOTA（1979）の推計幅を使う。放射性降下物の長期影響、医療の崩壊、気候への影響は含まない。</p>
     <p><b>国ごとの差</b>：同盟全体の質的係数に加えて、部隊ごとに国の係数を掛けた。NATOは1980年代で米1.05、西独1.05、英1.0、加1.0、仏0.95、蘭0.85、ベルギー0.8、デンマーク0.8とした。蘭・ベルギーは主力の多くが本国にあり、徴集兵の服役期間が短く、動員と前方展開に日数がかかった。西独は1950年代の創設期を0.8、米は1970年代のベトナム後の「空洞化した陸軍」を0.85とした。この差の大きさはスライダーで0〜2倍に変えられる。担当国以外の部隊（LANDJUTのデンマーク師団、蘭第1軍団正面の米旅団、米第7軍団正面の西独・カナダ部隊、他の正面から回した予備）が占める割合に応じて、教範・装備・通信の違いによる摩擦（標準10%）で戦闘力を下げる。</p>
     <p>ワルシャワ条約機構側は、非ソ連軍の開戦時の政治的信頼性を時期ごとに置いた。東独軍は0.95（1950年代は0.85）。ポーランド軍は0.9（1960年代）から0.85（1970年代）を経て、連帯運動と戒厳令のあとの1980年代は0.7。チェコスロヴァキア軍は0.9から、1968年の軍事介入のあとは0.7、1980年代は0.75とした。信頼性の不足はスライダーで0〜2倍に変えられる。戦争が長引くと非ソ連軍の抗戦意欲はさらに落ちる（標準でD+45までに最大15%）。前進が止まった正面では1.5倍、順調に進む正面では半分、NATOが核を使ったあとは1.5倍の速さで落ちる。数字は西側の研究（RAND、米陸軍の信頼性研究）の定性的な評価を、このモデルの都合で数に置き換えたものである。</p>
+    <p><b>警報期間中の再配置</b>：NATOは警報期間（WPの動員開始からNATOが動員を決めるまでの差）の間に、捉えたWPの集中に合わせて予備を寄せる。寄せられるのは同じ軍集団の中だけで、WPの見積もりが平均の7割未満の正面から1日4%（上限35%）を引き抜き、見積もりが平均の1.3倍を超える正面へ、集中の大きさに応じて配る（移動中の損耗で9割が着く）。他国の正面へ入った部隊には多国籍の摩擦がかかる。NATOが捉える集中は、ソ連の欺瞞（マスキロフカ）の強さに応じて各正面の平均へぼやけ、察知が遅いほど見積もりの誤差も大きくなる。軍集団をまたぐ移動（CENTAGとNORTHAGの間、1日3%・上限25%、着くのは8割）は選択にした。警報開始後に到着する予備も、開戦前なら最も脅かされた正面へ送る。1984年以降は、北部軍集団司令官バグナルが持ち込んだ軍集団の作戦予備と反撃の構想を選べる。選ぶと、北部軍集団の中の予備の移動が速くなり（開戦前は1日6%・上限45%、開戦後は1日7%で着くのは9割）、戦力比が逆転した正面での押し返しが1.3倍になる。</p>
     <p><b>大西洋と北翼</b>：大西洋の制海は固定値ではなく、ソ連潜水艦と海軍航空隊の脅威と、GIUKギャップの対潜障壁・船団護衛による消耗のせめぎ合いとして日ごとに動く。1982年のCIAの国家情報評価が示したように、ソ連海軍が戦略原潜の「要塞」の防衛を優先する場合、通商破壊に回る潜水艦は少ない。通商破壊を優先すると、開戦直後の船団の損失は大きいが、障壁での消耗で脅威はしだいに下がる。米海軍の前方戦略（1981年以降、空母をノルウェー海へ）は、ソ連の潜水艦を要塞の防衛に引きつけ、障壁での消耗を早め、北ノルウェーにも航空支援を与える。米国からの増援は出港した日の制海で到着の割合（40〜100%）と遅れ（0〜8日）が決まる。D+20以降の補給は、直近10日の制海の平均に左右される。</p>
     <p>北ノルウェーの戦いは、ソ連第6軍と北方艦隊の海軍歩兵（師団換算2.5、D+10に1.5を追加）に対し、ノルウェー北部旅団（0.7）と、北翼への増援（ACE機動部隊、英蘭海兵、トロンデラーグに装備を事前集積した米海兵旅団、計1.25）で戦う。山地と極地の防御を2.4倍、リュンゲン線ではさらに1.8倍とした。バルドゥフォスとトロムソの飛行場が落ちると、ソ連の海軍航空隊が大西洋の船団を狙えるようになり、GIUKギャップの障壁も弱まる。増援を送らなければ北翼は持たないが、中欧の航空戦力と英国の予備はそのぶん厚くなる。全欧州戦域を一体で扱ったわけではなく、南翼（イタリア・ギリシャ・トルコ）と地中海は含まない。</p>
     <p><b>西ベルリン</b>：東独軍の攻略計画（1993年に報道された「ツェントルム」作戦。東独第1自動車化狙撃師団と国境警備隊を主力に約3万2千人）と、米英仏の守備隊（約1万2千人）を置いた。攻略側は師団換算2.9（第20親衛軍から1個師団を引き抜く）、守備側は1.0で、市街戦の防御力を2.5倍とした。陥落の2日後、引き抜いた師団が北部の正面へ戻る（0.8に目減り）。「包囲にとどめる」では引き抜きは小さく、守備隊は戦わずに残る。</p>
@@ -750,6 +757,33 @@ function run(p){
   WP_ECH.forEach(e=>{if(e[4]&&p.era<e[4])return;if(e[2]>M)return;const c=e[3]?ax.filter(x=>e[3].includes(x.a.id)):land;const t=pick(c,false);const v=e[1]-(e[0].includes('第20親衛軍')?gaHeld:0);const ev=addW(t,v,natOfW(e[0]));pre.push(`${t.a.short}+${+ev.toFixed(1)}`);});
   WP_STRAT.forEach(w=>{if(p.wp2Day+w[2]>M)return;const tot=w[1]*p.wp2;const first=mainAx||weakest(land);const second=weakest(land.filter(x=>x!==first));addW(first,tot*0.7,'SU');addW(second,tot*0.3,'SU');pre.push(`戦略第2梯団（${first.a.short}・${second.a.short}）+${tot.toFixed(0)}`);});
   if(pre.length)log.push([0,'2nd',`開戦までに展開を終えた後続部隊：${pre.join('、')}（師団換算）`]);
+  // ---- NATO repositions reserves during the warning period, towards the concentration it has detected ----
+  const W=Math.max(0,p.warning), bag=!!p.bagnall&&p.era>=1984, preMoves=[];
+  const GROUPS=[['nl1','ge1','uk1','be1'],['ge3','us5','us7','ge2']];
+  if(p.preShift!==false&&W>0){const mask=p.mask??0.3, sig=0.08+0.05*(p.intel||0);
+    GROUPS.forEach((g,gi)=>{const xs=ax.filter(x=>g.includes(x.a.id));const north=gi===0;
+      const mean=xs.reduce((a,x)=>a+x.wp,0)/xs.length;
+      xs.forEach(x=>{x.est=Math.max(0.1,((1-mask)*x.wp+mask*mean)*(rng?Math.exp(sig*gauss()):1));});
+      const ratio=x=>x.est/Math.max(0.1,x.nato);const mr=xs.reduce((a,x)=>a+x.est,0)/xs.reduce((a,x)=>a+x.nato,0);
+      const frac=Math.min(north&&bag?0.45:0.35,(north&&bag?0.06:0.04)*W);
+      const donors=xs.filter(x=>ratio(x)<mr*0.7&&x.nato>1.5), recv=xs.filter(x=>ratio(x)>mr*1.3);
+      if(!donors.length||!recv.length)return;
+      let pool=0;donors.forEach(x=>{const m=x.nato*frac*Math.min(1,1-ratio(x)/mr);x.nato-=m;pool+=m;});
+      const need=recv.map(x=>Math.max(0.01,x.est-mr*x.nato));const tn=need.reduce((a,b)=>a+b,0);
+      recv.forEach((x,i)=>{const v=pool*0.9*need[i]/tn;addN(x,v,'LAT',true);preMoves.push(`${x.a.short}+${v.toFixed(1)}`);});
+      preMoves.push(`（${donors.map(x=>x.a.short).join('・')}から）`);});
+    if(p.crossAG){const all=ax.filter(x=>GROUPS[0].includes(x.a.id)||GROUPS[1].includes(x.a.id));const mr=all.reduce((a,x)=>a+x.est,0)/all.reduce((a,x)=>a+x.nato,0);
+      const ratio=x=>x.est/Math.max(0.1,x.nato);
+      for(const [from,to,lab] of [[1,0,'CENTAGからNORTHAGへ'],[0,1,'NORTHAGからCENTAGへ']]){
+        const donors=ax.filter(x=>GROUPS[from].includes(x.a.id)&&ratio(x)<mr*0.6&&x.nato>2), recv=ax.filter(x=>GROUPS[to].includes(x.a.id)&&ratio(x)>mr*1.3);
+        if(!donors.length||!recv.length)continue;const frac=Math.min(0.25,0.03*W);let pool=0;
+        donors.forEach(x=>{const m=x.nato*frac*Math.min(1,1-ratio(x)/mr);x.nato-=m;pool+=m;});
+        const need=recv.map(x=>Math.max(0.01,x.est-mr*x.nato));const tn=need.reduce((a,b)=>a+b,0);
+        recv.forEach((x,i)=>{const v=pool*0.8*need[i]/tn;addN(x,v,'LAT',true);preMoves.push(`${x.a.short}+${v.toFixed(1)}`);});
+        preMoves.push(`（${lab}、${donors.map(x=>x.a.short).join('・')}から）`);}}
+    if(preMoves.length)log.push([0,'nato',`警報期間の${W}日間に、NATOは察知したWPの集中${(p.mask??0.3)>0?'（欺瞞で一部ぼやけている）':''}に合わせて予備を寄せた：${preMoves.join(' ')}（師団換算）`]);
+    else log.push([0,'nato',`警報期間の${W}日間、NATOはWPの集中をはっきり捉えられず、平時の配置のまま開戦を迎える`]);}
+  else if(W===0)log.push([0,'nato','警報期間がなく、NATOは平時の配置のまま開戦を迎える']);
   if(B.on)log.push([0,B.assault?'omg':'nato',B.assault?'東独軍と在独ソ連軍が西ベルリンの攻略にかかる（東独第1自動車化狙撃師団・ソ連第6独立親衛自狙旅団・国境警備隊に第20親衛軍の1個師団、計約3万人）。守るのは米英仏の守備隊と警察、約1万2千人':'西ベルリンは攻略せず包囲にとどめる。包囲に師団換算0.8を張り付ける']);
   log.push([0,'nato',AU.on?'WPがオーストリアの中立を破り、ソ連南部軍集団（4個師団）とハンガリー軍がウィーンからリンツを経てバイエルンを目指す':'オーストリアの中立は守られる（1964年計画も、3日目までにオーストリアが中立を保った場合の部隊配置を定めていた）']);
   ax.forEach(x=>x.hist.push({pen:0,wp:x.wp,nato:x.nato,R:null,omg:false}));
@@ -810,7 +844,7 @@ function run(p){
       if(due===p.warning+d||(due<=p.warning&&d===1)){
         if(r[4]==='sea'){const dl=Math.round((1-seaT)*8),fr0=0.4+0.6*seaT;convoys.push({r,day:d+dl,frac:fr0,dl});}
         else convoys.push({r,day:d,frac:1,dl:0});}});
-    convoys.filter(c=>c.day===d).forEach(c=>{const r=c.r;const cand=r[3]?ax.filter(x=>r[3].includes(x.a.id)):land;const t=cand.reduce((m,x)=>x.pen>m.pen?x:m,cand[0]);
+    convoys.filter(c=>c.day===d).forEach(c=>{const r=c.r;const cand=r[3]?ax.filter(x=>r[3].includes(x.a.id)):land;const thr=x=>x.wp/Math.max(0.1,x.nato);const t=cand.reduce((m,x)=>(x.pen>m.pen||(p.preShift!==false&&x.pen===m.pen&&thr(x)>thr(m)))?x:m,cand[0]);
         const v=(r[1]-(NO.on&&noReinf&&r[0].startsWith('英 領土軍')?0.3:0))*p.scaleNato*c.frac;addN(t,v,natOfN(r[0]));
         log.push([d,'nato',`${r[0]}が最も押された${t.a.short}正面へ${r[4]==='sea'?`（船団の損失で${Math.round(c.frac*100)}%が到着、${c.dl}日遅れ）`:''}`]);});
     const seaAvg=seaHist.slice(-10).reduce((a,b)=>a+b,0)/Math.min(10,seaHist.length);
@@ -842,7 +876,7 @@ function run(p){
       const natoEff=Math.max(0.05,x.fogN*x.nato*(1-fr*(x.forW||0))*p.natoQ*posture*river*casN*supplyN*chemN*(x.flank?0.85:1)*(p.natoDoc==='AD'&&d<=4?1.15:1)*(x.omg>0?0.85:1));
       const front=x.a.amph?99:FRONTAGE;const wpEff=Math.max(0.01,Math.min(x.wp,front)*x.fogW*p.wpQ*casW*chemW*(1-(x.nsW||0)*decay*Math.min(1,Math.max(0,d-5)/40)*(x.stall?1.5:(x.fast?0.5:1))*(nucT&&d>nucT?1.5:1))); const R=wpEff/natoEff;
       let adv;
-      if(R>1.1)adv=x.a.terrain*12*(R-1.1);else if(R>=0.8)adv=x.a.terrain*1.5;else adv=d>=4?-x.a.terrain*8*(0.8-R)/0.8*(p.natoDoc==='ALB'?1:0.5):0;
+      if(R>1.1)adv=x.a.terrain*12*(R-1.1);else if(R>=0.8)adv=x.a.terrain*1.5;else adv=d>=4?-x.a.terrain*8*(0.8-R)/0.8*(p.natoDoc==='ALB'?1:0.5)*(bag&&GROUPS[0].includes(x.a.id)?1.3:1):0;
       if(p.nuc==='early'&&d<=3)adv*=1.6;
       if(wpBoost>0&&adv>0)adv*=1.6;
       if(x.halt>0){adv=Math.min(adv,0);x.halt--;}
@@ -870,7 +904,7 @@ function run(p){
     }
     // army-group reserves: quiet sectors release a share of their forces to the most threatened sector
     {const thr=land.filter(x=>x.hist[x.hist.length-1].R!=null);if(thr.length){const hot=thr.reduce((m,x)=>(x.hist[x.hist.length-1].R>m.hist[m.hist.length-1].R?x:m),thr[0]);
-      if(hot.hist[hot.hist.length-1].R>1.3){let moved=0;thr.forEach(x=>{const r=x.hist[x.hist.length-1].R;if(x!==hot&&r<0.6&&x.nato>1.5){const m=x.nato*0.04;x.nato-=m;moved+=m;}});
+      if(hot.hist[hot.hist.length-1].R>1.3){let moved=0;const nb=bag&&GROUPS[0].includes(hot.a.id);thr.forEach(x=>{const r=x.hist[x.hist.length-1].R;const same=nb&&GROUPS[0].includes(x.a.id);if(x!==hot&&r<0.6&&x.nato>1.5){const m=x.nato*(same?0.07:0.04);x.nato-=m;moved+=m*(same?0.9/0.8:1);}});
         if(moved>0){addN(hot,moved*0.8,'LAT',true);if(!hot.latLog){hot.latLog=true;log.push([d,'nato',`NATOが手薄でない正面から予備を引き抜き、${hot.a.short}正面へ回す（軍集団の予備運用）`]);}}}}}
     if(wpBoost>0)wpBoost--;
     if(rhineX&&p.phase2&&p.phase2!=='same'){const set=p.phase2==='paris'?land.filter(x=>x.a.paris):land.filter(x=>['uk1','ge1','nl1'].includes(x.a.id));
@@ -894,13 +928,13 @@ const MC_RANGES=[
   ['sea','大西洋の制海','±15ポイント'],['baltic','バルト海の制海','±15ポイント'],['deep','縦深攻撃の効果','×0.5〜1.5'],
   ['wpMob','WPの動員開始','±2日'],['intel','動員の察知','−1〜+2日'],['decide','同盟の決定','−1〜+2日'],['consult','核の協議','−1〜+2日'],['wp2Day','戦略第2梯団の到着','−2〜+3日'],
   ['chemN','化学兵器の効果','×0.5〜1.5（使用時）'],['bDef','西ベルリンの市街戦防御','×0.7〜1.4'],['aDef','オーストリアの山地防御','×0.7〜1.4'],
-  ['natSpread','NATO各国の質の差の大きさ','×0.5〜1.5'],['natoFr','多国籍の摩擦','×0.5〜1.5'],['wpRelK','非ソ連軍の信頼性の不足','±0.5'],['wpDecay','抗戦意欲の減衰','×0.5〜1.5'],['tJit','大西洋のソ連潜水艦の脅威','×0.75〜1.25'],['noJit','北ノルウェーのソ連軍の戦力','×0.75〜1.3'],
+  ['natSpread','NATO各国の質の差の大きさ','×0.5〜1.5'],['natoFr','多国籍の摩擦','×0.5〜1.5'],['wpRelK','非ソ連軍の信頼性の不足','±0.5'],['wpDecay','抗戦意欲の減衰','×0.5〜1.5'],['tJit','大西洋のソ連潜水艦の脅威','×0.75〜1.25'],['noJit','北ノルウェーのソ連軍の戦力','×0.75〜1.3'],['mask','WPの欺瞞（マスキロフカ）','±0.2'],
   ['fog','軸ごとの戦力見積もりの誤差','各軸±10%（対数正規）'],['day','日々の前進の振れ','±30%（対数正規）']];
 function jitter(p,r){const U=(a,b)=>a+(b-a)*r(),I=(a,b)=>a+Math.floor(r()*(b-a+1)),cl=(v,a,b)=>Math.max(a,Math.min(b,v));
   const q={...p};q.natoQ=p.natoQ*U(0.8,1.2);q.wpQ=(p.wpQ||1)*U(0.85,1.15);q.airQ=(p.airQ||2)*U(0.75,1.25);q.airOp=cl(p.airOp+U(-.15,.15),0,1);
   q.sea=cl(p.sea+U(-.15,.15),0,1);q.baltic=cl(p.baltic+U(-.15,.15),0,1);q.deep=p.deep*U(0.5,1.5);
   q.wpMob=Math.max(0,p.wpMob+I(-2,2));q.intel=Math.max(0,(p.intel||0)+I(-1,2));q.decide=Math.max(0,(p.decide||0)+I(-1,2));q.consult=Math.max(0,(p.consult||0)+I(-1,2));
-  q.wp2Day=Math.max(3,p.wp2Day+I(-2,3));q.chemN=(p.chemN??15)*U(0.5,1.5);q.chemW=(p.chemW??5)*U(0.5,1.5);q.bDef=U(0.7,1.4);q.aDef=U(0.7,1.4);q.natoFr=(p.natoFr??10)*U(0.5,1.5);q.wpRelK=Math.max(0,(p.wpRelK??1)+U(-.5,.5));q.wpDecay=(p.wpDecay??15)*U(0.5,1.5);q.tJit=U(0.75,1.25);q.natSpread=Math.max(0,(p.natSpread??1)*U(0.5,1.5));q.noJit=U(0.75,1.3);return q;}
+  q.wp2Day=Math.max(3,p.wp2Day+I(-2,3));q.chemN=(p.chemN??15)*U(0.5,1.5);q.chemW=(p.chemW??5)*U(0.5,1.5);q.bDef=U(0.7,1.4);q.aDef=U(0.7,1.4);q.natoFr=(p.natoFr??10)*U(0.5,1.5);q.wpRelK=Math.max(0,(p.wpRelK??1)+U(-.5,.5));q.wpDecay=(p.wpDecay??15)*U(0.5,1.5);q.tJit=U(0.75,1.25);q.natSpread=Math.max(0,(p.natSpread??1)*U(0.5,1.5));q.noJit=U(0.75,1.3);q.mask=Math.max(0,Math.min(1,(p.mask??0.3)+U(-.2,.2)));return q;}
 function mc(p,n,seed){const r=mulberry(seed||12345);const out=[];
   for(let i=0;i<n;i++){const q=jitter(p,r);q.seed=1+Math.floor(r()*1e9);const z=run(q);
     out.push({thr:z.stop||z.thrDay||null,use:z.nucT,berlin:z.berlin.fell,aust:z.austria.thru,norw:z.norway.lost,reached:z.reached,paris:z.parisDay,calais:z.calaisDay,
@@ -953,7 +987,7 @@ function posAt(a,km){km=Math.max(0,Math.min(a.len,km));let i=1;while(i<a.cum.len
 function placeAt(a,km){let n=a.path[0][2];for(let i=0;i<a.path.length;i++){if(a.cum[i]<=km+1)n=a.path[i][2];}return n;}
 
 /* ---------- presets ---------- */
-const BASE={airQ:2.0,airOp:0.7,sea:0.6,nukeMode:'stop',wpMob:10,intel:1,decide:2,consult:2,frgVeto:false,frNuke:true,berlin:'assault',austria:'neutral',norway:false,chem:false,nat:true,natSpread:1,natoFr:10,wpRelK:1,wpDecay:15,sovNavy:'bastion',fwd:true,noReinf:true,chemN:15,chemW:5,chemDelay:2,phase2:'paris',natoQ:1.2,wp2Day:8,wp2:1,deep:0.25,threshold:120,ignore:false,scaleNato:1,wpQ:1,france:true,baltic:0.5,landDay:2,main:'uk1',era:1985};
+const BASE={airQ:2.0,airOp:0.7,sea:0.6,nukeMode:'stop',wpMob:10,intel:1,decide:2,consult:2,frgVeto:false,frNuke:true,berlin:'assault',austria:'neutral',norway:false,chem:false,preShift:true,mask:0.3,crossAG:false,bagnall:true,nat:true,natSpread:1,natoFr:10,wpRelK:1,wpDecay:15,sovNavy:'bastion',fwd:true,noReinf:true,chemN:15,chemW:5,chemDelay:2,phase2:'paris',natoQ:1.2,wp2Day:8,wp2:1,deep:0.25,threshold:120,ignore:false,scaleNato:1,wpQ:1,france:true,baltic:0.5,landDay:2,main:'uk1',era:1985};
 const PRESETS={
  p1961:{label:'1961 ブーリャ演習型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.9,airQ:1.3,sea:0.7,wpMob:3,intel:0,decide:0,wp2Day:7,wp2:0.8,deep:0,scaleNato:0.85,sovNavy:'sloc',fwd:false,baltic:0.8,era:1961,main:'auto'},nuke:'n1961',
   desc:'1968年以前なのでソ連中央軍集団はまだない。ベルリン危機下の連合演習。NATOの核攻撃に反撃して核を同時使用し、西欧へ突進する。当時のNATOは大量報復の時代で、FM100-5のドクトリン区別はまだない（モデルでは近い挙動の側を使う）。',
@@ -979,13 +1013,13 @@ let P={};
 const $=id=>document.getElementById(id);
 (function(){const m=$('main');[['auto','自動（最も進んだ軸へ）'],...AXES.filter(a=>!a.amph).map(a=>[a.id,a.name])].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;m.appendChild(o);});})();
 const sel=$('preset');Object.entries(PRESETS).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;sel.appendChild(o);});
-const FIELDS=['natSpread','natoFr','wpRelK','wpDecay','wpMob','intel','decide','consult','chemN','chemW','chemDelay','natoQ','airQ','airOp','sea','wp2Day','deep','threshold','baltic'];
-const fmt={wpMob:v=>v+'日前',intel:v=>v+'日',natSpread:v=>'×'+(+v).toFixed(2),natoFr:v=>'−'+v+'%',wpRelK:v=>'×'+(+v).toFixed(2),wpDecay:v=>'−'+v+'%',chemN:v=>'−'+v+'%',chemW:v=>'−'+v+'%',chemDelay:v=>v+'日',decide:v=>v+'日',consult:v=>v+'日',natoQ:v=>'×'+(+v).toFixed(2),airQ:v=>'×'+(+v).toFixed(1),airOp:v=>Math.round(v*100)+'%',sea:v=>Math.round(v*100)+'%',wp2Day:v=>'M+'+v,deep:v=>Math.round(v*100)+'%',threshold:v=>v+'km',baltic:v=>Math.round(v*100)+'%'};
-function applyPreset(k){P={...BASE,...PRESETS[k].p};FIELDS.forEach(f=>{$(f).value=P[f];});$('main').value=P.main;$('wpDoc-'+P.wpDoc).checked=true;$('natoDoc-'+P.natoDoc).checked=true;$('france').checked=P.france;$('nukeMode').value=P.nukeMode;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf'].forEach(k=>$(k).checked=!!P[k]);['berlin','austria','phase2','sovNavy'].forEach(k=>$(k).value=P[k]);$('pdesc').textContent=PRESETS[k].desc;}
+const FIELDS=['mask','natSpread','natoFr','wpRelK','wpDecay','wpMob','intel','decide','consult','chemN','chemW','chemDelay','natoQ','airQ','airOp','sea','wp2Day','deep','threshold','baltic'];
+const fmt={wpMob:v=>v+'日前',intel:v=>v+'日',mask:v=>(+v).toFixed(1),natSpread:v=>'×'+(+v).toFixed(2),natoFr:v=>'−'+v+'%',wpRelK:v=>'×'+(+v).toFixed(2),wpDecay:v=>'−'+v+'%',chemN:v=>'−'+v+'%',chemW:v=>'−'+v+'%',chemDelay:v=>v+'日',decide:v=>v+'日',consult:v=>v+'日',natoQ:v=>'×'+(+v).toFixed(2),airQ:v=>'×'+(+v).toFixed(1),airOp:v=>Math.round(v*100)+'%',sea:v=>Math.round(v*100)+'%',wp2Day:v=>'M+'+v,deep:v=>Math.round(v*100)+'%',threshold:v=>v+'km',baltic:v=>Math.round(v*100)+'%'};
+function applyPreset(k){P={...BASE,...PRESETS[k].p};FIELDS.forEach(f=>{$(f).value=P[f];});$('main').value=P.main;$('wpDoc-'+P.wpDoc).checked=true;$('natoDoc-'+P.natoDoc).checked=true;$('france').checked=P.france;$('nukeMode').value=P.nukeMode;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf','preShift','crossAG','bagnall'].forEach(k=>$(k).checked=!!P[k]);['berlin','austria','phase2','sovNavy'].forEach(k=>$(k).value=P[k]);$('pdesc').textContent=PRESETS[k].desc;}
 function readForm(){FIELDS.forEach(f=>{P[f]=+$(f).value;$('v-'+f).textContent=fmt[f]($(f).value);});P.natoLag=P.intel+P.decide;$('v-prep').textContent=Math.max(0,P.wpMob-P.natoLag)+'日';
   P.main=$('main').value;P.wpDoc=document.querySelector('input[name=wpDoc]:checked').value;P.natoDoc=document.querySelector('input[name=natoDoc]:checked').value;
-  P.nuc=P.wpDoc==='nuc'?'early':'flex';P.france=$('france').checked;P.nukeMode=$('nukeMode').value;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf'].forEach(k=>P[k]=$(k).checked);['berlin','austria','phase2','sovNavy'].forEach(k=>P[k]=$(k).value);P.nk=readNk();
-  $('threshold').disabled=P.nuc==='early';$('nukeMode').disabled=P.nuc==='early';$('consult').disabled=P.nuc==='early'||!['fu','esc'].includes(P.nukeMode);$('frgVeto').disabled=$('consult').disabled;$('deep').disabled=P.natoDoc!=='ALB';['chemN','chemW','chemDelay'].forEach(k=>$(k).disabled=!P.chem);['natSpread','natoFr','wpRelK','wpDecay'].forEach(k=>$(k).disabled=!P.nat);$('noReinf').disabled=!P.norway;$('fwd').disabled=P.era<1981;}
+  P.nuc=P.wpDoc==='nuc'?'early':'flex';P.france=$('france').checked;P.nukeMode=$('nukeMode').value;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf','preShift','crossAG','bagnall'].forEach(k=>P[k]=$(k).checked);['berlin','austria','phase2','sovNavy'].forEach(k=>P[k]=$(k).value);P.nk=readNk();
+  $('threshold').disabled=P.nuc==='early';$('nukeMode').disabled=P.nuc==='early';$('consult').disabled=P.nuc==='early'||!['fu','esc'].includes(P.nukeMode);$('frgVeto').disabled=$('consult').disabled;$('deep').disabled=P.natoDoc!=='ALB';['chemN','chemW','chemDelay'].forEach(k=>$(k).disabled=!P.chem);['natSpread','natoFr','wpRelK','wpDecay'].forEach(k=>$(k).disabled=!P.nat);$('noReinf').disabled=!P.norway;$('fwd').disabled=P.era<1981;$('bagnall').disabled=P.era<1984;['mask','crossAG'].forEach(k=>$(k).disabled=!P.preShift);}
 let R=null, day=0, timer=null, openAxis=null;
 function readNk(){const g=(id,d)=>{const v=+(document.getElementById(id)||{}).value;return isFinite(v)&&v>0?v:d;};return {n1:g('n1',40),k1:g('k1',10),n2:g('n2',400),k2:g('k2',200),n3:g('n3',300),k3:g('k3',150)};}
 function recompute(keepDay){const atEnd=R&&day>=R.days;readForm();R=run(P);if(!keepDay)day=0;else if(atEnd)day=R.days;day=Math.min(day,R.days);draw();drawChart();drawAir();chartCursor();if(typeof mcSchedule==='function')mcSchedule();}
@@ -1255,7 +1289,7 @@ const DIVPROF=[
 /* ---------- uncertainty: Monte Carlo over the user's settings ---------- */
 var MC={tok:0,timer:null,A:null,B:null,n:0};
 const SENS_KEYS=[['natoQ','NATOの質的係数'],['wpQ','WPの質'],['airQ','NATO機の質'],['airOp','WPの初期航空作戦'],['sea','大西洋の制海'],['baltic','バルト海の制海'],
-  ['deep','縦深攻撃の効果'],['wpMob','WPの動員開始'],['intel','動員の察知'],['decide','同盟の決定'],['wp2Day','戦略第2梯団の到着'],['chemN','化学兵器の効果'],['natSpread','NATO各国の質の差'],['natoFr','多国籍の摩擦'],['wpRelK','非ソ連軍の信頼性の不足'],['wpDecay','非ソ連軍の抗戦意欲の低下'],['tJit','ソ連潜水艦の脅威'],['bDef','西ベルリンの市街戦防御'],['aDef','オーストリアの山地防御']];
+  ['deep','縦深攻撃の効果'],['wpMob','WPの動員開始'],['intel','動員の察知'],['decide','同盟の決定'],['wp2Day','戦略第2梯団の到着'],['chemN','化学兵器の効果'],['natSpread','NATO各国の質の差'],['natoFr','多国籍の摩擦'],['wpRelK','非ソ連軍の信頼性の不足'],['wpDecay','非ソ連軍の抗戦意欲の低下'],['tJit','ソ連潜水艦の脅威'],['mask','WPの欺瞞'],['bDef','西ベルリンの市街戦防御'],['aDef','オーストリアの山地防御']];
 function mcSchedule(){if(!MC||!$('mcauto').checked)return;clearTimeout(MC.timer);MC.timer=setTimeout(mcStart,450);}
 function mcStart(){
   const tok=++MC.tok;const n=+$('mcn').value;const t0=performance.now();
@@ -1325,7 +1359,7 @@ function mcChart(){
 }
 function mcSens(){
   const useA=!!MC.A;const set=useA?MC.A:MC.B;const y=set.map(r=>(useA?r.thr:r.rhine)??61);
-  const keys=SENS_KEYS.filter(([k])=>!(k==='chemN'&&!P.chem)&&!(k==='bDef'&&P.berlin!=='assault')&&!(k==='aDef'&&P.austria!=='violate')&&!(k==='deep'&&P.natoDoc!=='ALB')&&!(['natSpread','natoFr','wpRelK','wpDecay'].includes(k)&&!P.nat));
+  const keys=SENS_KEYS.filter(([k])=>!(k==='chemN'&&!P.chem)&&!(k==='bDef'&&P.berlin!=='assault')&&!(k==='aDef'&&P.austria!=='violate')&&!(k==='deep'&&P.natoDoc!=='ALB')&&!(['natSpread','natoFr','wpRelK','wpDecay'].includes(k)&&!P.nat)&&!(k==='mask'&&!P.preShift));
   if(new Set(y).size<2){$('mcsens').innerHTML=`<p class="mcnote">${useA?'核の敷居に達する日':'ライン川に届く日'}がどの試行でも同じで、比べられない。</p>`;return;}
   const rows=keys.map(([k,l])=>({k,l,r:spear(set.map(z=>z.q[k]),y)})).sort((a,b)=>Math.abs(b.r)-Math.abs(a.r)).slice(0,6);
   const what=useA?'核の敷居':'ライン川到達';

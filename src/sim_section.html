@@ -14,6 +14,12 @@
       <label for="decide"><span class="lab">同盟が動員を決めるまで <span class="mono" id="v-decide"></span></span>
         <input type="range" id="decide" min="0" max="7" step="1"></label>
       <div class="prep">NATOの準備期間 <b class="mono" id="v-prep"></b></div>
+      <fieldset class="nset"><legend>警報期間中の再配置</legend>
+      <label class="chk" for="preShift"><input type="checkbox" id="preShift"> 捉えたWPの集中に合わせて、開戦前に予備を寄せる</label>
+      <label for="mask"><span class="lab">WPの欺瞞（マスキロフカ） <span class="mono" id="v-mask"></span></span>
+        <input type="range" id="mask" min="0" max="1" step="0.1"></label>
+      <label class="chk" for="crossAG"><input type="checkbox" id="crossAG"> 軍集団をまたいで予備を回す（CENTAGとNORTHAGの間）</label>
+      <label class="chk" for="bagnall"><input type="checkbox" id="bagnall"> 北部軍集団の作戦予備と反撃（バグナル、1984年〜）</label></fieldset>
       <label for="natoQ"><span class="lab">NATOの質的係数 <span class="mono" id="v-natoQ"></span></span>
         <input type="range" id="natoQ" min="0.8" max="1.6" step="0.05"></label>
       <fieldset class="nset"><legend>国ごとの差</legend>
