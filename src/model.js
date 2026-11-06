@@ -1,52 +1,52 @@
 /* ===== shared model (also embedded in page) ===== */
 // unit: [name, garrison, DE, arrival(day relative to mobilization start; WP: day of war)]
 const AXES=[
- {id:'zea',short:'シェラン',name:'シェラン島・バルト海峡',amph:true,terrain:0.8,sea:'ケーゲ湾（上陸）',
+ {id:'zea',host:'DK',short:'シェラン',name:'シェラン島・バルト海峡',amph:true,terrain:0.8,sea:'ケーゲ湾（上陸）',
   natoCmd:'LANDZEALAND（デンマーク）',wpCmd:'ポーランド沿岸方面軍の上陸部隊・バルト艦隊',
   path:[[13.55,54.45,'リューゲン島（出撃）'],[12.25,55.40,'ケーゲ湾（上陸）'],[12.57,55.68,'コペンハーゲン'],[12.60,56.03,'ヘルシンゲル']],
   wp:[['ポーランド第7ルジツァ上陸師団','グダニスク',0.6,0],['ポーランド第6ポモージェ空挺師団','クラクフ',0.5,0],['ソ連バルト艦隊 第336親衛海軍歩兵旅団','バルチースク',0.25,0]],
   nato:[['第1シェラン旅団','ホルベク',0.3,1],['第2シェラン旅団','ヴォーディングボー',0.3,1],['シェラン戦闘団1〜4（予備役）','シェラン各地',0.4,3],['ホームガード','シェラン',0.2,1]]},
- {id:'jut',short:'LANDJUT',name:'シュレースヴィヒ＝ホルシュタイン・ユトランド',terrain:0.85,
+ {id:'jut',host:'FRG',short:'LANDJUT',name:'シュレースヴィヒ＝ホルシュタイン・ユトランド',terrain:0.85,
   natoCmd:'LANDJUT（レンツブルク）',wpCmd:'東独第5軍 → ポーランド方面軍',
   path:[[11.41,53.63,'シュヴェリーン'],[10.69,53.87,'リューベック'],[10.13,54.32,'キール'],[9.67,54.30,'レンツブルク（キール運河）'],[9.43,54.79,'フレンスブルク'],[9.47,55.49,'コリング'],[10.20,56.15,'オーフス']],
   wp:[['東独 第8自動車化狙撃師団','シュヴェリーン',1.0,0],['東独 第9戦車師団','エッゲジン',1.0,0],['ポーランド方面軍 第一梯団＝ポモージェ軍管区の軍（第8・第12・第15自狙師団、第16・第20戦車師団）','ポモージェ軍管区',5.0,3]],
   nato:[['西独 第6装甲擲弾兵師団','ノイミュンスター',1.0,0],['デンマーク ユトランド師団（第1〜3旅団）','フレゼリシア',0.8,1],['西独 第51・第61郷土防衛旅団','シュレースヴィヒ＝ホルシュタイン',0.4,2],['英 第1歩兵旅団（UK機動部隊）','英本土',0.3,5],['米 第9歩兵師団','フォート・ルイス',1.0,12]]},
- {id:'nl1',short:'蘭I',name:'リューネブルク〜ブレーメン（蘭第1軍団）',terrain:0.9,
+ {id:'nl1',host:'NL',short:'蘭I',name:'リューネブルク〜ブレーメン（蘭第1軍団）',terrain:0.9,
   natoCmd:'NORTHAG 蘭第1軍団（アペルドールン）',wpCmd:'在独ソ連軍 第2親衛戦車軍（北翼）',
   path:[[11.86,53.07,'ペルレベルク'],[11.10,53.10,'ダンネンベルク'],[10.41,53.25,'リューネブルク'],[9.40,53.11,'ローテンブルク'],[8.80,53.08,'ブレーメン'],[8.21,53.14,'オルデンブルク'],[6.57,53.22,'フローニンゲン'],[4.90,52.37,'アムステルダム'],[4.30,52.08,'ハーグ']],
   wp:[['第16親衛戦車師団','ノイシュトレリッツ',1.0,0],['第21自動車化狙撃師団','ペルレベルク',1.0,0]],
   nato:[['蘭 第41機甲旅団（前方配置）','ゼードルフ',0.35,0],['米 第2機甲師団 第3旅団（前方配置）','ガルシュテット',0.35,1],['蘭 第1師団','アーネム',0.8,2],['蘭 第4師団','ハルデルウェイク',0.8,2],['蘭 第5師団（予備役）','アペルドールン',0.7,4],['蘭 第101歩兵旅団（予備役）','ストルーエ',0.25,4]]},
- {id:'ge1',short:'西独I',name:'ユルツェン〜ツェレ（西独第1軍団）',terrain:0.95,
+ {id:'ge1',host:'FRG',short:'西独I',name:'ユルツェン〜ツェレ（西独第1軍団）',terrain:0.95,
   natoCmd:'NORTHAG 西独第1軍団（ミュンスター）',wpCmd:'在独ソ連軍 第2親衛戦車軍（南翼）・第3打撃軍の一部',
   path:[[11.15,52.85,'ザルツヴェーデル'],[10.56,52.96,'ユルツェン'],[10.08,52.62,'ツェレ'],[9.21,52.64,'ニーンブルク'],[8.05,52.28,'オスナブリュック'],[6.89,52.22,'エンスヘーデ'],[5.90,51.98,'アーネム（ライン）'],[5.12,52.09,'ユトレヒト'],[4.48,51.92,'ロッテルダム']],
   wp:[['第94親衛自動車化狙撃師団（第2親衛戦車軍）','シュヴェリーン',1.0,0],['第207自動車化狙撃師団（第2親衛戦車軍）','シュテンダール',1.0,0],['第12親衛戦車師団（第3打撃軍）','ノイルピン',1.0,0]],
   nato:[['西独 第1装甲師団','ハノーファー',1.0,0],['西独 第3装甲師団','ブクステフーデ',1.0,0],['西独 第11装甲擲弾兵師団','オルデンブルク',1.0,1],['西独 第7装甲師団','ウンナ',1.0,1],['西独 第27空挺旅団','リップシュタット',0.3,0]]},
- {id:'uk1',short:'英I',name:'ヘルムシュテット〜ハノーファー南（英第1軍団）',terrain:1.0,
+ {id:'uk1',host:'UK',short:'英I',name:'ヘルムシュテット〜ハノーファー南（英第1軍団）',terrain:1.0,
   natoCmd:'NORTHAG 英第1軍団（ビーレフェルト）',wpCmd:'在独ソ連軍 第3打撃軍（主攻）',
   path:[[11.63,52.13,'マクデブルク'],[11.00,52.23,'ヘルムシュテット'],[10.52,52.27,'ブラウンシュヴァイク'],[9.95,52.15,'ヒルデスハイム'],[9.36,52.10,'ハーメルン'],[8.53,52.02,'ビーレフェルト'],[7.63,51.96,'ミュンスター'],[6.62,51.66,'ヴェーゼル（ライン）'],[5.48,51.44,'アイントホーフェン'],[4.40,51.22,'アントワープ'],[3.72,51.05,'ヘント'],[1.86,50.95,'カレー（仏国境の先）']],
   wp:[['第7親衛戦車師団','ロスラウ',1.0,0],['第10親衛戦車師団','アルテングラボウ',1.0,0],['第47親衛戦車師団','ヒラースレーベン',1.0,0]],
   nato:[['英 第1機甲師団','フェルデン',1.0,0],['英 第4機甲師団（第19旅団は英本土から）','ヘルフォルト',0.9,1],['英 第3機甲師団','ゾースト',1.0,1],['英 第2歩兵師団','ヨーク（英本土）',0.8,3]]},
- {id:'be1',short:'白I',name:'ゲッティンゲン〜カッセル（ベルギー第1軍団）',terrain:0.75,
+ {id:'be1',host:'BE',short:'白I',name:'ゲッティンゲン〜カッセル（ベルギー第1軍団）',terrain:0.75,
   natoCmd:'NORTHAG ベルギー第1軍団（ケルン）',wpCmd:'東独第3軍',
   path:[[10.79,51.50,'ノルトハウゼン'],[9.93,51.53,'ゲッティンゲン'],[9.48,51.31,'カッセル'],[8.75,51.72,'パーダーボルン'],[7.47,51.51,'ドルトムント'],[6.77,51.23,'デュッセルドルフ（ライン）'],[6.08,50.78,'アーヘン'],[5.57,50.63,'リエージュ'],[4.35,50.85,'ブリュッセル'],[3.06,50.63,'リール（仏国境）'],[2.35,48.86,'パリ']],
   wp:[['東独 第4自動車化狙撃師団','エアフルト',1.0,0],['東独 第11自動車化狙撃師団','ハレ',1.0,0]],
   nato:[['ベルギー 第16機甲師団','ネーハイム＝ヒュステン',1.0,0],['ベルギー 第1歩兵師団','リエージュ（本国）',0.8,2]]},
- {id:'ge3',short:'西独III',name:'エシュヴェーゲ〜ギーセン（西独第3軍団）',terrain:0.7,
+ {id:'ge3',host:'FRG',short:'西独III',name:'エシュヴェーゲ〜ギーセン（西独第3軍団）',terrain:0.7,
   natoCmd:'CENTAG 西独第3軍団（コブレンツ）',wpCmd:'在独ソ連軍 第8親衛軍・第1親衛戦車軍の一部',
   path:[[10.45,51.21,'ミュールハウゼン'],[10.05,51.19,'エシュヴェーゲ'],[9.71,50.87,'バート・ヘルスフェルト'],[9.27,50.75,'アルスフェルト'],[8.68,50.58,'ギーセン'],[7.60,50.36,'コブレンツ（ライン）'],[6.13,49.61,'ルクセンブルク'],[5.78,49.52,'ロンウィ（仏国境）'],[4.03,49.26,'ランス'],[2.35,48.86,'パリ']],
   wp:[['第57親衛自動車化狙撃師団（第8親衛軍）','ナウムブルク',1.0,0],['第20親衛自動車化狙撃師団（第1親衛戦車軍）','グリマ',1.0,0]],
   nato:[['西独 第2装甲擲弾兵師団','カッセル',1.0,0],['西独 第5装甲師団','ディーツ',1.0,1],['西独 第26空挺旅団','ザールルイ',0.3,1]]},
- {id:'us5',short:'米V',name:'フルダ・ギャップ（米第5軍団）',terrain:0.65,
+ {id:'us5',host:'US',short:'米V',name:'フルダ・ギャップ（米第5軍団）',terrain:0.65,
   natoCmd:'CENTAG 米第5軍団（フランクフルト）',wpCmd:'在独ソ連軍 第8親衛軍（主力）',
   path:[[10.32,50.97,'アイゼナハ'],[9.68,50.55,'フルダ'],[8.92,50.13,'ハーナウ'],[8.68,50.11,'フランクフルト'],[8.27,50.00,'マインツ（ライン）'],[7.77,49.44,'カイザースラウテルン'],[7.00,49.23,'ザールブリュッケン（仏国境）'],[6.18,49.12,'メス'],[5.38,49.16,'ヴェルダン'],[4.03,49.26,'ランス'],[2.35,48.86,'パリ']],
   wp:[['第79親衛戦車師団','イェーナ',1.0,0],['第39親衛自動車化狙撃師団','オールドルフ',1.0,0],['第27親衛自動車化狙撃師団','ハレ',1.0,0]],
   nato:[['米 第11機甲騎兵連隊','フルダ',0.4,0],['米 第3機甲師団','フランクフルト',1.0,0],['米 第8歩兵師団（機械化）','バート・クロイツナハ',1.0,0],['米 第4歩兵師団（機械化）・第194機甲旅団・第197歩兵旅団（REFORGER）','米本土',1.6,10]]},
- {id:'us7',short:'米VII',name:'ホーフ・コーブルク〜ニュルンベルク（米第7軍団）',terrain:0.65,
+ {id:'us7',host:'US',short:'米VII',name:'ホーフ・コーブルク〜ニュルンベルク（米第7軍団）',terrain:0.65,
   natoCmd:'CENTAG 米第7軍団（シュトゥットガルト）',wpCmd:'在独ソ連軍 第1親衛戦車軍・東独第7戦車師団・チェコスロヴァキア第1軍',
   path:[[12.13,50.50,'プラウエン'],[11.92,50.31,'ホーフ'],[11.58,49.94,'バイロイト'],[11.08,49.45,'ニュルンベルク'],[10.57,49.30,'アンスバッハ'],[9.22,49.14,'ハイルブロン'],[8.40,49.01,'カールスルーエ（ライン）'],[8.18,48.97,'ラウターブール（仏国境）'],[6.18,48.69,'ナンシー'],[4.07,48.30,'トロワ'],[2.35,48.86,'パリ']],
   wp:[['第11親衛戦車師団','ドレスデン',1.0,0],['第9戦車師団','リーザ',1.0,0],['東独 第7戦車師団','ドレスデン',1.0,0],['チェコスロヴァキア 第1戦車師団','スラニー',1.0,0],['チェコスロヴァキア 第19・第20自動車化狙撃師団','プルゼニ・カルロヴィ・ヴァリ',2.0,0]],
   nato:[['米 第2機甲騎兵連隊','ニュルンベルク',0.4,0],['米 第1機甲師団','アンスバッハ',1.0,0],['米 第3歩兵師団（機械化）','ヴュルツブルク',1.0,0],['西独 第12装甲師団（第3軍団）','ファイツヘーヒハイム',1.0,1],['カナダ 第4機械化旅団群','ラール',0.3,1],['米 第1歩兵師団（機械化、REFORGER）','フォート・ライリー',1.0,10]]},
- {id:'ge2',short:'西独II',name:'ケム〜レーゲンスブルク〜ドナウ（西独第2軍団）',terrain:0.65,
+ {id:'ge2',host:'FRG',short:'西独II',name:'ケム〜レーゲンスブルク〜ドナウ（西独第2軍団）',terrain:0.65,
   natoCmd:'CENTAG 西独第2軍団（ウルム）',wpCmd:'チェコスロヴァキア第4軍・第1軍の一部',
   path:[[13.38,49.75,'プルゼニ'],[12.66,49.22,'カム'],[12.10,49.02,'レーゲンスブルク'],[11.42,48.76,'インゴルシュタット'],[9.99,48.40,'ウルム'],[7.75,48.58,'ストラスブール（ライン・仏国境）'],[6.02,47.24,'ブザンソン'],[4.84,45.76,'リヨン']],
   wp:[['チェコスロヴァキア 第4・第9戦車師団','ハヴリーチクーフ・ブロト・ターボル',2.0,0],['チェコスロヴァキア 第3・第15自動車化狙撃師団','クロムニェジーシュ・チェスケー・ブジェヨヴィツェ',2.0,0],['チェコスロヴァキア 第2自動車化狙撃師団','スシツェ',1.0,0]],
@@ -82,6 +82,15 @@ const NATO_RES=[
  ['米 州兵師団の動員（師団換算4、装備と練度の差を織り込む）。大西洋の船団で輸送',4,45,null,'sea']
 ];
 const FRONTAGE=8, DAYS=60;
+/* ---- national differences ---- */
+const NAT_N=[['米','US'],['西独','FRG'],['英','UK'],['蘭','NL'],['ベルギー','BE'],['デンマーク','DK'],['仏','FR'],['加','CA'],['カナダ','CA'],['第1シェラン','DK'],['第2シェラン','DK'],['シェラン','DK'],['ホームガード','DK']];
+const natOfN=n=>{for(const [k,v] of NAT_N)if(n.startsWith(k))return v;return 'X';};
+const natOfW=n=>n.includes('東独')?'NVA':n.includes('ポーランド')?'POL':n.includes('チェコスロヴァキア')?'CS':'SU';
+// NATO national quality relative to the alliance-wide coefficient (era-dependent; see §6)
+const QN=(n,e)=>({US:e<1970?0.95:e<1980?0.85:1.05, FRG:e<1960?0.8:e<1970?0.95:1.05, UK:1.0, NL:0.85, BE:0.8, DK:0.8, FR:0.95, CA:1.0}[n]||1);
+// political reliability of non-Soviet WP armies at the outbreak of war (1 = as reliable as Soviet units)
+const RELW=(n,e)=>({SU:1, NVA:e<1960?0.85:0.95, POL:e<1960?0.8:e<1970?0.9:e<1980?0.85:0.7, CS:e<1960?0.85:e<1968?0.9:e<1980?0.7:0.75}[n]??1);
+const NAT_LABEL={US:'米',FRG:'西独',UK:'英',NL:'蘭',BE:'ベルギー',DK:'デンマーク',FR:'仏',CA:'加',NVA:'東独',POL:'ポーランド',CS:'チェコスロヴァキア',SU:'ソ連'};
 // air order of battle by era: WP numbers relative to NATO (=1), NATO quality multiplier
 const AIR_ERA=e=>e<1970?{w:1.5,q:1.3,shelter:0.15}:e<1980?{w:1.8,q:1.6,shelter:0.45}:{w:1.9,q:2.0,shelter:0.65};
 const DPW=kt=>1035*Math.pow(kt,2/3)*1.2; // civilian deaths per weapon (Carte Blanche anchor x 1980s density)
@@ -113,21 +122,33 @@ function run(p){
   const nukes=[]; // [day, axisId, kind] for the map
   const ae=AIR_ERA(p.era); let airN=1, airW=ae.w*(p.airW||1); const airQ=p.airQ||ae.q; let sGot=false;
   const natoArr=(u,d)=>u[3]<=p.warning+d;
-  ax.forEach(x=>{x.nato=x.a.nato.filter(u=>natoArr(u,0)).reduce((s,u)=>s+u[2],0)*p.scaleNato;
-    if(x.a.amph){x.amphPool=x.a.wp.reduce((s,u)=>s+u[2],0);}else{x.wp=x.a.wp.filter(u=>u[3]<=M).reduce((s,u)=>s+u[2],0);}});
+  const NAT=p.nat!==false, fr=NAT?(p.natoFr??10)/100:0, relK=p.wpRelK??1, decay=NAT?(p.wpDecay??15)/100:0;
+  const spread=p.natSpread??1, qN=n=>NAT?Math.max(0.3,1+spread*(QN(n,p.era)-1)):1, relW=n=>NAT?Math.max(0.2,1-relK*(1-RELW(n,p.era))):1;
+  // strengths are stored as effective DE; forW = share of NATO strength from outside the host nation, nsW = share of WP strength from non-Soviet armies
+  function addN(x,v,nat,raw){const e=raw?v:v*qN(nat);const f=(nat!==x.a.host)?e:0;const tot=x.nato+e;x.forW=tot>0?((x.forW||0)*x.nato+f)/tot:0;x.nato=tot;return e;}
+  function addW(x,v,nat){const e=v*relW(nat);const ns=nat!=='SU'?e:0;const tot=x.wp+e;x.nsW=tot>0?((x.nsW||0)*x.wp+ns)/tot:0;x.wp=tot;return e;}
+  ax.forEach(x=>{x.nato=0;x.wp=0;x.forW=0;x.nsW=0;x.a.nato.filter(u=>natoArr(u,0)).forEach(u=>addN(x,u[2]*p.scaleNato,natOfN(u[0])));
+    if(x.a.amph){x.amphPool=x.a.wp.reduce((s,u)=>s+u[2]*relW(natOfW(u[0])),0);x.nsW=1;}else{x.a.wp.filter(u=>u[3]<=M).forEach(u=>addW(x,u[2],natOfW(u[0])));}});
   if(rng)ax.forEach(x=>{x.fogW=Math.exp(0.10*gauss());x.fogN=Math.exp(0.10*gauss());});
   const pre=[];
-  WP_ECH.forEach(e=>{if(e[4]&&p.era<e[4])return;if(e[2]>M)return;const c=e[3]?ax.filter(x=>e[3].includes(x.a.id)):land;const t=pick(c,false);const v=e[1]-(e[0].includes('第20親衛軍')?gaHeld:0);t.wp+=v;pre.push(`${t.a.short}+${v}`);});
-  WP_STRAT.forEach(w=>{if(p.wp2Day+w[2]>M)return;const tot=w[1]*p.wp2;const first=mainAx||weakest(land);const second=weakest(land.filter(x=>x!==first));first.wp+=tot*0.7;second.wp+=tot*0.3;pre.push(`戦略第2梯団（${first.a.short}・${second.a.short}）+${tot.toFixed(0)}`);});
+  WP_ECH.forEach(e=>{if(e[4]&&p.era<e[4])return;if(e[2]>M)return;const c=e[3]?ax.filter(x=>e[3].includes(x.a.id)):land;const t=pick(c,false);const v=e[1]-(e[0].includes('第20親衛軍')?gaHeld:0);const ev=addW(t,v,natOfW(e[0]));pre.push(`${t.a.short}+${+ev.toFixed(1)}`);});
+  WP_STRAT.forEach(w=>{if(p.wp2Day+w[2]>M)return;const tot=w[1]*p.wp2;const first=mainAx||weakest(land);const second=weakest(land.filter(x=>x!==first));addW(first,tot*0.7,'SU');addW(second,tot*0.3,'SU');pre.push(`戦略第2梯団（${first.a.short}・${second.a.short}）+${tot.toFixed(0)}`);});
   if(pre.length)log.push([0,'2nd',`開戦までに展開を終えた後続部隊：${pre.join('、')}（師団換算）`]);
   if(B.on)log.push([0,B.assault?'omg':'nato',B.assault?'東独軍と在独ソ連軍が西ベルリンの攻略にかかる（東独第1自動車化狙撃師団・ソ連第6独立親衛自狙旅団・国境警備隊に第20親衛軍の1個師団、計約3万人）。守るのは米英仏の守備隊と警察、約1万2千人':'西ベルリンは攻略せず包囲にとどめる。包囲に師団換算0.8を張り付ける']);
   log.push([0,'nato',AU.on?'WPがオーストリアの中立を破り、ソ連南部軍集団（4個師団）とハンガリー軍がウィーンからリンツを経てバイエルンを目指す':'オーストリアの中立は守られる（1964年計画も、3日目までにオーストリアが中立を保った場合の部隊配置を定めていた）']);
   ax.forEach(x=>x.hist.push({pen:0,wp:x.wp,nato:x.nato,R:null,omg:false}));
   const sHist=[airN*airQ/(airN*airQ+airW)], civHist=[0];
   let nato0=ax.reduce((s,x)=>s+x.nato,0);
-  const addNato=(d)=>{ax.forEach(x=>x.a.nato.forEach(u=>{if(u[3]>0&&u[3]===p.warning+d){x.nato+=u[2]*p.scaleNato;if(u[2]>=0.8&&d>0)log.push([d,'nato',`${u[0]}が${x.a.short}の担当区域に到着`]);}}));};
+  const addNato=(d)=>{ax.forEach(x=>x.a.nato.forEach(u=>{if(u[3]>0&&u[3]===p.warning+d){addN(x,u[2]*p.scaleNato,natOfN(u[0]));if(u[2]>=0.8&&d>0)log.push([d,'nato',`${u[0]}が${x.a.short}の担当区域に到着`]);}}));};
   const warDay=(m)=>{const d=m-M;return d>0?d+(p.natoDoc==='ALB'?2:0):0;};
-  const seaDelay=Math.round((1-p.sea)*8), seaFrac=0.4+0.6*p.sea;
+  // ---- Atlantic: Soviet threat to the sea lanes T, decaying under NATO ASW at the GIUK gap ----
+  const fwd=!!p.fwd&&p.era>=1981, sloc=p.sovNavy==='sloc';
+  let T=(sloc?1.0:0.45)*(fwd?0.8:1)*(p.tJit||1), seaT=0, giukLog=false; const seaHist=[]; const seaOf=t=>Math.max(0.05,Math.min(1,p.sea+0.35*(0.45-t)));
+  seaT=seaOf(T); seaHist.push(seaT); const convoys=[];
+  // ---- North Norway: Soviet 6th Army vs Brigade North and allied reinforcements ----
+  const NO={on:!!p.norway,km:0,wp:2.5*(p.noJit||1),def:0.7,lost:null,lyngen:false,hist:[0]};
+  const noReinf=p.noReinf!==false;
+  if(NO.on){NO.km=fwd?60:150;log.push([0,'omg',`WPがフィンマルクに侵攻。ソ連第6軍（第45・第54自動車化狙撃師団）と北方艦隊の海軍歩兵が${fwd?'国境から攻め込む（米海軍の前方展開でバレンツ海からの上陸は小規模にとどまる）':'国境とバレンツ海からの上陸で一気に西へ進む'}。守るのはノルウェー北部旅団`]);}
   function firstUse(d){if(nucT)return;nucT=d;const t=best(land);const veto=!!p.frgVeto;
     t.wp*=veto?0.7:0.5;t.halt=veto?1:2;const c=nk.n1*DPW(nk.k1);if(veto)civ.e+=c;else{civ.w+=c*0.6;civ.e+=c*0.4;}nukes.push([d,t.a.id,veto?'e':'f']);
     log.push([d,'nuc',veto?`西ドイツが自国領内での使用を拒んだため、NATOは東独領内の後続部隊と渡河点を狙って核を初使用（${nk.n1}発×${nk.k1}kt）。${t.a.short}軸のWPは3割を失い、1日前進が止まる`:`NATOが${t.a.short}正面で核を選択的に初使用（${nk.n1}発×${nk.k1}kt）。この正面のWP部隊は半減し、2日間前進が止まる`]);
@@ -137,7 +158,7 @@ function run(p){
     // ---- air war ----
     if(d<=3&&p.airOp>0){const gl=0.12*p.airOp*(1-ae.shelter);airN*=1-gl;airW*=1-0.05*p.airOp*(0.5+0.5*Math.min(1,p.warning/3));
       if(d===3)log.push([d,'omg',`WPの初期航空作戦が一段落。NATOの航空戦力は${Math.round(airN*100)}%が残存（掩体の整備で地上撃破を抑えた度合いは時代による）`]);}
-    if(d===1&&p.norway){airN*=0.94;log.push([d,'nato','WPが北ノルウェーにも攻撃。NATOは米空軍8個・英空軍1個飛行隊と英蘭の海兵旅団、米海兵旅団（装備はトロンハイム近郊の洞窟に事前集積）を北翼へ回す。中欧の航空戦力が6%減る']);}
+    if(d===1&&p.norway&&noReinf){airN*=0.94;log.push([d,'nato','WPが北ノルウェーにも攻撃。NATOは米空軍8個・英空軍1個飛行隊と英蘭の海兵旅団、米海兵旅団（装備はトロンハイム近郊の洞窟に事前集積）を北翼へ回す。中欧の航空戦力が6%減る']);}
     if(d===1&&p.chem)log.push([d,'omg',`WPが化学兵器を使う。NATO部隊は防護装備を着けたまま戦うことになり戦闘力が${Math.round((1-chemN)*100)}%落ち、飛行場と港の機能低下で航空戦力の効率が鈍り、増援の到着が${chemDelay}日遅れる。WPも汚染地帯の通過で${Math.round((1-chemW)*100)}%落ちる`]);
     let EN=airN*airQ*chemN, EW=airW, s=EN/(EN+EW);
     airW*=1-0.08*s; airN*=1-0.08*(1-s)*0.6;
@@ -148,20 +169,37 @@ function run(p){
     const casN=1+0.3*(s-0.5), casW=1+0.3*(0.5-s);
     const deepEff=Math.min(1,s/0.6);
     // ---- WP arrivals ----
-    ax.forEach(x=>{if(x.a.amph)return;x.a.wp.forEach(u=>{if(u[3]>M&&u[3]-M===d){x.wp+=u[2];log.push([d,'2nd',`${u[0]}が${x.a.short}軸に投入`]);}})});
+    ax.forEach(x=>{if(x.a.amph)return;x.a.wp.forEach(u=>{if(u[3]>M&&u[3]-M===d){addW(x,u[2],natOfW(u[0]));log.push([d,'2nd',`${u[0]}が${x.a.short}軸に投入`]);}})});
     WP_ECH.forEach(e=>{if(e[4]&&p.era<e[4])return;if(e[2]<=M||warDay(e[2])!==d)return;
       const c=e[3]?ax.filter(x=>e[3].includes(x.a.id)):land;const t=pick(c,true);
-      const ded=p.natoDoc==='ALB'?p.deep*deepEff:0;t.wp+=(e[1]-(e[0].includes('第20親衛軍')?gaHeld:0))*(1-ded);log.push([d,'2nd',`${e[0]}を${mainAx===t?'主攻正面の':'突破の進んだ'}${t.a.short}軸へ投入${ded>0?'（縦深攻撃で一部減殺）':''}`]);});
+      const ded=p.natoDoc==='ALB'?p.deep*deepEff:0;addW(t,(e[1]-(e[0].includes('第20親衛軍')?gaHeld:0))*(1-ded),natOfW(e[0]));log.push([d,'2nd',`${e[0]}を${mainAx===t?'主攻正面の':'突破の進んだ'}${t.a.short}軸へ投入${ded>0?'（縦深攻撃で一部減殺）':''}`]);});
     WP_STRAT.forEach(w=>{const m=p.wp2Day+w[2];if(m<=M||warDay(m)!==d)return;const ded=p.natoDoc==='ALB'?p.deep*deepEff:0;const tot=w[1]*p.wp2*(1-ded);
-      const first=mainAx||best(land);const second=best(land.filter(x=>x!==first));first.wp+=tot*0.7;second.wp+=tot*0.3;
+      const first=mainAx||best(land);const second=best(land.filter(x=>x!==first));addW(first,tot*0.7,'SU');addW(second,tot*0.3,'SU');
       log.push([d,'2nd',`${w[0]}が到着（師団換算${tot.toFixed(1)}）。7割を${first.a.short}軸、3割を${second.a.short}軸へ集中${ded>0?`。縦深攻撃で${Math.round(ded*100)}%を減殺`:''}`]);});
     // ---- NATO reinforcements (sea-dependent ones depend on the Atlantic) ----
-    NATO_RES.forEach(r=>{if(r[4]==='france'&&!p.france)return;const arr=r[2]+(r[4]==='sea'?seaDelay:0)+chemDelay;
-      if(arr===p.warning+d||(arr<=p.warning&&d===1)){const cand=r[3]?ax.filter(x=>r[3].includes(x.a.id)):land;const t=cand.reduce((m,x)=>x.pen>m.pen?x:m,cand[0]);
-        const v=(r[1]-(p.norway&&r[0].startsWith('英 領土軍')?0.3:0))*p.scaleNato*(r[4]==='sea'?seaFrac:1);t.nato+=v;
-        log.push([d,'nato',`${r[0]}が最も押された${t.a.short}正面へ${r[4]==='sea'?`（船団の損失で${Math.round(seaFrac*100)}%が到着、${seaDelay}日遅れ）`:''}`]);}});
-    if(d===20&&p.sea<0.6)log.push([d,'nato','欧州の弾薬・燃料の備蓄（15〜20日分）が尽き始め、大西洋の船団頼みになる。NATOの戦闘力が落ちる']);
-    const supplyN=d>20?(0.75+0.25*p.sea):1;
+    // Atlantic battle of the day
+    {let attr=0.035*(0.5+p.sea)*(fwd?1.3:1);if(NO.lost)attr*=0.7;T*=1-attr;seaT=seaOf(T);seaHist.push(seaT);
+      if(!giukLog&&T<0.2){giukLog=true;log.push([d,'nato','GIUKギャップの対潜障壁と護衛でソ連潜水艦の多くが失われ、大西洋の船団の損失が下がり始める']);}}
+    // North Norway
+    if(NO.on&&!NO.lost){const lyn=NO.km>=480;if(lyn&&!NO.lyngen){NO.lyngen=true;log.push([d,'nato','北ノルウェーでWPがリュンゲン線に達する。山とフィヨルドに拠る準備陣地での防御になる']);}
+      if(noReinf){if(d===3)NO.def+=0.3;if(d===6)NO.def+=0.35*(0.5+0.5*seaT);if(d===8)NO.def+=0.6;}
+      if(d===10)NO.wp+=1.5;
+      const Rn=NO.wp/Math.max(0.05,NO.def*2.4*(lyn?1.8:1)*(fwd&&d>=5?1.2:1)*p.natoQ);
+      const adv=Rn>1?Math.min(25,14*(Rn-1)):0;NO.km+=adv;
+      NO.def-=NO.def*0.03*Math.pow(Rn,0.7);NO.wp-=NO.wp*0.02*Math.pow(1/Rn,0.6);NO.hist.push(NO.km);
+      if(NO.km>=560){NO.lost=d;T+=0.25;log.push([d,'omg','バルドゥフォスとトロムソが陥落。ソ連の海軍航空隊（Tu-22Mバックファイア）が北ノルウェーの飛行場から大西洋の船団を狙えるようになり、GIUKギャップの障壁も弱まる']);}}
+    else if(NO.on)NO.hist.push(NO.km);
+    // NATO reinforcements: transatlantic ones sail on schedule and arrive according to the Atlantic of the moment
+    NATO_RES.forEach(r=>{if(r[4]==='france'&&!p.france)return;const due=r[2]+chemDelay;
+      if(due===p.warning+d||(due<=p.warning&&d===1)){
+        if(r[4]==='sea'){const dl=Math.round((1-seaT)*8),fr0=0.4+0.6*seaT;convoys.push({r,day:d+dl,frac:fr0,dl});}
+        else convoys.push({r,day:d,frac:1,dl:0});}});
+    convoys.filter(c=>c.day===d).forEach(c=>{const r=c.r;const cand=r[3]?ax.filter(x=>r[3].includes(x.a.id)):land;const t=cand.reduce((m,x)=>x.pen>m.pen?x:m,cand[0]);
+        const v=(r[1]-(NO.on&&noReinf&&r[0].startsWith('英 領土軍')?0.3:0))*p.scaleNato*c.frac;addN(t,v,natOfN(r[0]));
+        log.push([d,'nato',`${r[0]}が最も押された${t.a.short}正面へ${r[4]==='sea'?`（船団の損失で${Math.round(c.frac*100)}%が到着、${c.dl}日遅れ）`:''}`]);});
+    const seaAvg=seaHist.slice(-10).reduce((a,b)=>a+b,0)/Math.min(10,seaHist.length);
+    if(d===20&&seaAvg<0.6)log.push([d,'nato','欧州の弾薬・燃料の備蓄（15〜20日分）が尽き始め、大西洋の船団頼みになる。NATOの戦闘力が落ちる']);
+    const supplyN=d>20?(0.75+0.25*seaAvg):1;
     // ---- nuclear events ----
     if(p.nuc==='early'&&d===1){ax.forEach(x=>{x.nato*=0.5;x.wp*=0.7});airN*=0.5;airW*=0.7;civ.w+=nk.n2*DPW(nk.k2);civ.e+=nk.n3*DPW(nk.k3);land.forEach(x=>{nukes.push([1,x.a.id,'w']);nukes.push([1,x.a.id,'e']);});
       log.push([d,'nuc',`双方が戦域核を大規模に応酬（核パネルの段階2・3の規模）。NATO戦力は半減、WPも3割を失う（モデル上の仮定）`]);}
@@ -172,12 +210,12 @@ function run(p){
     // ---- West Berlin ----
     if(B.on&&B.assault&&!B.fell){const Rb=B.wp/(B.al*bDef*p.natoQ);B.al-=B.al*0.07*Math.pow(Rb,0.7);B.wp-=B.wp*0.03*Math.pow(1/Rb,0.6);
       if(B.al<0.15){B.fell=d;log.push([d,'omg',`西ベルリンが陥落（開戦${d}日目）。守備隊は兵力の3倍近い攻撃を受け、市街戦の末に抵抗を終える`]);}}
-    if(B.fell&&!B.ret&&d>=B.fell+2&&gaHeld>0){B.ret=true;const t=best(land.filter(x=>['nl1','ge1','uk1','be1'].includes(x.a.id)));t.wp+=gaHeld*0.8;gaHeld=0;log.push([d,'2nd',`ベルリン攻略に使った第20親衛軍の師団が前線へ戻り、${t.a.short}軸に投入`]);}
+    if(B.fell&&!B.ret&&d>=B.fell+2&&gaHeld>0){B.ret=true;const t=best(land.filter(x=>['nl1','ge1','uk1','be1'].includes(x.a.id)));addW(t,gaHeld*0.8,'SU');gaHeld=0;log.push([d,'2nd',`ベルリン攻略に使った第20親衛軍の師団が前線へ戻り、${t.a.short}軸に投入`]);}
     B.hist.push(B.on?(B.assault?(B.fell?0:B.al):1):null);
     // ---- Austrian corridor ----
     if(AU.on&&!AU.thru&&d>=2){const Ra=AU.wp/(AU.def*aDef);AU.def-=AU.def*0.06*Math.pow(Ra,0.7);AU.wp-=AU.wp*0.025*Math.pow(1/Ra,0.6);
       if(d===2)log.push([d,'omg','オーストリア連邦軍が領域防衛（シュパノッキの「空間防御」）で山地と要所に拠って遅滞戦闘に入る']);
-      if(AU.def<0.3){AU.thru=d;const g=ax.find(x=>x.a.id==='ge2');g.wp+=AU.wp*0.8;g.flank=true;log.push([d,'2nd',`オーストリアを抜けたWP部隊（師団換算${(AU.wp*0.8).toFixed(1)}）がパッサウ方面からバイエルンに入り、西独第2軍団の南翼を突く`]);}}
+      if(AU.def<0.3){AU.thru=d;const g=ax.find(x=>x.a.id==='ge2');addW(g,AU.wp*0.8,'SU');g.flank=true;log.push([d,'2nd',`オーストリアを抜けたWP部隊（師団換算${(AU.wp*0.8).toFixed(1)}）がパッサウ方面からバイエルンに入り、西独第2軍団の南翼を突く`]);}}
     // amphibious
     ax.forEach(x=>{if(!x.a.amph||x.landed)return;if(d===p.landDay){if(p.baltic<0.35){x.landed=true;x.failed=true;x.wp=0;log.push([d,'nato',`シェラン島への上陸が失敗。NATOの海空戦力がバルト海出口を押さえ、上陸部隊の大半が洋上で失われる`]);}
       else{x.landed=true;x.wp=x.amphPool*Math.min(1,p.baltic+0.2);x.pen=x.a.seaKm;log.push([d,'omg',`ケーゲ湾に上陸、空挺部隊が降下（師団換算${x.wp.toFixed(2)}）。バルト海出口の制圧を目指す`]);}}});
@@ -185,8 +223,8 @@ function run(p){
     for(const x of ax){
       if(x.a.amph&&(!x.landed||x.failed)){x.hist.push({pen:x.pen,wp:x.wp,nato:x.nato,R:null,omg:false});continue;}
       const river=(x.a.rhine&&x.pen>=x.a.rhine-20&&x.pen<x.a.rhine)?1.5:1;
-      const natoEff=Math.max(0.05,x.fogN*x.nato*p.natoQ*posture*river*casN*supplyN*chemN*(x.flank?0.85:1)*(p.natoDoc==='AD'&&d<=4?1.15:1)*(x.omg>0?0.85:1));
-      const front=x.a.amph?99:FRONTAGE;const wpEff=Math.max(0.01,Math.min(x.wp,front)*x.fogW*p.wpQ*casW*chemW); const R=wpEff/natoEff;
+      const natoEff=Math.max(0.05,x.fogN*x.nato*(1-fr*(x.forW||0))*p.natoQ*posture*river*casN*supplyN*chemN*(x.flank?0.85:1)*(p.natoDoc==='AD'&&d<=4?1.15:1)*(x.omg>0?0.85:1));
+      const front=x.a.amph?99:FRONTAGE;const wpEff=Math.max(0.01,Math.min(x.wp,front)*x.fogW*p.wpQ*casW*chemW*(1-(x.nsW||0)*decay*Math.min(1,Math.max(0,d-5)/40)*(x.stall?1.5:(x.fast?0.5:1))*(nucT&&d>nucT?1.5:1))); const R=wpEff/natoEff;
       let adv;
       if(R>1.1)adv=x.a.terrain*12*(R-1.1);else if(R>=0.8)adv=x.a.terrain*1.5;else adv=d>=4?-x.a.terrain*8*(0.8-R)/0.8*(p.natoDoc==='ALB'?1:0.5):0;
       if(p.nuc==='early'&&d<=3)adv*=1.6;
@@ -197,6 +235,7 @@ function run(p){
       if(p.wpDoc==='conv'&&!x.omgUsed&&!x.a.amph&&R>1.6&&x.pen>15){x.omgUsed=true;x.omg=4;log.push([d,'omg',`${x.a.short}軸でOMGを投入。NATO後方の指揮所・補給・渡河点を狙う`]);}
       const omgNow=x.omg>0; if(omgNow){adv*=1.6;x.omg--;}
       if(adv<0&&x.pen>x.a.seaKm&&!x.cntr){x.cntr=true;log.push([d,'nato',`${x.a.short}正面で戦力比が逆転し、NATOが反撃に転じる`]);}
+      x.stall=adv<3;x.fast=adv>20;
       adv=Math.min(60,adv); x.pen=Math.min(x.a.len,Math.max(x.a.seaKm,x.pen+adv));
       const pin=R<0.8;
       const wl=Math.min(x.wp,front)*0.03*Math.pow(natoEff/wpEff,0.6)*(p.natoDoc==='AD'&&d<=4?1.2:1)*(pin?0.35:1);
@@ -206,7 +245,7 @@ function run(p){
       if(x.a.rhine&&x.pen>=x.a.rhine&&!reached[x.a.id]){reached[x.a.id]=d;log.push([d,'2nd',`${x.a.short}軸でライン川に到達`]);}
       if(x.a.amph&&x.pen>=x.a.cum[2]&&!reached[x.a.id]){reached[x.a.id]=d;log.push([d,'2nd','コペンハーゲンに到達。バルト海峡が開く']);}
       if(x.a.rhine&&x.pen>=x.a.rhine&&!rhineX){rhineX=true;}
-      if(x.a.fr&&x.pen>=x.a.fr-15&&!frHome){frHome=true;x.nato+=4*p.scaleNato;log.push([d,'nato',`${x.a.short}軸がフランス国境に迫る。NATO統合軍事機構の外にあっても、フランスは本土の第1軍（第1・第3軍団）と予備役を投入して自国を守る（師団換算4）`]);}
+      if(x.a.fr&&x.pen>=x.a.fr-15&&!frHome){frHome=true;addN(x,4*p.scaleNato,'FR');log.push([d,'nato',`${x.a.short}軸がフランス国境に迫る。NATO統合軍事機構の外にあっても、フランスは本土の第1軍（第1・第3軍団）と予備役を投入して自国を守る（師団換算4）`]);}
       if(p.frNuke&&x.a.fr&&x.pen>=x.a.fr+20&&!frWarn){frWarn=true;x.wp*=0.8;x.halt=2;civ.w+=10*DPW(25);nukes.push([d,x.a.id,'f']);
         log.push([d,'nuc',`WP軍がフランス領に入ったため、フランスが「最後の警告」として前戦略核（プリュトン級、25kt×10発と仮定）を使う。次は戦略核による報復という意思表示で、その後の展開はモデルの外`]);}
       if(x.a.paris&&x.pen>=x.a.len&&!x.parisLog){x.parisLog=true;if(!parisDay)parisDay=d;log.push([d,'nuc',`${x.a.short}軸でパリに到達`]);}
@@ -216,7 +255,7 @@ function run(p){
     // army-group reserves: quiet sectors release a share of their forces to the most threatened sector
     {const thr=land.filter(x=>x.hist[x.hist.length-1].R!=null);if(thr.length){const hot=thr.reduce((m,x)=>(x.hist[x.hist.length-1].R>m.hist[m.hist.length-1].R?x:m),thr[0]);
       if(hot.hist[hot.hist.length-1].R>1.3){let moved=0;thr.forEach(x=>{const r=x.hist[x.hist.length-1].R;if(x!==hot&&r<0.6&&x.nato>1.5){const m=x.nato*0.04;x.nato-=m;moved+=m;}});
-        if(moved>0){hot.nato+=moved*0.8;if(!hot.latLog){hot.latLog=true;log.push([d,'nato',`NATOが手薄でない正面から予備を引き抜き、${hot.a.short}正面へ回す（軍集団の予備運用）`]);}}}}}
+        if(moved>0){addN(hot,moved*0.8,'LAT',true);if(!hot.latLog){hot.latLog=true;log.push([d,'nato',`NATOが手薄でない正面から予備を引き抜き、${hot.a.short}正面へ回す（軍集団の予備運用）`]);}}}}}
     if(wpBoost>0)wpBoost--;
     if(rhineX&&p.phase2&&p.phase2!=='same'){const set=p.phase2==='paris'?land.filter(x=>x.a.paris):land.filter(x=>['uk1','ge1','nl1'].includes(x.a.id));
       if(set.length){const nm=best(set);if(nm!==mainAx){mainAx=nm;if(!phase2Log){phase2Log=true;log.push([d,'2nd',`ライン川を越えたWPは主攻を${p.phase2==='paris'?'パリ':'英仏海峡の港とベネルクス'}へ向け直す。後続の梯団は${nm.a.short}軸へ`]);}}}}
@@ -230,7 +269,7 @@ function run(p){
       if(!useDay){const cd=p.consult||0;useDay=d+cd;thrDay=d;log.push([d,'nuc',`${why}。NATOは核使用の判断に入る${cd>0?`。西ドイツを含む同盟国との協議に${cd}日かかり、その間も戦闘は続く`:''}`]);if(cd===0)firstUse(d);}
     }
   }
-  return {ax,log,stop,days:stop||DAYS,reached,sHist,civHist,nucT,thrDay,nukes,berlin:B,austria:AU,parisDay,calaisDay};
+  return {ax,log,stop,days:stop||DAYS,reached,sHist,civHist,nucT,thrDay,nukes,berlin:B,austria:AU,parisDay,calaisDay,seaHist,norway:NO};
 }
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 /* Monte Carlo: jitter the uncertain inputs around the user's settings */
@@ -239,15 +278,16 @@ const MC_RANGES=[
   ['sea','大西洋の制海','±15ポイント'],['baltic','バルト海の制海','±15ポイント'],['deep','縦深攻撃の効果','×0.5〜1.5'],
   ['wpMob','WPの動員開始','±2日'],['intel','動員の察知','−1〜+2日'],['decide','同盟の決定','−1〜+2日'],['consult','核の協議','−1〜+2日'],['wp2Day','戦略第2梯団の到着','−2〜+3日'],
   ['chemN','化学兵器の効果','×0.5〜1.5（使用時）'],['bDef','西ベルリンの市街戦防御','×0.7〜1.4'],['aDef','オーストリアの山地防御','×0.7〜1.4'],
+  ['natSpread','NATO各国の質の差の大きさ','×0.5〜1.5'],['natoFr','多国籍の摩擦','×0.5〜1.5'],['wpRelK','非ソ連軍の信頼性の不足','±0.5'],['wpDecay','抗戦意欲の減衰','×0.5〜1.5'],['tJit','大西洋のソ連潜水艦の脅威','×0.75〜1.25'],['noJit','北ノルウェーのソ連軍の戦力','×0.75〜1.3'],
   ['fog','軸ごとの戦力見積もりの誤差','各軸±10%（対数正規）'],['day','日々の前進の振れ','±30%（対数正規）']];
 function jitter(p,r){const U=(a,b)=>a+(b-a)*r(),I=(a,b)=>a+Math.floor(r()*(b-a+1)),cl=(v,a,b)=>Math.max(a,Math.min(b,v));
   const q={...p};q.natoQ=p.natoQ*U(0.8,1.2);q.wpQ=(p.wpQ||1)*U(0.85,1.15);q.airQ=(p.airQ||2)*U(0.75,1.25);q.airOp=cl(p.airOp+U(-.15,.15),0,1);
   q.sea=cl(p.sea+U(-.15,.15),0,1);q.baltic=cl(p.baltic+U(-.15,.15),0,1);q.deep=p.deep*U(0.5,1.5);
   q.wpMob=Math.max(0,p.wpMob+I(-2,2));q.intel=Math.max(0,(p.intel||0)+I(-1,2));q.decide=Math.max(0,(p.decide||0)+I(-1,2));q.consult=Math.max(0,(p.consult||0)+I(-1,2));
-  q.wp2Day=Math.max(3,p.wp2Day+I(-2,3));q.chemN=(p.chemN??15)*U(0.5,1.5);q.chemW=(p.chemW??5)*U(0.5,1.5);q.bDef=U(0.7,1.4);q.aDef=U(0.7,1.4);return q;}
+  q.wp2Day=Math.max(3,p.wp2Day+I(-2,3));q.chemN=(p.chemN??15)*U(0.5,1.5);q.chemW=(p.chemW??5)*U(0.5,1.5);q.bDef=U(0.7,1.4);q.aDef=U(0.7,1.4);q.natoFr=(p.natoFr??10)*U(0.5,1.5);q.wpRelK=Math.max(0,(p.wpRelK??1)+U(-.5,.5));q.wpDecay=(p.wpDecay??15)*U(0.5,1.5);q.tJit=U(0.75,1.25);q.natSpread=Math.max(0,(p.natSpread??1)*U(0.5,1.5));q.noJit=U(0.75,1.3);return q;}
 function mc(p,n,seed){const r=mulberry(seed||12345);const out=[];
   for(let i=0;i<n;i++){const q=jitter(p,r);q.seed=1+Math.floor(r()*1e9);const z=run(q);
-    out.push({thr:z.stop||z.thrDay||null,use:z.nucT,berlin:z.berlin.fell,aust:z.austria.thru,reached:z.reached,paris:z.parisDay,calais:z.calaisDay,
+    out.push({thr:z.stop||z.thrDay||null,use:z.nucT,berlin:z.berlin.fell,aust:z.austria.thru,norw:z.norway.lost,reached:z.reached,paris:z.parisDay,calais:z.calaisDay,
       rhine:(r=>r.length?Math.min(...r):null)(Object.entries(z.reached).filter(([k])=>k!=='zea').map(([,v])=>v))});}
   return out;}
-if(typeof module!=='undefined')module.exports={AXES,run,prepAxes,WP_ECH,NATO_RES,WP_STRAT,DPW,AIR_ERA,mc,jitter,MC_RANGES};
+if(typeof module!=='undefined')module.exports={QN,RELW,natOfN,natOfW,NAT_LABEL,AXES,run,prepAxes,WP_ECH,NATO_RES,WP_STRAT,DPW,AIR_ERA,mc,jitter,MC_RANGES};
