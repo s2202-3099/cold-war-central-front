@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Ignore the output video from Git but not videos you import into src/.
+out
+
+# Generated assets (rebuild with the scripts in tools/, see README.md)
+public/audio/
+public/photos/*.jpg
+public/sim/

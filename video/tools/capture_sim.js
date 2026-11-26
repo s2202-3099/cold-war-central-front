@@ -1,0 +1,26 @@
+// Screenshots of the simulator for the video. Run from video/: node tools/capture_sim.js  (needs ../node_modules from the main project)
+const {chromium}=require('playwright');const path=require('path');
+const ROOT=path.resolve(__dirname,'../..'),NM=ROOT+'/node_modules',OUT=path.resolve(__dirname,'../public/sim');
+(async()=>{const b=await chromium.launch();const pg=await b.newPage({viewport:{width:1400,height:1000},deviceScaleFactor:2});
+ await pg.route('**/d3.min.js',r=>r.fulfill({path:NM+'/d3/dist/d3.min.js',contentType:'application/javascript'}));
+ await pg.route('**/topojson.min.js',r=>r.fulfill({path:NM+'/topojson/dist/topojson.min.js',contentType:'application/javascript'}));
+ const errs=[];pg.on('pageerror',e=>errs.push(String(e)));
+ await pg.emulateMedia({colorScheme:'light',reducedMotion:'reduce'});
+ await pg.goto('file://'+ROOT+'/index.html');
+ await pg.waitForFunction("document.getElementById('mcstat').textContent.includes('秒')",null,{timeout:60000});
+ const setDay=async d=>{await pg.evaluate(d=>{const s=document.getElementById('day');s.value=d;s.dispatchEvent(new Event('input',{bubbles:true}));},d);await pg.waitForTimeout(250);};
+ const preset=async(k,o={})=>{await pg.selectOption('#preset',k);await pg.waitForTimeout(300);
+   if(o.nukeMode){await pg.selectOption('#nukeMode',o.nukeMode);await pg.waitForTimeout(300);}};
+ const shot=async(sel,name)=>{const e=await pg.$(sel);await e.scrollIntoViewIfNeeded();await e.screenshot({path:`${OUT}/${name}.png`});console.log(name);};
+ const mcDone=async()=>{await pg.waitForTimeout(600);await pg.waitForFunction("document.getElementById('mcstat').textContent.includes('秒')",null,{timeout:120000});};
+ await preset('p1985');await setDay(0);await shot('#mapbox','map_d0');
+ await shot('#ctrl','ctrl');
+ await preset('p1964');await setDay(8);await shot('#mapbox','p1964');
+ await preset('p1979');await setDay(7);await shot('#mapbox','p1979');
+ await preset('p1985');await setDay(33);await shot('#mapbox','r1985');await shot('#chart','r1985_chart');
+ await preset('p1985s');await setDay(12);await shot('#mapbox','r1985s');
+ await preset('p1976',{nukeMode:'ignore'});await setDay(41);await pg.evaluate(()=>document.querySelectorAll('#axt tbody tr').forEach(tr=>{if(!['jut','uk1','be1'].includes(tr.dataset.ax))tr.style.display='none';}));await shot('#axt','river_d41');await shot('#mapbox','river_d41_map');
+ await setDay(60);await shot('#mapbox','r1976_map');await shot('#logichart','r1976_logi');await shot('#chart','r1976_chart');
+ await preset('p1985',{nukeMode:'ignore'});await mcDone();await shot('#mctiles','mc_tiles');await shot('#mcsens','mc_sens');
+ await pg.uncheck('#rivers');await pg.uncheck('#logi');await mcDone();await shot('#mctiles','mc_tiles_off');
+ console.log('errors',errs);await b.close();})();
