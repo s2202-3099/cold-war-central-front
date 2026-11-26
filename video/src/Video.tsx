@@ -2,23 +2,32 @@ import React from 'react';
 import {AbsoluteFill, Easing, Img, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Audio} from '@remotion/media';
 import {loadFont} from '@remotion/fonts';
-import timeline from './timeline.json';
+import tSingle from './timeline/single.json';
+import tPart1 from './timeline/part1.json';
+import tPart2 from './timeline/part2.json';
+import tPart3 from './timeline/part3.json';
+import dims from '../public/photos/dims.json';
+import assets from './assets.json';
+import fontManifest from './fonts.json';
+import {MapScene} from './MapScene';
 import credits from '../public/photos/credits.json';
-import {CARDS, PERIODS, SIM, Card} from './visuals';
+import {CARDS, PERIODS, SIM, Card, PHOTO_ANNO} from './visuals';
 
 // Fonts subset to the characters used in this video (tools/fetch_fonts.py): M PLUS Rounded 1c and Noto Sans JP
 const ROUNDED = 'CFRounded';
 const SANS = 'CFSans';
-loadFont({family: ROUNDED, url: staticFile('fonts/rounded-800.woff2'), weight: '800'});
-[400, 700, 900].forEach((w) => loadFont({family: SANS, url: staticFile(`fonts/sans-${w}.woff2`), weight: String(w)}));
+(fontManifest as {family: string; weight: string; url: string; unicodeRange: string | null}[]).forEach((ft) =>
+  loadFont({family: ft.family === 'rounded' ? ROUNDED : SANS, url: staticFile(ft.url), weight: ft.weight, ...(ft.unicodeRange ? {unicodeRange: ft.unicodeRange} : {})}),
+);
 
 export const CREDITS_SEC = 16;
 
-type Line = {type: 'line'; spk: 'z' | 'm'; text: string; v: string; chapter: string; audio: string; start: number; dur: number};
+type Line = {type: 'line'; spk: 'z' | 'm'; style?: string; text: string; v: string; chapter: string; audio: string; start: number; dur: number; mouth?: string};
 type Chapter = {type: 'chapter'; num: string; title: string; sub: string; start: number; dur: number};
 type Item = Line | Chapter;
-const ITEMS = timeline.items as Item[];
-const TOTAL = timeline.total as number;
+type Tl = {total: number; items: unknown[]};
+const TIMELINES: Record<string, Tl> = {single: tSingle as Tl, part1: tPart1 as Tl, part2: tPart2 as Tl, part3: tPart3 as Tl};
+export const PART_TITLES: Record<string, string> = {single: '中欧正面 1949–1991', part1: '前編　二つの同盟が向かい合うまで', part2: '中編　作戦と計画', part3: '後編　もし戦っていたら'};
 
 const C = {
   bg: '#10161d', panel: '#182129', ink: '#eef1f3', muted: '#9aa6b2', line: '#2b3742',
@@ -31,23 +40,28 @@ const fade = (f: number, d: number, n = 12) =>
 
 // ---------- visual segments: consecutive lines sharing a visual ----------
 type Seg = {v: string; start: number; end: number};
-const SEGS: Seg[] = (() => {
-  const out: Seg[] = [];
-  ITEMS.forEach((it, i) => {
+type Data = {items: Item[]; total: number; segs: Seg[]};
+const buildData = (tl: Tl): Data => {
+  const items = tl.items as Item[];
+  const total = tl.total;
+  const segs: Seg[] = [];
+  items.forEach((it, i) => {
     if (it.type === 'chapter') return;
-    const prev = out[out.length - 1];
-    const prevItem = ITEMS[i - 1];
+    const prev = segs[segs.length - 1];
+    const prevItem = items[i - 1];
     if (prev && prev.v === it.v && prevItem?.type === 'line') return;
-    out.push({v: it.v, start: it.start, end: 0});
+    segs.push({v: it.v, start: it.start, end: 0});
   });
-  out.forEach((s, i) => {
-    const nextChap = ITEMS.find((it) => it.type === 'chapter' && it.start > s.start);
-    const next = out[i + 1];
-    const cands = [next?.start, nextChap?.start, TOTAL].filter((x): x is number => typeof x === 'number');
-    s.end = Math.min(...cands);
+  segs.forEach((sg, i) => {
+    const nextChap = items.find((it) => it.type === 'chapter' && it.start > sg.start);
+    const next = segs[i + 1];
+    const cands = [next?.start, nextChap?.start, total].filter((x): x is number => typeof x === 'number');
+    sg.end = Math.min(...cands);
   });
-  return out;
-})();
+  return {items, total, segs};
+};
+const DATA: Record<string, Data> = Object.fromEntries(Object.entries(TIMELINES).map(([k, t]) => [k, buildData(t)]));
+export const durationOf = (part: string) => DATA[part].total + CREDITS_SEC * 30;
 
 // ---------- photo with Ken Burns and credit ----------
 const Photo: React.FC<{id: string; dur: number; idx: number}> = ({id, dur, idx}) => {
@@ -64,6 +78,18 @@ const Photo: React.FC<{id: string; dur: number; idx: number}> = ({id, dur, idx})
         }}
       >
         <Img src={staticFile(`photos/${id}.jpg`)} style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+        {(PHOTO_ANNO[id] ?? []).map((a, i) => {
+          const [iw, ih] = (dims as Record<string, number[]>)[id] ?? [1920, 780];
+          const k = Math.min(1920 / iw, 780 / ih);
+          const ox = (1920 - iw * k) / 2, oy = (780 - ih * k) / 2;
+          const x = ox + a.x * iw * k, y = oy + a.y * ih * k, r = a.r * iw * k;
+          const o = interpolate(f, [20 + i * 10, 34 + i * 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+          return (
+            <div key={i} style={{position: 'absolute', left: x - r, top: y - r, width: r * 2, height: r * 2, borderRadius: '50%', border: `6px solid ${C.gold}`, opacity: o, boxShadow: '0 0 0 3px rgba(0,0,0,0.5)', scale: interpolate(o, [0, 1], [1.3, 1])}}>
+              <div style={{position: 'absolute', left: r * 2 + 12, top: r - 26, whiteSpace: 'nowrap', fontFamily: SANS, fontWeight: 900, fontSize: 38, color: C.gold, textShadow: '0 2px 8px #000, 0 0 3px #000'}}>{a.label}</div>
+            </div>
+          );
+        })}
       </AbsoluteFill>
       {cr && (
         <div style={{position: 'absolute', right: 18, bottom: 14, fontFamily: SANS, fontSize: 19, color: 'rgba(255,255,255,0.85)', backgroundColor: 'rgba(0,0,0,0.55)', padding: '4px 12px', borderRadius: 4, maxWidth: 1100}}>
@@ -201,7 +227,7 @@ const CardView: React.FC<{card: Card}> = ({card}) => {
       return (
         <AbsoluteFill style={pad}>
           <Heading>{card.title}</Heading>
-          <div style={{display: 'grid', gridTemplateColumns: '170px 400px 1fr 110px', fontFamily: SANS, fontSize: 30, color: C.ink}}>
+          <div style={{display: 'grid', gridTemplateColumns: card.cols ?? '170px 400px 1fr 110px', fontFamily: SANS, fontSize: 30, color: C.ink}}>
             {card.head.map((h) => (
               <div key={h} style={{fontWeight: 900, color: C.muted, padding: '8px 12px', borderBottom: `2px solid ${C.line}`}}>{h}</div>
             ))}
@@ -222,7 +248,7 @@ const CardView: React.FC<{card: Card}> = ({card}) => {
           <div style={{display: 'flex', gap: 22}}>
             {card.facts.map(([big, small], i) => (
               <div key={i} style={{flex: 1, backgroundColor: C.panel, borderRadius: 10, padding: '30px 26px', border: `2px solid ${C.line}`, ...appear(f, i + 1)}}>
-                <div style={{fontFamily: SANS, fontWeight: 900, fontSize: 54, color: C.wp}}>{big}</div>
+                <div style={{fontFamily: SANS, fontWeight: 900, fontSize: big.length > 9 ? 40 : 54, color: C.wp}}><CountUp text={big} f={f - 8 - i * 8} /></div>
                 <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 32, color: C.ink, marginTop: 10}}>{small}</div>
               </div>
             ))}
@@ -266,6 +292,30 @@ const CardView: React.FC<{card: Card}> = ({card}) => {
           ))}
         </AbsoluteFill>
       );
+    case 'echelon': {
+      const box = (title: string, sub: string, i: number, color: string) => (
+        <div style={{flex: 1, backgroundColor: C.panel, border: `3px solid ${color}`, borderRadius: 12, padding: '26px 24px', ...appear(f, i)}}>
+          <div style={{fontFamily: SANS, fontWeight: 900, fontSize: 40, color}}>{title}</div>
+          <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 28, color: C.ink, marginTop: 12, lineHeight: 1.4}}>{sub}</div>
+        </div>
+      );
+      const arrow = (i: number) => <div style={{fontSize: 70, color: C.gold, alignSelf: 'center', ...appear(f, i)}}>◀</div>;
+      return (
+        <AbsoluteFill style={{padding: '40px 110px', gap: 34, flexDirection: 'column', justifyContent: 'center'}}>
+          <Heading>梯団：成功した方向に、後ろから流し込む</Heading>
+          <div style={{display: 'flex', gap: 18, alignItems: 'stretch'}}>
+            {box('NATOの防御', '前方防衛の陣地', 0, C.nato)}
+            {arrow(1)}
+            {box('第一梯団', '攻撃して防御に穴を開ける', 2, C.wp)}
+            {arrow(3)}
+            {box('第二梯団', 'うまくいった方向へ投入して戦果を広げる（交代要員ではない）', 4, C.wp)}
+            {arrow(5)}
+            {box('戦略梯団', 'ソ連西部の軍管区から数日〜数週間で到着', 6, C.muted)}
+          </div>
+          <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 32, color: C.gold, ...appear(f, 8)}}>作戦機動グループ（OMG）は、突破口から作戦の初めに飛び込み、敵の後方を崩す</div>
+        </AbsoluteFill>
+      );
+    }
     case 'quote':
       return (
         <AbsoluteFill style={{...pad, justifyContent: 'center'}}>
@@ -290,6 +340,7 @@ const Visual: React.FC<{seg: Seg; idx: number}> = ({seg, idx}) => {
       {kind === 'p' && <Photo id={id} dur={dur} idx={idx} />}
       {kind === 's' && <Sim id={id} dur={dur} />}
       {kind === 'c' && <CardView card={CARDS[id]} />}
+      {kind === 'map' && <MapScene id={id} dur={dur} fontSans={SANS} />}
     </AbsoluteFill>
   );
 };
@@ -308,13 +359,39 @@ const ChapterCard: React.FC<{c: Chapter}> = ({c}) => {
   );
 };
 
+// ---------- characters (optional, src/assets.json) ----------
+type CharCfg = {closed: string; open: string; height?: number};
+const CHARS = (assets as {chars: null | Record<'z' | 'm', CharCfg>}).chars;
+const BGM = (assets as {bgm: null | {file: string; volume?: number; duck?: number}}).bgm;
+const SUB_SIDE = CHARS ? 380 : 70;
+
+const Chars: React.FC<{items: Item[]}> = ({items}) => {
+  const f = useCurrentFrame();
+  if (!CHARS) return null;
+  const cur = items.find((it): it is Line => it.type === 'line' && f >= it.start && f < it.start + it.dur);
+  return (
+    <>
+      {(['m', 'z'] as const).map((k) => {
+        const c = CHARS[k];
+        const speaking = cur?.spk === k;
+        const mf = speaking && cur?.mouth ? cur.mouth[Math.max(0, Math.min(cur.mouth.length - 1, f - cur.start))] === '1' : false;
+        const bob = speaking ? Math.sin(f / 5) * 3 : 0;
+        return (
+          <Img key={k} src={staticFile(mf ? c.open : c.closed)}
+            style={{position: 'absolute', bottom: -10, [k === 'm' ? 'left' : 'right']: 10, height: c.height ?? 520, translate: `0px ${bob}px`, filter: speaking ? 'none' : 'brightness(0.72)', scale: k === 'm' ? '1 1' : '1 1'}} />
+        );
+      })}
+    </>
+  );
+};
+
 // ---------- subtitles ----------
 const Subtitle: React.FC<{l: Line}> = ({l}) => {
   const f = useCurrentFrame();
   const sp = SPK[l.spk];
   const size = l.text.length > 62 ? 40 : l.text.length > 44 ? 44 : 50;
   return (
-    <AbsoluteFill style={{top: 'auto', height: 230, bottom: 0, padding: '0 70px 26px', justifyContent: 'flex-end', opacity: interpolate(f, [0, 5], [0, 1], {extrapolateRight: 'clamp'})}}>
+    <AbsoluteFill style={{top: 'auto', height: 230, bottom: 0, padding: `0 ${SUB_SIDE}px 26px`, justifyContent: 'flex-end', opacity: interpolate(f, [0, 5], [0, 1], {extrapolateRight: 'clamp'})}}>
       <div style={{display: 'flex', alignItems: 'flex-start', gap: 22}}>
         <div style={{flexShrink: 0, marginTop: 6, fontFamily: ROUNDED, fontWeight: 800, fontSize: 30, color: '#fff', backgroundColor: sp.color, padding: '8px 18px', borderRadius: 999}}>{sp.name}</div>
         <div style={{fontFamily: ROUNDED, fontWeight: 800, fontSize: size, lineHeight: 1.38, color: '#fff', WebkitTextStroke: `10px ${sp.color}`, paintOrder: 'stroke fill', textShadow: '0 3px 10px rgba(0,0,0,0.5)'}}>{l.text}</div>
@@ -324,16 +401,17 @@ const Subtitle: React.FC<{l: Line}> = ({l}) => {
 };
 
 // ---------- credits ----------
-const Credits: React.FC = () => {
+const Credits: React.FC<{segs: Seg[]}> = ({segs}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const used = new Set(SEGS.filter((s) => s.v.startsWith('p:')).map((s) => s.v.slice(2)));
+  const used = new Set(segs.filter((sg) => sg.v.startsWith('p:')).map((sg) => sg.v.slice(2)));
   const photos = Object.entries(credits as Record<string, {title: string; artist: string; license: string}>).filter(([k]) => used.has(k));
   const lines: [string, string][] = [
     ['音声', 'VOICEVOX:ずんだもん　VOICEVOX:四国めたん'],
     ['シミュレーター', '中欧正面 1949–1991（このリポジトリの index.html）'],
-    ['史料・研究', 'PHP（ETH Zurich）、National Security Archive、Mastny & Byrne『A Cardboard Castle?』、Pałka（2017）、Uhl（2006）、Luňák（2001）、Heuser（1993）、Mearsheimer（1982）、Posen（1984/85）、Cohen（1988）、Odom（1998）、FM100-5'],
-    ['地図', 'Natural Earth（world-atlas 2.0.2）'],
+    ['史料・研究', 'PHP（ETH Zurich）、National Security Archive、Mastny & Byrne『A Cardboard Castle?』、Pałka（2017）、Uhl（2006）、Luňák（2001）、Heuser（1993）、Mearsheimer（1982）、Posen（1984/85）、Cohen（1988）、Odom（1998）、FM100-5、OTA『核戦争の影響』（1979）'],
+    ['地図', 'Natural Earth（world-atlas 2.0.2）。内独国境・河川・侵攻軸は概略'],
+    ...(BGM ? [['音楽', BGM.file] as [string, string]] : []),
     ...photos.map(([, c]) => ['写真', `${c.title.replace('File:', '')} ／ ${c.artist} ／ ${c.license}`] as [string, string]),
     ['写真の出典', 'すべて Wikimedia Commons。CC BY／CC BY-SA の写真は各ライセンスに従い、作者名を表示しています'],
     ['注意', 'シミュレーターの数字は相対比較のための簡易モデルの結果で、実際の戦闘結果や確率を示すものではありません'],
@@ -355,17 +433,24 @@ const Credits: React.FC = () => {
 };
 
 // ---------- main ----------
-export const CentralFront: React.FC = () => {
+export const PartVideo: React.FC<{part: string}> = ({part}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const chapter = [...ITEMS].reverse().find((it): it is Chapter => it.type === 'chapter' && it.start <= f);
+  const {items, total, segs} = DATA[part];
+  const chapter = [...items].reverse().find((it): it is Chapter => it.type === 'chapter' && it.start <= f);
+  // frames where someone is speaking, for ducking the music
+  const speaking = (fr: number) => items.some((it) => it.type === 'line' && fr >= it.start - 6 && fr < it.start + it.dur + 6);
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
+      {BGM && (
+        <Audio src={staticFile(BGM.file)} loop
+          volume={(fr) => (fr > total ? (BGM.volume ?? 0.14) : speaking(fr) ? (BGM.duck ?? 0.05) : (BGM.volume ?? 0.14))} />
+      )}
       {/* visual area */}
-      <AbsoluteFill style={{top: 70, bottom: 230, height: "auto"}}>
-        {SEGS.map((s, i) => (
-          <Sequence key={i} from={s.start} durationInFrames={Math.max(1, s.end - s.start)} name={s.v} premountFor={30}>
-            <Visual seg={s} idx={i} />
+      <AbsoluteFill style={{top: 70, bottom: 230, height: 'auto'}}>
+        {segs.map((sg, i) => (
+          <Sequence key={i} from={sg.start} durationInFrames={Math.max(1, sg.end - sg.start)} name={sg.v} premountFor={30}>
+            <Visual seg={sg} idx={i} />
           </Sequence>
         ))}
       </AbsoluteFill>
@@ -375,9 +460,10 @@ export const CentralFront: React.FC = () => {
           {chapter.num === '終' ? '終章' : `第${chapter.num}章`}　{chapter.title}
         </div>
       )}
-      <div style={{position: 'absolute', right: 70, top: 18, fontFamily: SANS, fontWeight: 700, fontSize: 26, color: C.muted, letterSpacing: 2}}>中欧正面 1949–1991</div>
+      <div style={{position: 'absolute', right: 70, top: 18, fontFamily: SANS, fontWeight: 700, fontSize: 26, color: C.muted, letterSpacing: 2}}>{PART_TITLES[part]}</div>
+      <Chars items={items} />
       {/* subtitles and audio */}
-      {ITEMS.map((it, i) =>
+      {items.map((it, i) =>
         it.type === 'line' ? (
           <Sequence key={i} from={it.start} durationInFrames={it.dur + 8} name={`${it.spk}:${it.text.slice(0, 14)}`} premountFor={30}>
             <Audio src={staticFile(it.audio)} />
@@ -389,11 +475,21 @@ export const CentralFront: React.FC = () => {
           </Sequence>
         ),
       )}
-      <Sequence from={TOTAL} durationInFrames={CREDITS_SEC * fps} name="クレジット">
-        <Credits />
+      <Sequence from={total} durationInFrames={CREDITS_SEC * fps} name="クレジット">
+        <Credits segs={segs} />
       </Sequence>
     </AbsoluteFill>
   );
 };
 
-export const DURATION = TOTAL + CREDITS_SEC * 30;
+// ---------- number count-up for card figures ----------
+const CountUp: React.FC<{text: string; f: number}> = ({text, f}) => {
+  const m = text.match(/^([^0-9]*)([0-9][0-9,.]*)(.*)$/);
+  if (!m) return <>{text}</>;
+  const raw = m[2].replace(/,/g, '');
+  const target = parseFloat(raw);
+  if (!isFinite(target) || /[.]/.test(raw)) return <>{text}</>;
+  const v = Math.round(interpolate(f, [0, 28], [0, target], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)}));
+  const shown = m[2].includes(',') ? v.toLocaleString('en-US') : String(v);
+  return <>{m[1]}{shown}{m[3]}</>;
+};

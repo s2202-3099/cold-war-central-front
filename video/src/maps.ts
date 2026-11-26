@@ -24,7 +24,6 @@ const P = {
   munich: [11.58, 48.14] as LL, besancon: [6.02, 47.24] as LL, memmingen: [10.18, 47.99] as LL, mosbach: [9.15, 49.35] as LL, lyon: [4.84, 45.76] as LL,
 };
 const NORTH: [number, number, number, number] = [6.0, 50.6, 12.8, 55.2];
-const SOUTH: [number, number, number, number] = [5.5, 46.8, 15.5, 51.2];
 
 export const MAPS: Record<string, MapSpec> = {
   // ---------------- 前編（歴史） ----------------
@@ -54,7 +53,7 @@ export const MAPS: Record<string, MapSpec> = {
       {type: 'arrow', pts: [[17.03, 51.11], [15.8, 50.6], P.prague], label: 'ポーランドから', color: 'wp', at: 16, labelAt: 0, dy: -20},
       {type: 'arrow', pts: [[19.04, 47.6], [17.1, 48.6], [15.6, 49.4], P.prague], label: 'ハンガリーから', color: 'wp', at: 26, labelAt: 0, dx: -60, dy: 40},
       {type: 'circle', at_ll: P.prague, r: 30, label: 'プラハ　1968年8月', color: 'gold', at: 40, size: 34, dy: 60, dx: -80},
-      {type: 'text', at_ll: [16.6, 49.3], text: '→ 以後ソ連中央軍集団（5個師団）が駐留', color: 'wp', at: 60, size: 30},
+      {type: 'text', at_ll: [9.4, 47.5], text: '以後、ソ連中央軍集団（5個師団）が駐留', color: 'wp', at: 60, size: 32},
     ],
   },
   // ---------------- 中編（作戦と計画） ----------------

@@ -1,0 +1,5 @@
+{
+  "_comment": "立ち絵とBGM。ファイルを public/ に置いてパスを書く。chars.z / chars.m は口を閉じた絵（closed）と開いた絵（open）。bgm.volume は話していない時の音量、duck は話している時の音量",
+  "chars": null,
+  "bgm": null
+}
