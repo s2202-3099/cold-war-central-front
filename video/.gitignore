@@ -10,3 +10,6 @@ out
 public/audio/
 public/photos/*.jpg
 public/sim/
+
+# BGM files (OpenTracks: redistribution of the audio files is not allowed; see README)
+public/bgm/

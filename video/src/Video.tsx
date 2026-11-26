@@ -362,7 +362,8 @@ const ChapterCard: React.FC<{c: Chapter}> = ({c}) => {
 // ---------- characters (optional, src/assets.json) ----------
 type CharCfg = {closed: string; open: string; height?: number};
 const CHARS = (assets as {chars: null | Record<'z' | 'm', CharCfg>}).chars;
-const BGM = (assets as {bgm: null | {file: string; volume?: number; duck?: number}}).bgm;
+type BgmCfg = {file: string; title?: string; composer?: string; volume?: number; duck?: number};
+const BGMS = (assets as {bgm: null | Record<string, BgmCfg>}).bgm;
 const SUB_SIDE = CHARS ? 380 : 70;
 
 const Chars: React.FC<{items: Item[]}> = ({items}) => {
@@ -401,7 +402,7 @@ const Subtitle: React.FC<{l: Line}> = ({l}) => {
 };
 
 // ---------- credits ----------
-const Credits: React.FC<{segs: Seg[]}> = ({segs}) => {
+const Credits: React.FC<{segs: Seg[]; bgm?: BgmCfg}> = ({segs, bgm: BGM}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   const used = new Set(segs.filter((sg) => sg.v.startsWith('p:')).map((sg) => sg.v.slice(2)));
@@ -411,7 +412,7 @@ const Credits: React.FC<{segs: Seg[]}> = ({segs}) => {
     ['シミュレーター', '中欧正面 1949–1991（このリポジトリの index.html）'],
     ['史料・研究', 'PHP（ETH Zurich）、National Security Archive、Mastny & Byrne『A Cardboard Castle?』、Pałka（2017）、Uhl（2006）、Luňák（2001）、Heuser（1993）、Mearsheimer（1982）、Posen（1984/85）、Cohen（1988）、Odom（1998）、FM100-5、OTA『核戦争の影響』（1979）'],
     ['地図', 'Natural Earth（world-atlas 2.0.2）。内独国境・河川・侵攻軸は概略'],
-    ...(BGM ? [['音楽', BGM.file] as [string, string]] : []),
+    ...(BGM ? [['音楽', `「${BGM.title ?? BGM.file}」 ${BGM.composer ?? ''}（OpenTracks／旧DOVA-SYNDROME）`] as [string, string]] : []),
     ...photos.map(([, c]) => ['写真', `${c.title.replace('File:', '')} ／ ${c.artist} ／ ${c.license}`] as [string, string]),
     ['写真の出典', 'すべて Wikimedia Commons。CC BY／CC BY-SA の写真は各ライセンスに従い、作者名を表示しています'],
     ['注意', 'シミュレーターの数字は相対比較のための簡易モデルの結果で、実際の戦闘結果や確率を示すものではありません'],
@@ -437,6 +438,7 @@ export const PartVideo: React.FC<{part: string}> = ({part}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   const {items, total, segs} = DATA[part];
+  const BGM = BGMS?.[part];
   const chapter = [...items].reverse().find((it): it is Chapter => it.type === 'chapter' && it.start <= f);
   // frames where someone is speaking, for ducking the music
   const speaking = (fr: number) => items.some((it) => it.type === 'line' && fr >= it.start - 6 && fr < it.start + it.dur + 6);
@@ -476,7 +478,7 @@ export const PartVideo: React.FC<{part: string}> = ({part}) => {
         ),
       )}
       <Sequence from={total} durationInFrames={CREDITS_SEC * fps} name="クレジット">
-        <Credits segs={segs} />
+        <Credits segs={segs} bgm={BGM} />
       </Sequence>
     </AbsoluteFill>
   );

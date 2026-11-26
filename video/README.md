@@ -34,6 +34,7 @@ node tools/capture_sim.js            # シミュ画面（playwright が必要）
 node tools/sim_runs.js               # 地図シーン用にモデルを回す
 python3 -I tools/tts.py part1        # 音声と timeline（part2, part3, single も同様）
 python3 -I tools/fetch_fonts.py      # 台本を変えたら必ず作り直す（使う文字だけのフォント）
+bash tools/fetch_bgm.sh              # BGM（OpenTracks）を取得して音量をそろえる
 npx remotion studio                  # プレビュー
 npx remotion render Part1 out/part1.mp4
 ```
@@ -50,11 +51,21 @@ npx remotion render Part1 out/part1.mp4
     "z": {"closed": "chars/zundamon_closed.png", "open": "chars/zundamon_open.png", "height": 520},
     "m": {"closed": "chars/metan_closed.png", "open": "chars/metan_open.png", "height": 520}
   },
-  "bgm": {"file": "bgm/track.mp3", "volume": 0.14, "duck": 0.05}
+  "bgm": {"part1": {"file": "bgm/track.mp3", "title": "曲名", "composer": "作曲者", "volume": 0.3, "duck": 0.16}}
 }
 ```
 
-立ち絵は口を閉じた絵と開いた絵の2枚で、台詞の音量に合わせて切り替わる（左にめたん、右にずんだもん）。BGMはループし、話している間は `duck` の音量まで下がる。
+立ち絵は口を閉じた絵と開いた絵の2枚で、台詞の音量に合わせて切り替わる（左にめたん、右にずんだもん）。BGMは篇ごとに指定でき、ループし、話している間は `duck` の音量まで下がる。
+
+## BGM
+
+OpenTracks（旧DOVA-SYNDROME）の曲を篇ごとに使う。利用は無料・クレジット表記は不要（任意）で、作曲者の条件はいずれもサイト準拠。曲ファイルの再配布はできないため git には含めず、`tools/fetch_bgm.sh` で取得する。
+
+| 篇 | 曲 | 作曲者 |
+|---|---|---|
+| 前編 | モノクロライブラリー | shimtone |
+| 中編 | 考察 | shimtone |
+| 後編 | Sulpiride（ループ版） | Anonyment |
 
 ## クレジットと注意
 

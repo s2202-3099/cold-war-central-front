@@ -1,5 +1,10 @@
 {
-  "_comment": "立ち絵とBGM。ファイルを public/ に置いてパスを書く。chars.z / chars.m は口を閉じた絵（closed）と開いた絵（open）。bgm.volume は話していない時の音量、duck は話している時の音量",
+  "_comment": "立ち絵とBGM。chars.z / chars.m は口を閉じた絵（closed）と開いた絵（open）。bgm は篇ごと。volume は話していない時、duck は話している時の音量",
   "chars": null,
-  "bgm": null
+  "bgm": {
+    "part1": {"file": "bgm/monochrome_library.mp3", "title": "モノクロライブラリー", "composer": "shimtone", "volume": 0.3, "duck": 0.16},
+    "part2": {"file": "bgm/kousatsu.mp3", "title": "考察", "composer": "shimtone", "volume": 0.32, "duck": 0.18},
+    "part3": {"file": "bgm/sulpiride_loop.mp3", "title": "Sulpiride", "composer": "Anonyment", "volume": 0.26, "duck": 0.14},
+    "single": {"file": "bgm/kousatsu.mp3", "title": "考察", "composer": "shimtone", "volume": 0.32, "duck": 0.18}
+  }
 }
