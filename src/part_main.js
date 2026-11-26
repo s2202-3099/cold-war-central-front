@@ -34,6 +34,9 @@ AXES.forEach(a=>{
   a.headT=a.head.append('text').attr('x',10).attr('y',4).attr('font-size',11.5).style('font-family','var(--f-mono)').style('fill','var(--wp)').attr('font-weight',500).attr('paint-order','stroke').style('stroke','var(--paper)').attr('stroke-width',3);
   a.omgMark=a.head.append('text').attr('x',-9).attr('y',-10).attr('font-size',10).style('font-family','var(--f-mono)').style('fill','var(--wp)').attr('font-weight',700).attr('paint-order','stroke').style('stroke','var(--paper)').attr('stroke-width',3);
 });
+const gRiv=svg.append('g');
+AXES.forEach(a=>{a.rivMarks=(a.rivers||[]).map(rv=>{const [x,y]=proj(posAt(a,rv.km));
+  const c=gRiv.append('circle').attr('cx',x).attr('cy',y).attr('r',[0,2.6,3.4,4.4][rv.c]).attr('stroke-width',rv.c===3?2:1.5);c.append('title').text(`${rv.n}（${RIVER_CLS[rv.c].n}、${a.short}軸の${Math.round(rv.km)}km地点）`);return c;});});
 const nukeLayer=svg.append('g');
 const auLayer=svg.append('g');const AU_PATH=[[17.11,48.15],[16.37,48.21],[15.62,48.20],[14.29,48.31],[13.46,48.57]];
 const berlinG=svg.append('g');{const [bx,by]=proj([13.38,52.50]);berlinG.attr('transform',`translate(${bx},${by})`);berlinG.append('circle').attr('r',9).attr('class','bring').style('fill','none').attr('stroke-width',2.5);
@@ -43,18 +46,18 @@ function posAt(a,km){km=Math.max(0,Math.min(a.len,km));let i=1;while(i<a.cum.len
 function placeAt(a,km){let n=a.path[0][2];for(let i=0;i<a.path.length;i++){if(a.cum[i]<=km+1)n=a.path[i][2];}return n;}
 
 /* ---------- presets ---------- */
-const BASE={airQ:2.0,airOp:0.7,sea:0.6,nukeMode:'stop',wpMob:10,intel:1,decide:2,consult:2,frgVeto:false,frNuke:true,berlin:'assault',austria:'neutral',norway:false,chem:false,preShift:true,mask:0.3,crossAG:false,bagnall:true,nat:true,natSpread:1,natoFr:10,wpRelK:1,wpDecay:15,sovNavy:'bastion',fwd:true,noReinf:true,chemN:15,chemW:5,chemDelay:2,phase2:'paris',natoQ:1.2,wp2Day:8,wp2:1,deep:0.25,threshold:120,ignore:false,scaleNato:1,wpQ:1,france:true,baltic:0.5,landDay:2,main:'uk1',era:1985};
+const BASE={logi:true,rivers:true,natoStock:20,wpLift:1,demo:0.7,bridging:1,airQ:2.0,airOp:0.7,sea:0.6,nukeMode:'stop',wpMob:10,intel:1,decide:2,consult:2,frgVeto:false,frNuke:true,berlin:'assault',austria:'neutral',norway:false,chem:false,preShift:true,mask:0.3,crossAG:false,bagnall:true,nat:true,natSpread:1,natoFr:10,wpRelK:1,wpDecay:15,sovNavy:'bastion',fwd:true,noReinf:true,chemN:15,chemW:5,chemDelay:2,phase2:'paris',natoQ:1.2,wp2Day:8,wp2:1,deep:0.25,threshold:120,ignore:false,scaleNato:1,wpQ:1,france:true,baltic:0.5,landDay:2,main:'uk1',era:1985};
 const PRESETS={
- p1961:{label:'1961 ブーリャ演習型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.9,airQ:1.3,sea:0.7,wpMob:3,intel:0,decide:0,wp2Day:7,wp2:0.8,deep:0,scaleNato:0.85,sovNavy:'sloc',fwd:false,baltic:0.8,era:1961,main:'auto'},nuke:'n1961',
+ p1961:{label:'1961 ブーリャ演習型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.9,airQ:1.3,sea:0.7,wpMob:3,intel:0,decide:0,wp2Day:7,wp2:0.8,deep:0,scaleNato:0.85,sovNavy:'sloc',fwd:false,baltic:0.8,era:1961,main:'auto',natoStock:10,bridging:0.85},nuke:'n1961',
   desc:'1968年以前なのでソ連中央軍集団はまだない。ベルリン危機下の連合演習。NATOの核攻撃に反撃して核を同時使用し、西欧へ突進する。当時のNATOは大量報復の時代で、FM100-5のドクトリン区別はまだない（モデルでは近い挙動の側を使う）。',
   target:{axis:'jut',km:'end',day:5,text:'ポーランド沿岸方面軍：5日でデンマーク制圧'}},
- p1964:{label:'1964 チェコスロヴァキア計画型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.95,airQ:1.3,sea:0.7,wpMob:3,intel:0,decide:0,wp2Day:7,wp2:0.8,deep:0,scaleNato:0.9,sovNavy:'sloc',fwd:false,baltic:0.7,era:1964,main:'ge2'},nuke:'n1964',
+ p1964:{label:'1964 チェコスロヴァキア計画型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:0.95,airQ:1.3,sea:0.7,wpMob:3,intel:0,decide:0,wp2Day:7,wp2:0.8,deep:0,scaleNato:0.9,sovNavy:'sloc',fwd:false,baltic:0.7,era:1964,main:'ge2',natoStock:10,bridging:0.9},nuke:'n1964',
   desc:'主攻は南ドイツ（チェコスロヴァキア方面軍）。1968年以前なのでソ連中央軍集団はない。西側の大規模核攻撃で開戦し、核131発を使って南ドイツから仏東部へ。計画上は7〜8日目にラングル〜ブザンソンの線。',
   target:{axis:'ge2',place:'ブザンソン',day:8,text:'1964年計画：7〜8日目にブザンソンの線'}},
- p1979:{label:'1979「ライン川まで7日間」型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:1.1,airQ:1.6,wpMob:4,intel:0,decide:0,fwd:false,baltic:0.6,era:1979,main:'auto'},nuke:'n1979',
+ p1979:{label:'1979「ライン川まで7日間」型',p:{nuc:'early',wpDoc:'nuc',natoDoc:'AD',natoQ:1.1,airQ:1.6,wpMob:4,intel:0,decide:0,fwd:false,baltic:0.6,era:1979,main:'auto',natoStock:15},nuke:'n1979',
   desc:'NATOの核先制攻撃を受けて反撃し、7日でライン川に達する想定。NATOはアクティブ・ディフェンスの時代。',
   target:{axis:'uk1',place:'ライン',day:7,text:'演習名どおり7日でライン川'}},
- p1976:{label:'1976 通常攻勢 対 アクティブ・ディフェンス',p:{nuc:'flex',wpDoc:'conv',natoDoc:'AD',natoQ:1.15,airQ:1.6,wpMob:7,intel:1,decide:1,fwd:false,era:1976},nuke:'nflex',
+ p1976:{label:'1976 通常攻勢 対 アクティブ・ディフェンス',p:{nuc:'flex',wpDoc:'conv',natoDoc:'AD',natoQ:1.15,airQ:1.6,wpMob:7,intel:1,decide:1,fwd:false,era:1976,natoStock:15},nuke:'nflex',
   desc:'柔軟反応のもとで通常戦段階が続く場合。NATOは第一会戦に火力を集中するが、後続梯団への手当てがない。'},
  p1985:{label:'1985 オガルコフ期 対 エアランド・バトル',p:{nuc:'flex',wpDoc:'conv',natoDoc:'ALB',natoQ:1.2,wpMob:10,intel:1,decide:2},nuke:'nflex',
   desc:'WPが10日前に動員を始め、NATOは3日遅れて動員する（準備7日）。WPは第3打撃軍を主攻とする通常攻勢をかける。NATOは縦深攻撃で第2梯団を遅らせ、減殺する。'},
@@ -69,16 +72,16 @@ let P={};
 const $=id=>document.getElementById(id);
 (function(){const m=$('main');[['auto','自動（最も進んだ軸へ）'],...AXES.filter(a=>!a.amph).map(a=>[a.id,a.name])].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;m.appendChild(o);});})();
 const sel=$('preset');Object.entries(PRESETS).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;sel.appendChild(o);});
-const FIELDS=['mask','natSpread','natoFr','wpRelK','wpDecay','wpMob','intel','decide','consult','chemN','chemW','chemDelay','natoQ','airQ','airOp','sea','wp2Day','deep','threshold','baltic'];
-const fmt={wpMob:v=>v+'日前',intel:v=>v+'日',mask:v=>(+v).toFixed(1),natSpread:v=>'×'+(+v).toFixed(2),natoFr:v=>'−'+v+'%',wpRelK:v=>'×'+(+v).toFixed(2),wpDecay:v=>'−'+v+'%',chemN:v=>'−'+v+'%',chemW:v=>'−'+v+'%',chemDelay:v=>v+'日',decide:v=>v+'日',consult:v=>v+'日',natoQ:v=>'×'+(+v).toFixed(2),airQ:v=>'×'+(+v).toFixed(1),airOp:v=>Math.round(v*100)+'%',sea:v=>Math.round(v*100)+'%',wp2Day:v=>'M+'+v,deep:v=>Math.round(v*100)+'%',threshold:v=>v+'km',baltic:v=>Math.round(v*100)+'%'};
-function applyPreset(k){P={...BASE,...PRESETS[k].p};FIELDS.forEach(f=>{$(f).value=P[f];});$('main').value=P.main;$('wpDoc-'+P.wpDoc).checked=true;$('natoDoc-'+P.natoDoc).checked=true;$('france').checked=P.france;$('nukeMode').value=P.nukeMode;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf','preShift','crossAG','bagnall'].forEach(k=>$(k).checked=!!P[k]);['berlin','austria','phase2','sovNavy'].forEach(k=>$(k).value=P[k]);$('pdesc').textContent=PRESETS[k].desc;}
+const FIELDS=['natoStock','wpLift','demo','bridging','mask','natSpread','natoFr','wpRelK','wpDecay','wpMob','intel','decide','consult','chemN','chemW','chemDelay','natoQ','airQ','airOp','sea','wp2Day','deep','threshold','baltic'];
+const fmt={natoStock:v=>v+'日分',wpLift:v=>'×'+(+v).toFixed(2),demo:v=>Math.round(v*100)+'%',bridging:v=>'×'+(+v).toFixed(2),wpMob:v=>v+'日前',intel:v=>v+'日',mask:v=>(+v).toFixed(1),natSpread:v=>'×'+(+v).toFixed(2),natoFr:v=>'−'+v+'%',wpRelK:v=>'×'+(+v).toFixed(2),wpDecay:v=>'−'+v+'%',chemN:v=>'−'+v+'%',chemW:v=>'−'+v+'%',chemDelay:v=>v+'日',decide:v=>v+'日',consult:v=>v+'日',natoQ:v=>'×'+(+v).toFixed(2),airQ:v=>'×'+(+v).toFixed(1),airOp:v=>Math.round(v*100)+'%',sea:v=>Math.round(v*100)+'%',wp2Day:v=>'M+'+v,deep:v=>Math.round(v*100)+'%',threshold:v=>v+'km',baltic:v=>Math.round(v*100)+'%'};
+function applyPreset(k){P={...BASE,...PRESETS[k].p};FIELDS.forEach(f=>{$(f).value=P[f];});$('main').value=P.main;$('wpDoc-'+P.wpDoc).checked=true;$('natoDoc-'+P.natoDoc).checked=true;$('france').checked=P.france;$('nukeMode').value=P.nukeMode;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf','preShift','crossAG','bagnall','logi','rivers'].forEach(k=>$(k).checked=!!P[k]);['berlin','austria','phase2','sovNavy'].forEach(k=>$(k).value=P[k]);$('pdesc').textContent=PRESETS[k].desc;}
 function readForm(){FIELDS.forEach(f=>{P[f]=+$(f).value;$('v-'+f).textContent=fmt[f]($(f).value);});P.natoLag=P.intel+P.decide;$('v-prep').textContent=Math.max(0,P.wpMob-P.natoLag)+'日';
   P.main=$('main').value;P.wpDoc=document.querySelector('input[name=wpDoc]:checked').value;P.natoDoc=document.querySelector('input[name=natoDoc]:checked').value;
-  P.nuc=P.wpDoc==='nuc'?'early':'flex';P.france=$('france').checked;P.nukeMode=$('nukeMode').value;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf','preShift','crossAG','bagnall'].forEach(k=>P[k]=$(k).checked);['berlin','austria','phase2','sovNavy'].forEach(k=>P[k]=$(k).value);P.nk=readNk();
-  $('threshold').disabled=P.nuc==='early';$('nukeMode').disabled=P.nuc==='early';$('consult').disabled=P.nuc==='early'||!['fu','esc'].includes(P.nukeMode);$('frgVeto').disabled=$('consult').disabled;$('deep').disabled=P.natoDoc!=='ALB';['chemN','chemW','chemDelay'].forEach(k=>$(k).disabled=!P.chem);['natSpread','natoFr','wpRelK','wpDecay'].forEach(k=>$(k).disabled=!P.nat);$('noReinf').disabled=!P.norway;$('fwd').disabled=P.era<1981;$('bagnall').disabled=P.era<1984;['mask','crossAG'].forEach(k=>$(k).disabled=!P.preShift);}
+  P.nuc=P.wpDoc==='nuc'?'early':'flex';P.france=$('france').checked;P.nukeMode=$('nukeMode').value;['frgVeto','frNuke','norway','chem','nat','fwd','noReinf','preShift','crossAG','bagnall','logi','rivers'].forEach(k=>P[k]=$(k).checked);['berlin','austria','phase2','sovNavy'].forEach(k=>P[k]=$(k).value);P.nk=readNk();
+  $('threshold').disabled=P.nuc==='early';$('nukeMode').disabled=P.nuc==='early';$('consult').disabled=P.nuc==='early'||!['fu','esc'].includes(P.nukeMode);$('frgVeto').disabled=$('consult').disabled;$('deep').disabled=P.natoDoc!=='ALB';['chemN','chemW','chemDelay'].forEach(k=>$(k).disabled=!P.chem);['natSpread','natoFr','wpRelK','wpDecay'].forEach(k=>$(k).disabled=!P.nat);$('noReinf').disabled=!P.norway;$('fwd').disabled=P.era<1981;$('bagnall').disabled=P.era<1984;['mask','crossAG'].forEach(k=>$(k).disabled=!P.preShift);['natoStock','wpLift'].forEach(k=>$(k).disabled=!P.logi);['demo','bridging'].forEach(k=>$(k).disabled=!P.rivers);}
 let R=null, day=0, timer=null, openAxis=null;
 function readNk(){const g=(id,d)=>{const v=+(document.getElementById(id)||{}).value;return isFinite(v)&&v>0?v:d;};return {n1:g('n1',40),k1:g('k1',10),n2:g('n2',400),k2:g('k2',200),n3:g('n3',300),k3:g('k3',150)};}
-function recompute(keepDay){const atEnd=R&&day>=R.days;readForm();R=run(P);if(!keepDay)day=0;else if(atEnd)day=R.days;day=Math.min(day,R.days);draw();drawChart();drawAir();chartCursor();if(typeof mcSchedule==='function')mcSchedule();}
+function recompute(keepDay){const atEnd=R&&day>=R.days;readForm();R=run(P);if(!keepDay)day=0;else if(atEnd)day=R.days;day=Math.min(day,R.days);drawChart();drawAir();drawLogi();draw();chartCursor();if(typeof mcSchedule==='function')mcSchedule();}
 function H(x){return x.hist[Math.min(day,x.hist.length-1)];}
 function draw(){
   $('dlabel').textContent=day;$('day').value=day;$('dnow').textContent='D+'+day;$('dstop').textContent=R.stop?`D+${R.stop}で核の敷居・停止`:R.nucT?`D+${R.nucT}に核を初使用`:'D+60まで計算';$('day').style.setProperty('--stop',(R.days/60*100)+'%');
@@ -87,7 +90,9 @@ function draw(){
     a.prog.attr('d',(a.amph&&h.pen<=0)?null:gp({type:'LineString',coordinates:pts})).attr('stroke-dasharray',a.amph?'2 7':null);
     const [hx,hy]=proj(posAt(a,h.pen));a.head.attr('transform',`translate(${hx},${hy})`);
     a.headT.text(a.amph?(h.pen>=a.seaKm&&x.landed!==false&&h.wp>0.02?`上陸 +${Math.round(h.pen-a.seaKm)}km`:(day>=P.landDay&&x.failed?'上陸失敗':'')):(h.pen>0?`${Math.round(h.pen)}km`:''));
-    a.omgMark.text(h.omg?'OMG':'');});
+    a.omgMark.text(h.omg?'OMG':(h.xing?'渡河中':(P.logi&&h.sw!=null&&h.sw<1&&h.pen>0?'補給切れ':'')));
+    (a.rivMarks||[]).forEach((c,i)=>{const done=i<(h.rv||0),now=i===(h.rv||0)&&h.xing;
+      c.style('display',P.rivers?null:'none').style('fill',done?'var(--wp)':'var(--paper)').style('stroke',done?'var(--paper)':now?'var(--wp)':'var(--water)');});});
   {const B=R.berlin;const st=!B.on?'':B.assault?(B.fell&&day>=B.fell?`西ベルリン陥落 D+${B.fell}`:'西ベルリン：守備隊が抵抗中'):'西ベルリン：包囲';
     const col=!B.on?'var(--muted)':B.assault&&B.fell&&day>=B.fell?'var(--wp)':'var(--nato)';berlinG.select('.bring').style('stroke',col);berlinG.select('.blab').text(st).style('fill',col);}
   auLayer.selectAll('*').remove();if(R.austria.on&&day>=2){const t=R.austria.thru;const frac=t?1:Math.min(1,(day-1)/12);const n=AU_PATH.length;const pts=[];
@@ -101,8 +106,8 @@ function draw(){
     const [cx,cy]=proj(pt);const r=k==='f'?14:20;
     nukeLayer.append('circle').attr('cx',cx).attr('cy',cy).attr('r',r).style('fill','var(--nuke)').attr('fill-opacity',k==='f'?.35:.18).style('stroke','var(--nuke)').attr('stroke-width',k==='f'?2:1).attr('stroke-dasharray',k==='f'?null:'3 3');});
   const rows=R.ax.map(x=>{const h=H(x);const a=x.a;const pen=a.amph?Math.max(0,h.pen-a.seaKm):h.pen;
-    return `<tr data-ax="${a.id}" tabindex="0" class="${openAxis===a.id?'sel':''}"><td><b>${a.name}</b><br><span class="sub">${a.wpCmd} ／ ${a.natoCmd}</span></td><td>${Math.round(pen)}<span class="bar" style="width:${Math.min(60,pen/6)}px"></span></td><td>${a.amph&&h.pen<a.seaKm?'—':placeAt(a,h.pen)}</td><td>${h.wp.toFixed(1)}</td><td>${h.nato.toFixed(1)}</td><td>${h.R?h.R.toFixed(2):'—'}</td></tr>`;}).join('');
-  $('axt').innerHTML=`<thead><tr><th>軸（WP ／ NATO）</th><th>前進km</th><th>到達点</th><th>WP</th><th>NATO</th><th>戦力比</th></tr></thead><tbody>${rows}</tbody>`;
+    return `<tr data-ax="${a.id}" tabindex="0" class="${openAxis===a.id?'sel':''}"><td><b>${a.name}</b><br><span class="sub">${a.wpCmd} ／ ${a.natoCmd}</span></td><td>${Math.round(pen)}<span class="bar" style="width:${Math.min(60,pen/6)}px"></span></td><td>${a.amph&&h.pen<a.seaKm?'—':placeAt(a,h.pen)}${h.xing&&a.rivers[h.rv]?`<br><span class="sub">${a.rivers[h.rv].n}を渡河中</span>`:''}</td><td>${h.wp.toFixed(1)}</td><td>${h.nato.toFixed(1)}</td><td>${h.R?h.R.toFixed(2):'—'}</td><td>${P.logi&&h.sw!=null?`<span style="${h.sw<1.5?'color:var(--wp);font-weight:600':''}">${h.sw.toFixed(1)}日</span>`:'—'}</td></tr>`;}).join('');
+  $('axt').innerHTML=`<thead><tr><th>軸（WP ／ NATO）</th><th>前進km</th><th>到達点</th><th>WP</th><th>NATO</th><th>戦力比</th><th>WP補給</th></tr></thead><tbody>${rows}</tbody>`;
   $('log').innerHTML=R.log.filter(l=>l[0]<=day).map(l=>`<li><span class="d">D+${l[0]}</span><span class="k-${l[1]}">${l[2]}</span></li>`).join('');
   verdict(); chartCursor();
 }
@@ -124,6 +129,10 @@ function verdict(){
   if(R.berlin.on&&R.berlin.assault)parts.push(R.berlin.fell&&day>=R.berlin.fell?`西ベルリンはD+${R.berlin.fell}に陥落した。`:'西ベルリンの守備隊は抵抗を続けている。');
   if(R.norway.on){const N=R.norway;const kd=N.hist[Math.min(day,N.hist.length-1)]||0;parts.push(N.lost&&day>=N.lost?`北ノルウェーではD+${N.lost}にバルドゥフォスとトロムソが落ち、大西洋の船団がソ連海軍航空隊の圏内に入った。`:`北ノルウェーではWPが国境から約${Math.round(kd)}km進んだ${kd>=480?'（リュンゲン線で防御中）':''}。`);}
   if(R.austria.on)parts.push(R.austria.thru&&day>=R.austria.thru?`オーストリアを抜けた部隊がD+${R.austria.thru}にバイエルンへ入った。`:'オーストリアで遅滞戦闘が続いている。');
+  if(R.logi){const culm=land.filter(x=>{const h=H(x);return h.sw!=null&&h.sw<1&&h.pen>0;}).map(x=>x.a.short);
+    const ns=R.nsHist[Math.min(day,R.nsHist.length-1)];
+    parts.push(`${culm.length?`<b>補給が追いつかず息切れしている軸：${culm.join('・')}。</b>`:''}NATOの欧州の備蓄は${R.nsOut&&day>=R.nsOut?`D+${R.nsOut}に尽き、船団で届く分だけで戦っている。`:`残り約${Math.round(ns)}日分。`}`);}
+  if(R.rivers){const xs=land.filter(x=>H(x).xing).map(x=>`${x.a.short}軸（${x.a.rivers[H(x).rv].n}）`);if(xs.length)parts.push(`渡河中：${xs.join('、')}。`);}
   const cv=R.civHist[Math.min(day,R.civHist.length-1)]||0;
   if(cv>0)parts.push(`<b>D+${day}までの推計民間人死者（短期）：約${cv>=1e8?(cv/1e8).toFixed(1)+'億':Math.round(cv/1e4).toLocaleString('ja-JP')+'万'}人</b>（核パネルの発数・威力の設定とカルト・ブランシュの比率による。戦略核は含まない）。`);
   const sv=R.sHist[Math.min(day,R.sHist.length-1)];parts.push(`航空優勢指数は${Math.round(sv*100)}（${sv>=0.6?'NATOが優勢':sv<=0.4?'WPが優勢':'拮抗'}）。`);
@@ -151,7 +160,7 @@ function drawChart(){
   csvg.append('line').attr('id','cur').attr('y1',CH.t).attr('y2',CH.h-CH.b).style('stroke','var(--ink)').attr('stroke-width',1);
   CH.xs=xs;chartCursor();
 }
-function chartCursor(){if(!CH.xs)return;csvg.select('#cur').attr('x1',CH.xs(day)).attr('x2',CH.xs(day));asvg.select('#acur').attr('x1',CH.xs(day)).attr('x2',CH.xs(day));}
+function chartCursor(){if(!CH.xs)return;csvg.select('#cur').attr('x1',CH.xs(day)).attr('x2',CH.xs(day));asvg.select('#acur').attr('x1',CH.xs(day)).attr('x2',CH.xs(day));lsvg.select('#lcur').attr('x1',CH.xs(day)).attr('x2',CH.xs(day));}
 const asvg=d3.select('#airchart');
 function drawAir(){asvg.selectAll('*').remove();const xs=d3.scaleLinear([0,60],[CH.l,CH.w-CH.r]);const ys=d3.scaleLinear([0,100],[110,8]);
   [0,50,100].forEach(t=>{asvg.append('line').attr('x1',CH.l).attr('x2',CH.w-CH.r).attr('y1',ys(t)).attr('y2',ys(t)).style('stroke','var(--line)').attr('stroke-dasharray',t===50?'4 3':null);asvg.append('text').attr('x',CH.l-6).attr('y',ys(t)+4).attr('text-anchor','end').attr('font-size',10.5).style('fill','var(--muted)').style('font-family','var(--f-mono)').text(t);});
@@ -164,6 +173,22 @@ function drawAir(){asvg.selectAll('*').remove();const xs=d3.scaleLinear([0,60],[
     asvg.append('text').attr('x',CH.w-CH.r+8).attr('y',20).attr('font-size',11).style('fill','var(--nuke)').text('民間人死者');asvg.append('text').attr('x',CH.w-CH.r+8).attr('y',34).attr('font-size',10).style('fill','var(--nuke)').style('font-family','var(--f-mono)').text('最大'+Math.round(cmax/1e4).toLocaleString('ja-JP')+'万');}
   if(R.nucT){asvg.append('line').attr('x1',xs(R.nucT)).attr('x2',xs(R.nucT)).attr('y1',8).attr('y2',110).style('stroke','var(--nuke)').attr('stroke-width',1);}
   asvg.append('line').attr('id','acur').attr('y1',8).attr('y2',110).style('stroke','var(--ink)').attr('stroke-width',1);}
+const lsvg=d3.select('#logichart');
+function drawLogi(){lsvg.selectAll('*').remove();const xs=d3.scaleLinear([0,60],[CH.l,CH.w-CH.r]);
+  if(!R.logi){lsvg.append('text').attr('x',CH.l).attr('y',60).attr('font-size',12).style('fill','var(--muted)').text('兵站の計算は切ってある');return;}
+  const land=R.ax.filter(x=>!x.a.amph);const lead=land.reduce((m,x)=>x.pen>m.pen?x:m,land[0]);const wpS=lead.hist.map(h=>h.sw);
+  const top=Math.max(8,d3.max(R.nsHist)*1.05);const ys=d3.scaleLinear([0,top],[110,8]);
+  ys.ticks(3).forEach(t=>{asvgLine(lsvg,ys(t),xs);lsvg.append('text').attr('x',CH.l-6).attr('y',ys(t)+4).attr('text-anchor','end').attr('font-size',10.5).style('fill','var(--muted)').style('font-family','var(--f-mono)').text(t);});
+  lsvg.append('line').attr('x1',CH.l).attr('x2',CH.w-CH.r).attr('y1',ys(1.5)).attr('y2',ys(1.5)).style('stroke','var(--wp)').attr('stroke-dasharray','2 3').attr('stroke-opacity',.7);
+  lsvg.append('path').datum(R.nsHist).attr('d',d3.line().x((v,i)=>xs(i)).y(v=>ys(v))).style('fill','none').style('stroke','var(--nato)').attr('stroke-width',2);
+  lsvg.append('path').datum(wpS).attr('d',d3.line().x((v,i)=>xs(i)).y(v=>ys(v))).style('fill','none').style('stroke','var(--wp)').attr('stroke-width',2);
+  let ya=ys(R.nsHist[R.nsHist.length-1])+4,yb=ys(wpS[wpS.length-1])+4;if(Math.abs(ya-yb)<13){if(ya<=yb)yb=ya+13;else ya=yb+13;}
+  lsvg.append('text').attr('x',CH.w-CH.r+8).attr('y',ya).attr('font-size',11).style('fill','var(--ink)').text('NATOの備蓄');
+  lsvg.append('text').attr('x',CH.w-CH.r+8).attr('y',yb).attr('font-size',11).style('fill','var(--ink)').text(`WP（${lead.a.short}軸）`);
+  lsvg.append('text').attr('x',CH.l+4).attr('y',ys(1.5)-4).attr('font-size',10).style('fill','var(--wp)').text('これを下回ると攻撃力が落ちる');
+  if(R.nsOut)lsvg.append('line').attr('x1',xs(R.nsOut)).attr('x2',xs(R.nsOut)).attr('y1',8).attr('y2',110).style('stroke','var(--nato)').attr('stroke-dasharray','3 3');
+  lsvg.append('line').attr('id','lcur').attr('y1',8).attr('y2',110).style('stroke','var(--ink)').attr('stroke-width',1);}
+function asvgLine(g,y,xs){g.append('line').attr('x1',CH.l).attr('x2',CH.w-CH.r).attr('y1',y).attr('y2',y).style('stroke','var(--line)');}
 function stopPlay(){clearInterval(timer);timer=null;$('play').textContent='再生';}
 $('play').onclick=()=>{if(timer){stopPlay();return;}if(day>=R.days)day=0;$('play').textContent='一時停止';timer=setInterval(()=>{day++;if(day>=R.days){day=R.days;draw();stopPlay();return;}draw();},matchMedia('(prefers-reduced-motion: reduce)').matches?900:450);};
 $('reset').onclick=()=>{stopPlay();day=0;draw();};
@@ -182,7 +207,7 @@ $('ctrl').addEventListener('submit',e=>e.preventDefault());
   $('orbatList').innerHTML=AXES.map(a=>`<details data-ax="${a.id}" class="ob"><summary><span class="obn">${a.name}</span><span class="obt"><span style="color:var(--wp)">WP ${tot(a.wp)}</span> ／ <span style="color:var(--nato)">NATO ${tot(a.nato)}</span></span></summary>
    <div class="obg"><div><h5 style="color:var(--wp)">${a.wpCmd}</h5><table class="axt ob-t"><thead><tr><th>部隊</th><th>平時の駐屯地</th><th>師団換算</th><th>投入</th></tr></thead><tbody>${a.wp.map(u=>li(u,'wp')).join('')}</tbody></table></div>
    <div><h5 style="color:var(--nato)">${a.natoCmd}</h5><table class="axt ob-t"><thead><tr><th>部隊</th><th>平時の駐屯地</th><th>師団換算</th><th>到着</th></tr></thead><tbody>${a.nato.map(u=>li(u,'nato')).join('')}</tbody></table></div></div>
-   <p class="obnote">地形係数 ${a.terrain}${a.amph?'。上陸はD+'+BASE.landDay+'。バルト海の制海・制空が35%未満なら失敗し、それ以上なら上陸できる兵力がその割合に応じて増える':''}。経路：${a.path.map(p=>p[2]).join(' → ')}</p></details>`).join('');
+   <p class="obnote">地形係数 ${a.terrain}${a.amph?'。上陸はD+'+BASE.landDay+'。バルト海の制海・制空が35%未満なら失敗し、それ以上なら上陸できる兵力がその割合に応じて増える':''}。経路：${a.path.map(p=>p[2]).join(' → ')}${a.rivers.length?`。河川線：${a.rivers.map(r=>`${r.n}（${Math.round(r.km)}km、${RIVER_CLS[r.c].n}）`).join('、')}`:''}</p></details>`).join('');
   $('echTable').innerHTML=`<thead><tr><th>陣営</th><th>部隊</th><th>師団換算</th><th>投入日</th><th>投入先</th></tr></thead><tbody>`+
    WP_ECH.map(e=>`<tr><td style="color:var(--wp)">WP</td><td>${e[0]}</td><td>${e[1]}</td><td>M+${e[2]}</td><td>${e[3]?e[3].map(id=>AXES.find(a=>a.id===id).short).join('・')+'のうち主攻正面か、最も進んだ軸':'主攻正面（自動なら最も進んだ軸）'}${e[4]?'。'+e[4]+'年以降のみ':''}</td></tr>`).join('')+
    WP_STRAT.map(w=>`<tr><td style="color:var(--wp)">WP</td><td>${w[0]}</td><td>${w[1]}</td><td>第1波の到着日${w[2]?'＋'+w[2]+'日':''}（スライダー）</td><td>主攻正面に7割、次に進んだ軸に3割</td></tr>`).join('')+

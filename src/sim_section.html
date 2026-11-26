@@ -37,6 +37,17 @@
         <input type="range" id="airQ" min="0.8" max="3" step="0.1"></label>
       <label for="airOp"><span class="lab">WPの初期航空作戦の強さ <span class="mono" id="v-airOp"></span></span>
         <input type="range" id="airOp" min="0" max="1" step="0.05"></label></fieldset>
+      <fieldset class="nset"><legend>兵站と河川</legend>
+      <label class="chk" for="logi"><input type="checkbox" id="logi"> 兵站を計算する（弾薬・燃料の消費と補給）</label>
+      <label for="natoStock"><span class="lab">NATOの欧州の弾薬・燃料備蓄 <span class="mono" id="v-natoStock"></span></span>
+        <input type="range" id="natoStock" min="5" max="45" step="5"></label>
+      <label for="wpLift"><span class="lab">WPの補給輸送力（鉄道・自動車・パイプライン） <span class="mono" id="v-wpLift"></span></span>
+        <input type="range" id="wpLift" min="0.6" max="1.4" step="0.05"></label>
+      <label class="chk" for="rivers"><input type="checkbox" id="rivers"> 河川線と渡河を計算する</label>
+      <label for="demo"><span class="lab">NATOが橋の爆破に成功する割合 <span class="mono" id="v-demo"></span></span>
+        <input type="range" id="demo" min="0" max="1" step="0.05"></label>
+      <label for="bridging"><span class="lab">WPの渡河能力（架橋・工兵） <span class="mono" id="v-bridging"></span></span>
+        <input type="range" id="bridging" min="0.5" max="1.5" step="0.05"></label></fieldset>
       <fieldset class="nset"><legend>大西洋と北翼</legend>
       <label for="sea"><span class="lab">NATOの対潜・船団護衛の力 <span class="mono" id="v-sea"></span></span>
         <input type="range" id="sea" min="0" max="1" step="0.05"></label>
@@ -91,6 +102,7 @@
           <span><i style="background:var(--wp)"></i>WP軍の前進</span>
           <span><i style="background:var(--ink)"></i>内独国境（1949–90）</span>
           <span><i style="background:var(--water)"></i>主要河川</span>
+          <span><i style="background:var(--paper);border:2px solid var(--water);height:8px;width:8px;border-radius:50%;box-sizing:border-box"></i>渡河点（塗り＝渡河済み）</span>
           <span><i style="background:var(--nato);height:8px;width:8px;border-radius:50%"></i>NATO軍団の担当区域</span>
         </div>
       </div>
@@ -107,7 +119,8 @@
       <div class="card"><h4>侵攻軸ごとの状況（行を選ぶと下の戦闘序列が開く）</h4><div style="overflow-x:auto"><table class="axt" id="axt"></table></div></div>
       <div class="out">
         <div class="card"><h4>前進距離の推移（km）</h4><div class="chartbox"><svg id="chart" viewBox="0 0 640 300" role="img" aria-label="侵攻軸ごとの前進距離の推移"></svg></div>
-          <h4 style="margin-top:10px">航空優勢指数（50＝拮抗、NATO側が高い）と推計民間人死者</h4><div class="chartbox"><svg id="airchart" viewBox="0 0 640 130" role="img" aria-label="航空優勢指数と推計民間人死者の推移"></svg></div></div>
+          <h4 style="margin-top:10px">航空優勢指数（50＝拮抗、NATO側が高い）と推計民間人死者</h4><div class="chartbox"><svg id="airchart" viewBox="0 0 640 130" role="img" aria-label="航空優勢指数と推計民間人死者の推移"></svg></div>
+          <h4 style="margin-top:10px">補給（日分）：NATOの欧州の備蓄と、最も進んだ軸のWP</h4><div class="chartbox"><svg id="logichart" viewBox="0 0 640 130" role="img" aria-label="NATOの備蓄とWPの補給の推移"></svg></div></div>
         <div class="card"><h4>経過</h4><ul class="log" id="log"></ul></div>
       </div>
       <div class="card mcbox" id="mcbox">
