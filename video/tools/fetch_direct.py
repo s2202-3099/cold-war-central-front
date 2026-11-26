@@ -14,9 +14,24 @@ def url(title, w=None):
 def get(u, path):
     with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120) as r, open(path, 'wb') as f: f.write(r.read())
 cp = os.path.join(OUT, 'credits.json'); credits = json.load(open(cp, encoding='utf-8')) if os.path.exists(cp) else {}
+import html as _html, re as _re
+def meta(title):
+    """Read licence and author from the Commons file page (HTML, not the rate-limited API)."""
+    u = 'https://commons.wikimedia.org/wiki/' + urllib.parse.quote(title.replace(' ', '_'))
+    s = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=60).read().decode()
+    s = s.replace('&#95;', '_')
+    clean = lambda t: _re.sub(r'\s+', ' ', _html.unescape(_re.sub('<[^>]+>', ' ', t))).strip()
+    lic = _re.search(r'licensetpl_short[^>]*>(.*?)<', s)
+    aut = _re.search(r'id="fileinfotpl_aut"[^>]*>.*?</td>\s*<td[^>]*>(.*?)</td>', s, _re.S)
+    a = clean(aut.group(1)) if aut else ''
+    a = _re.sub(r'\s*(Unknown author|作者不明)\s*', '作者不明 ', a).strip()
+    return (clean(lic.group(1)) if lic else '?'), (a[:120] or '作者不明')
 for k, (title, lic, artist) in fp.PHOTOS.items():
     dst = os.path.join(OUT, k + '.jpg')
     if os.path.exists(dst) and k in credits: continue
+    if lic is None:
+        try: lic, artist = meta(title); time.sleep(1)
+        except Exception as e: print('META FAIL', k, e); continue
     tmp = dst + '.src'; ok = False
     for u in (url(title, 1920), url(title)):
         for i in range(3):
