@@ -108,7 +108,7 @@ export const MapScene: React.FC<{id: string; dur: number; fontSans: string}> = (
 
   // events up to the current day
   const events = run && panel ? run.log.filter((l) => l[0] <= di && (spec.kinds ? spec.kinds.includes(l[1]) : true) && l[0] >= (spec.logFrom ?? 1)) : [];
-  const shown = events.slice(-5);
+  const shown = events.slice(-5).reverse(); // newest first (the bottom corner can be covered by a character)
   const maxPen = run ? Math.max(...run.ax.filter((x) => x.id !== 'zea').map((x) => lerp(x.h[hAt(di)][0], x.h[hAt(di + 1)][0], dt))) : 0;
 
   return (

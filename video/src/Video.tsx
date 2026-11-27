@@ -92,7 +92,7 @@ const Photo: React.FC<{id: string; dur: number; idx: number}> = ({id, dur, idx})
         })}
       </AbsoluteFill>
       {cr && (
-        <div style={{position: 'absolute', right: 18, bottom: 14, fontFamily: SANS, fontSize: 19, color: 'rgba(255,255,255,0.85)', backgroundColor: 'rgba(0,0,0,0.55)', padding: '4px 12px', borderRadius: 4, maxWidth: 1100}}>
+        <div style={{position: 'absolute', right: 18, ...(CHARS ? {top: 12} : {bottom: 14}), fontFamily: SANS, fontSize: 19, color: 'rgba(255,255,255,0.85)', backgroundColor: 'rgba(0,0,0,0.55)', padding: '4px 12px', borderRadius: 4, maxWidth: 1100}}>
           写真：{cr.artist}／{cr.license}／Wikimedia Commons
         </div>
       )}
@@ -360,11 +360,16 @@ const ChapterCard: React.FC<{c: Chapter}> = ({c}) => {
 };
 
 // ---------- characters (optional, src/assets.json) ----------
-type CharCfg = {closed: string; open: string; height?: number};
-const CHARS = (assets as {chars: null | Record<'z' | 'm', CharCfg>}).chars;
+type CharCfg = {prefix: string; height?: number; bottom?: number};
+const CHARS = (assets as {chars: null | {z: CharCfg; m: CharCfg; credit?: string}}).chars;
 type BgmCfg = {file: string; title?: string; composer?: string; volume?: number; duck?: number};
 const BGMS = (assets as {bgm: null | Record<string, BgmCfg>}).bgm;
-const SUB_SIDE = CHARS ? 380 : 70;
+const SUB_SIDE = CHARS ? 390 : 70;
+// voice style -> expression sprite
+const EXPR: Record<'z' | 'm', Record<string, string>> = {
+  z: {なみだめ: 'namidame', あまあま: 'amaama', ヘロヘロ: 'herohero', ツンツン: 'tsuntsun'},
+  m: {ささやき: 'sasayaki'},
+};
 
 const Chars: React.FC<{items: Item[]}> = ({items}) => {
   const f = useCurrentFrame();
@@ -375,11 +380,15 @@ const Chars: React.FC<{items: Item[]}> = ({items}) => {
       {(['m', 'z'] as const).map((k) => {
         const c = CHARS[k];
         const speaking = cur?.spk === k;
-        const mf = speaking && cur?.mouth ? cur.mouth[Math.max(0, Math.min(cur.mouth.length - 1, f - cur.start))] === '1' : false;
-        const bob = speaking ? Math.sin(f / 5) * 3 : 0;
+        const expr = (speaking && cur?.style && EXPR[k][cur.style]) || 'normal';
+        const mouthOpen = speaking && cur?.mouth ? cur.mouth[Math.max(0, Math.min(cur.mouth.length - 1, f - cur.start))] === '1' : false;
+        const period = k === 'z' ? 137 : 151;
+        const blink = !mouthOpen && (f + (k === 'z' ? 40 : 0)) % period < 4;
+        const state = mouthOpen ? 'open' : blink ? 'blink' : 'closed';
+        const bob = speaking ? Math.sin(f / 4) * 4 : 0;
         return (
-          <Img key={k} src={staticFile(mf ? c.open : c.closed)}
-            style={{position: 'absolute', bottom: -10, [k === 'm' ? 'left' : 'right']: 10, height: c.height ?? 520, translate: `0px ${bob}px`, filter: speaking ? 'none' : 'brightness(0.72)', scale: k === 'm' ? '1 1' : '1 1'}} />
+          <Img key={k} src={staticFile(`${c.prefix}_${expr}_${state}.png`)}
+            style={{position: 'absolute', bottom: c.bottom ?? -300, [k === 'm' ? 'left' : 'right']: 6, height: c.height ?? 760, translate: `0px ${bob}px`, filter: speaking ? 'drop-shadow(0 0 10px rgba(0,0,0,0.6))' : 'brightness(0.7) drop-shadow(0 0 8px rgba(0,0,0,0.5))'}} />
         );
       })}
     </>
@@ -390,7 +399,7 @@ const Chars: React.FC<{items: Item[]}> = ({items}) => {
 const Subtitle: React.FC<{l: Line}> = ({l}) => {
   const f = useCurrentFrame();
   const sp = SPK[l.spk];
-  const size = l.text.length > 62 ? 40 : l.text.length > 44 ? 44 : 50;
+  const size = CHARS ? (l.text.length > 70 ? 34 : l.text.length > 46 ? 38 : 44) : l.text.length > 62 ? 40 : l.text.length > 44 ? 44 : 50;
   return (
     <AbsoluteFill style={{top: 'auto', height: 230, bottom: 0, padding: `0 ${SUB_SIDE}px 26px`, justifyContent: 'flex-end', opacity: interpolate(f, [0, 5], [0, 1], {extrapolateRight: 'clamp'})}}>
       <div style={{display: 'flex', alignItems: 'flex-start', gap: 22}}>
@@ -409,6 +418,7 @@ const Credits: React.FC<{segs: Seg[]; bgm?: BgmCfg}> = ({segs, bgm: BGM}) => {
   const photos = Object.entries(credits as Record<string, {title: string; artist: string; license: string}>).filter(([k]) => used.has(k));
   const lines: [string, string][] = [
     ['音声', 'VOICEVOX:ずんだもん　VOICEVOX:四国めたん'],
+    ...(CHARS?.credit ? [['立ち絵', CHARS.credit] as [string, string]] : []),
     ['シミュレーター', '中欧正面 1949–1991（このリポジトリの index.html）'],
     ['史料・研究', 'PHP（ETH Zurich）、National Security Archive、Mastny & Byrne『A Cardboard Castle?』、Pałka（2017）、Uhl（2006）、Luňák（2001）、Heuser（1993）、Mearsheimer（1982）、Posen（1984/85）、Cohen（1988）、Odom（1998）、FM100-5、OTA『核戦争の影響』（1979）'],
     ['地図', 'Natural Earth（world-atlas 2.0.2）。内独国境・河川・侵攻軸は概略'],

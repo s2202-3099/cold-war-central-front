@@ -1,10 +1,46 @@
 {
-  "_comment": "立ち絵とBGM。chars.z / chars.m は口を閉じた絵（closed）と開いた絵（open）。bgm は篇ごと。volume は話していない時、duck は話している時の音量",
-  "chars": null,
-  "bgm": {
-    "part1": {"file": "bgm/monochrome_library.mp3", "title": "モノクロライブラリー", "composer": "shimtone", "volume": 0.3, "duck": 0.16},
-    "part2": {"file": "bgm/kousatsu.mp3", "title": "考察", "composer": "shimtone", "volume": 0.32, "duck": 0.18},
-    "part3": {"file": "bgm/sulpiride_loop.mp3", "title": "Sulpiride", "composer": "Anonyment", "volume": 0.26, "duck": 0.14},
-    "single": {"file": "bgm/kousatsu.mp3", "title": "考察", "composer": "shimtone", "volume": 0.32, "duck": 0.18}
+ "_comment": "立ち絵とBGM。chars.z / chars.m は public/<prefix>_<表情>_<closed|open|blink>.png（tools/make_chars.py が作る）。bgm は篇ごと。volume は話していない時、duck は話している時の音量",
+ "chars": {
+  "z": {
+   "prefix": "chars/z",
+   "height": 760,
+   "bottom": -300
+  },
+  "m": {
+   "prefix": "chars/m",
+   "height": 760,
+   "bottom": -300
+  },
+  "credit": "坂本アヒル（ずんだもん立ち絵素材2.3・四国めたん立ち絵素材2.1）"
+ },
+ "bgm": {
+  "part1": {
+   "file": "bgm/monochrome_library.mp3",
+   "title": "モノクロライブラリー",
+   "composer": "shimtone",
+   "volume": 0.3,
+   "duck": 0.16
+  },
+  "part2": {
+   "file": "bgm/kousatsu.mp3",
+   "title": "考察",
+   "composer": "shimtone",
+   "volume": 0.32,
+   "duck": 0.18
+  },
+  "part3": {
+   "file": "bgm/sulpiride_loop.mp3",
+   "title": "Sulpiride",
+   "composer": "Anonyment",
+   "volume": 0.26,
+   "duck": 0.14
+  },
+  "single": {
+   "file": "bgm/kousatsu.mp3",
+   "title": "考察",
+   "composer": "shimtone",
+   "volume": 0.32,
+   "duck": 0.18
   }
+ }
 }
