@@ -42,7 +42,8 @@ const fade = (f: number, d: number, n = 12) =>
 type Seg = {v: string; start: number; end: number};
 type Data = {items: Item[]; total: number; segs: Seg[]};
 const buildData = (tl: Tl): Data => {
-  const items = tl.items as Item[];
+  const items = (tl.items as Item[]).map((it) => ({...it}));
+  if (items[0]?.type === 'chapter' && items[0].start > 0) { items[0].dur += items[0].start; items[0].start = 0; }
   const total = tl.total;
   const segs: Seg[] = [];
   items.forEach((it, i) => {
@@ -371,9 +372,16 @@ const EXPR: Record<'z' | 'm', Record<string, string>> = {
   m: {ささやき: 'sasayaki'},
 };
 
-const Chars: React.FC<{items: Item[]}> = ({items}) => {
+const Chars: React.FC<{items: Item[]; total: number}> = ({items, total}) => {
   const f = useCurrentFrame();
   if (!CHARS) return null;
+  // hide during chapter cards and credits, with a short fade on both sides
+  const FADE = 10;
+  const hidden: [number, number][] = items.filter((it) => it.type === 'chapter').map((it) => [it.start, it.start + it.dur] as [number, number]);
+  hidden.push([total, Number.MAX_SAFE_INTEGER]);
+  const dist = Math.min(...hidden.map(([a, b]) => (f < a ? a - f : f >= b ? f - b + 1 : 0)));
+  const opacity = Math.min(1, dist / FADE);
+  if (opacity <= 0) return null;
   const cur = items.find((it): it is Line => it.type === 'line' && f >= it.start && f < it.start + it.dur);
   return (
     <>
@@ -383,12 +391,12 @@ const Chars: React.FC<{items: Item[]}> = ({items}) => {
         const expr = (speaking && cur?.style && EXPR[k][cur.style]) || 'normal';
         const mouthOpen = speaking && cur?.mouth ? cur.mouth[Math.max(0, Math.min(cur.mouth.length - 1, f - cur.start))] === '1' : false;
         const period = k === 'z' ? 137 : 151;
-        const blink = !mouthOpen && (f + (k === 'z' ? 40 : 0)) % period < 4;
+        const blink = f > 30 && !mouthOpen && (f + (k === 'z' ? 40 : 0)) % period < 4;
         const state = mouthOpen ? 'open' : blink ? 'blink' : 'closed';
         const bob = speaking ? Math.sin(f / 4) * 4 : 0;
         return (
           <Img key={k} src={staticFile(`${c.prefix}_${expr}_${state}.png`)}
-            style={{position: 'absolute', bottom: c.bottom ?? -300, [k === 'm' ? 'left' : 'right']: 6, height: c.height ?? 760, translate: `0px ${bob}px`, filter: speaking ? 'drop-shadow(0 0 10px rgba(0,0,0,0.6))' : 'brightness(0.7) drop-shadow(0 0 8px rgba(0,0,0,0.5))'}} />
+            style={{position: 'absolute', bottom: c.bottom ?? -300, [k === 'm' ? 'left' : 'right']: 6, height: c.height ?? 760, translate: `0px ${bob}px`, opacity, filter: speaking ? 'drop-shadow(0 0 10px rgba(0,0,0,0.6))' : 'brightness(0.7) drop-shadow(0 0 8px rgba(0,0,0,0.5))'}} />
         );
       })}
     </>
@@ -473,7 +481,7 @@ export const PartVideo: React.FC<{part: string}> = ({part}) => {
         </div>
       )}
       <div style={{position: 'absolute', right: 70, top: 18, fontFamily: SANS, fontWeight: 700, fontSize: 26, color: C.muted, letterSpacing: 2}}>{PART_TITLES[part]}</div>
-      <Chars items={items} />
+      <Chars items={items} total={total} />
       {/* subtitles and audio */}
       {items.map((it, i) =>
         it.type === 'line' ? (
